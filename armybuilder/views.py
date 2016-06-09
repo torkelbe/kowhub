@@ -1,7 +1,16 @@
 from django.shortcuts import render
 # Create your views here.
 
-from django.http import HttpResponse
+import os
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the armybuilder index")
+from django.http import HttpResponse, Http404
+from django.views import generic
+
+class AppView(generic.TemplateView):
+    template_name = 'armybuilder/application.html'
+
+def armydata(request):
+    path = "armybuilder/data/armies.json"
+    with open(path, 'r') as f:
+        data = f.read()
+        return HttpResponse(data, content_type="application/json")

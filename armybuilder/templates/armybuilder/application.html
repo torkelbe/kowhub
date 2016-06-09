@@ -1,0 +1,143 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="utf=8">
+        <title>Army Builder</title>
+        <link rel="stylesheet" type="text/css" href="{% static "armybuilder/styles/armybuilder.css" %}" media="screen" />
+        <script src="{% static "armybuilder/scripts/jquery-2.2.3.js" %}"></script>
+        <script src="{% static "armybuilder/scripts/jsrender.js" %}"></script>
+        <script src="{% static "armybuilder/scripts/armybuilder-controller.js" %}"></script>
+        <script src="{% static "armybuilder/scripts/armybuilder-webstorage.js" %}"></script>
+    </head>
+
+    <body>
+        <header>
+            Torkel's Army Builder
+        </header>
+        <main id="armybuilderPage">
+        <span id="forceList">
+        </span>
+        <table id="choiceList">
+            <caption>Army List</caption>
+            <colgroup>
+                <col width="45%">
+                <col width="45%">
+                <col width="10%">
+            </colgroup>
+            <tbody id="choiceListBody">
+            </tbody>
+            <tfoot>
+                <td>Points total:</td>
+                <td><span id="pointsTotal">0</span></td>
+            </tfoot>
+        </table>
+        <span>
+            <table id="statsTable">
+            </table>
+        </span>
+        </main>
+        <footer>
+        </footer>
+    </body>
+
+    <script>
+$(document).ready(function() {
+    armybuilderController.init($('#armybuilderPage'), function(army) {
+            armybuilderController.loadForceListJSON(army);
+    });
+});
+    </script>
+
+    <script id="forceListTmpl" type="text/x-jsrender">
+<table id="unitList" class="forceList">
+    <caption>{?>name?}</caption>
+    <colgroup>
+        <col width="30%">
+        <col width="10%">
+        <col width="10%">
+        <col width="10%">
+        <col width="10%">
+        <col width="10%">
+        <col width="10%">
+        <col width="10%">
+    </colgroup>
+    <thead>
+        <th>Unit Type</th>
+        <th>Hero</th>
+        <th>Monster</th>
+        <th>War Engine</th>
+        <th>Troop</th>
+        <th>Regiment</th>
+        <th>Horde</th>
+        <th>Legion</th>
+    </thead>
+    <tbody>
+    {?props units?}
+        <tr>
+            <td>{?>prop.name?}</td>
+            {?include ~form="Hero" tmpl="#btnTmpl"/?}
+            {?include ~form="Monster" tmpl="#btnTmpl"/?}
+            {?include ~form="Warengine" tmpl="#btnTmpl"/?}
+            {?include ~form="Troop" tmpl="#btnTmpl"/?}
+            {?include ~form="Regiment" tmpl="#btnTmpl"/?}
+            {?include ~form="Horde" tmpl="#btnTmpl"/?}
+            {?include ~form="Legion" tmpl="#btnTmpl"/?}
+        </tr>
+    {?/props?}
+    </tbody>
+</table>
+    </script>
+
+    <script id="btnTmpl" type="text/x-jsrender">
+    {?if prop[~form]?}
+    <td><nav><a href="#" class="selectBtn" data-key={?>key?} data-form={?:~form?}>{?>prop[~form].Pts?}</a></nav></td>
+    {?else?}
+    <td><nav><a href="#" class="emptyBtn" >-</a></nav></td>
+    {?/if?}
+    </script>
+
+    <script id="unitChoiceTmpl" type="text/x-jsrender">
+    <tr data-unit-id={?:id?}>
+        <td>{?:name?}{?:~suffix(form)?}</td>
+        <td>{?include stats tmpl="#unitStatsTmpl"/?}</td>
+        <td><nav><a href="#" class="removeBtn">X</a></nav></td>
+    </tr>
+    </script>
+
+    <script id="unitStatsTmpl" type="text/x-jsrender">
+    <table class="unitStats">
+        <thead>
+            <th>Sp</th>
+            <th>Me</th>
+            <th>Ra</th>
+            <th>De</th>
+            <th>Att</th>
+            <th>Ne</th>
+            <th>Pts</th>
+        </thead>
+        <tbody>
+            <td>{?>Sp?}</td>
+            <td>{?>Me?}</td>
+            <td>{?>Ra?}</td>
+            <td>{?>De?}</td>
+            <td>{?>Att?}</td>
+            <td>{?>Ne?}</td>
+            <td>{?>Pts?}</td>
+        </tbody>
+    </table>
+    </script>
+
+    <script id="statsTmpl" type="text/x-jsrender">
+    <tr><td>Total number of units: {?:count?}</td></tr>
+    <tr><td>{?:Horde?} Hordes, {?:Legion?} Legions</td></tr>
+    <tr><td>{?:Regiment?} Regiments</td></tr>
+    <tr><td legal="{?:legalTro?}">{?:Troop?} Troops ({?:slotsTro?} slots left)</td></tr>
+    <tr><td legal="{?:legalHer?}">{?:Hero?} Heroes ({?:slotsHer?} slots left)</td></tr>
+    <tr><td legal="{?:legalMon?}">{?:Monster?} Monsters ({?:slotsMon?} slots left)</td></tr>
+    <tr><td legal="{?:legalWen?}">{?:Warengine?} War Engines ({?:slotsWen?} slots left)</td></tr>
+    <tr><td legal="{?:legalAllies?}">0% Allies (not implemented)</td></tr>
+    </script>
+</html>
+
