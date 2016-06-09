@@ -90,7 +90,7 @@ armybuilderController = function() {
                     }, errorLogger)
                 }, errorLogger);
 
-                // Remove unit choice button listener
+                // Button listener: Remove unit choice
                 $(armyPage).find('#choiceList tbody').on('click', '.removeBtn', function(evt) {
                     evt.preventDefault();
                     storageEngine.remove('units', $(evt.target).parents('tr').data().unitId, function(units) {
@@ -101,6 +101,25 @@ armybuilderController = function() {
                         $(evt.target).parents('tr').remove();
                         updateRendering(units);
                     }, errorLogger);
+                });
+
+                // Button listener: Get armylist PDF
+                $(armyPage).find('#choiceList').on('click', '.pdfBtn', function(evt) {
+                    evt.preventDefault();
+                    // send getJSON
+                    var obj = {};
+                    obj.message = "empty message";
+                    $.getJSON("pdfgen", obj, function(data) {
+                        pdfurl = "getpdf/" + data.pdfid;
+                        window.open(pdfurl);
+                    })
+                    .done(function(data) {
+                    })
+                    .fail(function(d, textStatus, error) {
+                        console.log("getJSON failed, status: " + textStatus + ", error: " + error);
+                    })
+                    .always(function() {
+                    });
                 });
 
                 initialized = true;
