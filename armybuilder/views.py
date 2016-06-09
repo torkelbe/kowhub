@@ -1,28 +1,31 @@
-from django.shortcuts import render
-
 import os
 
+from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.views import generic
+import json
 
-DATADIR = "armybuilder/data/"
+from kowpdfs import latexpdf
+
+DATAFILE = "armybuilder/data/armies.json"
+PDFSDIR = "armybuilder/kowpdfs/temp/"
 
 class AppView(generic.TemplateView):
     template_name = 'armybuilder/application.html'
 
 def armydata(request):
-    path = "armybuilder/data/armies.json"
-    with open(path, 'r') as f:
+    with open(DATAFILE, 'r') as f:
         data = f.read()
         return HttpResponse(data, content_type="application/json")
 
 def makepdf(request):
-    # handle request.GET.get(...) to create pdf
-    pdfid = '{"pdfid": "0000"}'
-    return HttpResponse(pdfid, content_type="application/json")
+    for value in request.GET:
+        recvobj = json.loads(value)
+    fileid = latexpdf.make_latex_pdf(recvobj, DATAFILE)
+    return HttpResponse('{"id":'+fileid+'}', content_type="application/json")
 
 def openpdf(request, pdfid):
-    filename = DATADIR + pdfid + '.pdf'
+    filename = PDFSDIR + pdfid + '.pdf'
     if os.path.exists(filename):
         with open(filename, 'r') as f:
             pdf = f.read()

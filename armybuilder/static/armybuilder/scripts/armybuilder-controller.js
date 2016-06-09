@@ -65,6 +65,21 @@ armybuilderController = function() {
         return unit;
     }
 
+    function generate_armylist_obj(units) {
+        var obj = {};
+        obj.player = "Torkel";
+        obj.army = "elfarmies";
+        obj.name = "My new list";
+        //obj.tournament = "";
+        obj.pts = 2000;
+        obj.units = [];
+        $.each(units, function(i,u) {
+            var options = "";
+            obj.units.push(["elfarmies",u.key,u.form,options]);
+        });
+        return obj;
+    }
+
     // Helper functions for forceList html template (jsrender)
     var tmplHelper = {
         suffix: function(form) {
@@ -104,13 +119,19 @@ armybuilderController = function() {
                 });
 
                 // Button listener: Get armylist PDF
-                $(armyPage).find('#choiceList').on('click', '.pdfBtn', function(evt) {
+                $(armyPage).on('click', '.pdfBtn', function(evt) {
                     evt.preventDefault();
-                    // send getJSON
-                    var obj = {};
-                    obj.message = "empty message";
-                    $.getJSON("pdfgen", obj, function(data) {
-                        pdfurl = "getpdf/" + data.pdfid;
+                    var senddata;
+                    storageEngine.findAll('units', function(units) {
+                        var sendobj = generate_armylist_obj(units);
+                        senddata = JSON.stringify(sendobj);
+                    }, errorLogger);
+                    if(senddata.length < 10) {
+                        console.log("Error in senddata, did not request PDF");
+                        return;
+                    }
+                    $.getJSON("pdfgen", senddata, function(response) {
+                        pdfurl = "getpdf/" + response.id;
                         window.open(pdfurl);
                     })
                     .done(function(data) {
