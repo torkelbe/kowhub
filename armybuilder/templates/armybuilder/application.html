@@ -18,9 +18,6 @@
         </header>
         <main id="armybuilderPage">
         <table id="armyselector">
-            <td><nav><a href="#" class="armyBtn" data-army-key="elfarmies">Elf Armies</a></nav></td>
-            <td><nav><a href="#" class="armyBtn" data-army-key="dwarfarmies">Dwarf Armies</a></nav></td>
-            <td><nav><a href="#" class="armyBtn" data-army-key="undeadarmies">Undead Armies</a></nav></td>
         </table>
         <span id="forceList">
         </span>
@@ -51,7 +48,7 @@
     <script>
 $(document).ready(function() {
     armybuilderController.init($('#armybuilderPage'), function(army) {
-            armybuilderController.loadForceListJSON(army);
+            armybuilderController.loadForceListJSON();
     });
 });
     </script>

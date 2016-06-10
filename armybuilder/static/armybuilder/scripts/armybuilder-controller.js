@@ -14,6 +14,17 @@ armybuilderController = function() {
         console.log(errorCode+':'+errorMessage);
     }
 
+    /* Load buttons for selecting which army to handle */
+    function loadArmyChoices(data) {
+        var armyChoiceList = [];
+        $.each(data, function(key, army) {
+            armyChoiceList.push({"key":key,"name":army["name"]});
+        });
+        var armyChoiceTmpl = $.templates("#armyChoiceTmpl");
+        var armyChoiceHtml = armyChoiceTmpl.render(armyChoiceList);
+        $('#armyselector').html(armyChoiceHtml);
+    }
+
     /* Load the forceList view with unit choices from seleted armySelection */
     function loadUnitChoices(armySelection) {
         armybuilderController.activeArmy = armySelection;
@@ -25,13 +36,13 @@ armybuilderController = function() {
             evt.preventDefault();
             var obj = getUnitObject(evt);
             storageEngine.save('units', obj, function() {
-                loadSelections();
+                loadUnitSelections();
             }, errorLogger);
         });
     }
 
     /* Load the set of unit selections from local webstorage */
-    function loadSelections() {
+    function loadUnitSelections() {
         storageEngine.findAll('units', function(units) {
             var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
             var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
@@ -126,14 +137,14 @@ armybuilderController = function() {
     return {
         init: function(page, callback) {
             if(initialized) {
-                callback("elfarmies");
+                callback();
             } else {
                 armyPage = page;
 
                 // Initialize storage engine
                 storageEngine.init(function() {
                     storageEngine.initObjectStore('units', function() {
-                        callback("elfarmies");
+                        callback();
                     }, errorLogger)
                 }, errorLogger);
 
@@ -186,33 +197,14 @@ armybuilderController = function() {
             }
         },
 
-        loadForceListJSON: function(armyName) {
+        loadForceListJSON: function() {
             $.getJSON("armydata", function(data) {
                 armybuilderController.dataObject = data;
-                armybuilderController.activeArmy = armyName;
-                var armyChoiceList = [];
-                $.each(data, function(key, army) {
-                    armyChoiceList.push({"key":key,"name":army["name"]});
-                });
-                // Call template here
-                var armyChoiceTmpl = $.templates("#armyChoiceTmpl");
-                var armyChoiceHtml = armyChoiceTmpl.render(armyChoiceList);
-                $('#armyselector').html(armyChoiceHtml);
-                // Placeholder setup:
-                var forceListTmpl = $.templates("#forceListTmpl");
-                var forceListHtml = forceListTmpl.render(armyData());
-                $('#forceList').html(forceListHtml);
             })
-            .done(function() {
-                loadSelections();
-                // forceList button listeners
-                $(armyPage).find('#forceList tbody').on('click', '.unitBtn', function(evt) {
-                    evt.preventDefault();
-                    var obj = getUnitObject(evt);
-                    storageEngine.save('units', obj, function() {
-                        loadSelections();
-                    }, errorLogger);
-                });
+            .done(function(data) {
+                loadUnitSelections();
+                loadArmyChoices(data);
+                //loadUnitChoices("elfarmies");
             })
             .fail(function() {
                 errorLogger("JSON", "getJSON failed to load army data");
