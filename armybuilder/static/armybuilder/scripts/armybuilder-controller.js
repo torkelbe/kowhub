@@ -190,6 +190,14 @@ armybuilderController = function() {
             $.getJSON("armydata", function(data) {
                 armybuilderController.dataObject = data;
                 armybuilderController.activeArmy = armyName;
+                var armyChoiceList = [];
+                $.each(data, function(key, army) {
+                    armyChoiceList.push({"key":key,"name":army["name"]});
+                });
+                // Call template here
+                var armyChoiceTmpl = $.templates("#armyChoiceTmpl");
+                var armyChoiceHtml = armyChoiceTmpl.render(armyChoiceList);
+                $('#armyselector').html(armyChoiceHtml);
                 // Placeholder setup:
                 var forceListTmpl = $.templates("#forceListTmpl");
                 var forceListHtml = forceListTmpl.render(armyData());

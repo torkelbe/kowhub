@@ -104,6 +104,10 @@ $(document).ready(function() {
     {?/if?}
     </script>
 
+    <script id="armyChoiceTmpl" type="text/x-jsrender">
+<td><nav><a href="#" class="armyBtn" data-army-key={?:key?}>{?:name?}</a></nav></td>
+    </script>
+
     <script id="unitChoiceTmpl" type="text/x-jsrender">
     <tr data-unit-id={?:id?}>
         <td>{?:name?}{?:~suffix(form)?}</td>
