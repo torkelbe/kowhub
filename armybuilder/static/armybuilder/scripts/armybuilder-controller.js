@@ -1,5 +1,7 @@
-
 armybuilderController = function() {
+    /* Custom delimiters for jsrender to make compatible with django templates */
+    $.views.settings.delimiters("{?", "?}");
+
     var armyPage;
     var initialized = false;
     var dataObject;
@@ -8,14 +10,37 @@ armybuilderController = function() {
     function armyData() {
         return armybuilderController.dataObject[armybuilderController.activeArmy];
     }
-
-    // Custom delimiters for jsrender to make compatible with django templates
-    $.views.settings.delimiters("{?", "?}");
-
     function errorLogger(errorCode, errorMessage) {
         console.log(errorCode+':'+errorMessage);
     }
 
+    /* Load the forceList view with unit choices from seleted armySelection */
+    function loadUnitChoices(armySelection) {
+        armybuilderController.activeArmy = armySelection;
+        var forceListTmpl = $.templates("#forceListTmpl");
+        var forceListHtml = forceListTmpl.render(armyData());
+        $('#forceList').html(forceListHtml);
+        // forceList button listeners
+        $(armyPage).find('#forceList tbody').on('click', '.unitBtn', function(evt) {
+            evt.preventDefault();
+            var obj = getUnitObject(evt);
+            storageEngine.save('units', obj, function() {
+                loadSelections();
+            }, errorLogger);
+        });
+    }
+
+    /* Load the set of unit selections from local webstorage */
+    function loadSelections() {
+        storageEngine.findAll('units', function(units) {
+            var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
+            var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
+            $('#choiceListBody').html(unitChoiceHtml);
+            updateRendering(units);
+        }, errorLogger);
+    }
+
+    /* Adjust application view when unit selections change */
     function updateRendering(units) {
         // Disable button for chosen unique units
         $('#forceList a.unitBtn').removeClass('disabled');
@@ -61,6 +86,7 @@ armybuilderController = function() {
         $('#pointsTotal').html(stats.points);
     }
 
+    /* Create a unit object based on the information in a unit choice button click */
     function getUnitObject(evt) {
         var unit = {};
         unit.key = $(evt.target).data().key;
@@ -70,6 +96,7 @@ armybuilderController = function() {
         return unit;
     }
 
+    /* Configure armylist data for communication with server */
     function generate_armylist_obj(units) {
         var obj = {};
         obj.player = "Torkel";
@@ -85,7 +112,7 @@ armybuilderController = function() {
         return obj;
     }
 
-    // Helper functions for forceList html template (jsrender)
+    /* Helper functions for forceList html template (jsrender) */
     var tmplHelper = {
         suffix: function(form) {
             if(jQuery.inArray(form,["Troop","Regiment","Horde","Legion"]) >= 0) {
@@ -126,6 +153,8 @@ armybuilderController = function() {
                 // Button listener: Select Army
                 $(armyPage).find('#armyselector').on('click', '.armyBtn', function(evt) {
                     evt.preventDefault();
+                    var armyChoice = $(evt.target).data().armyKey;
+                    loadUnitChoices(armyChoice);
                 });
 
                 // Button listener: Get armylist PDF
@@ -167,13 +196,13 @@ armybuilderController = function() {
                 $('#forceList').html(forceListHtml);
             })
             .done(function() {
-                armybuilderController.loadSelections();
+                loadSelections();
                 // forceList button listeners
                 $(armyPage).find('#forceList tbody').on('click', '.unitBtn', function(evt) {
                     evt.preventDefault();
                     var obj = getUnitObject(evt);
                     storageEngine.save('units', obj, function() {
-                        armybuilderController.loadSelections();
+                        loadSelections();
                     }, errorLogger);
                 });
             })
@@ -182,15 +211,6 @@ armybuilderController = function() {
             })
             .always(function() {
             });
-        },
-
-        loadSelections: function() {
-            storageEngine.findAll('units', function(units) {
-                var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
-                var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
-                $('#choiceListBody').html(unitChoiceHtml);
-                updateRendering(units);
-            }, errorLogger);
         }
     }
 }();
