@@ -2,7 +2,12 @@
 armybuilderController = function() {
     var armyPage;
     var initialized = false;
-    var listModel;
+    var dataObject;
+    var activeArmy;
+
+    function armyData() {
+        return armybuilderController.dataObject[armybuilderController.activeArmy];
+    }
 
     // Custom delimiters for jsrender to make compatible with django templates
     $.views.settings.delimiters("{?", "?}");
@@ -60,8 +65,8 @@ armybuilderController = function() {
         var unit = {};
         unit.key = $(evt.target).data().key;
         unit.form = $(evt.target).data().form;
-        unit.stats = armybuilderController.listModel["units"][unit.key][unit.form];
-        unit.name = armybuilderController.listModel["units"][unit.key].name;
+        unit.stats = armyData()["units"][unit.key][unit.form];
+        unit.name = armyData()["units"][unit.key].name;
         return unit;
     }
 
@@ -154,10 +159,11 @@ armybuilderController = function() {
 
         loadForceListJSON: function(armyName) {
             $.getJSON("armydata", function(data) {
-                armybuilderController.listModel = data[armyName];
+                armybuilderController.dataObject = data;
+                armybuilderController.activeArmy = armyName;
                 // Placeholder setup:
                 var forceListTmpl = $.templates("#forceListTmpl");
-                var forceListHtml = forceListTmpl.render(armybuilderController.listModel);
+                var forceListHtml = forceListTmpl.render(armyData());
                 $('#forceList').html(forceListHtml);
             })
             .done(function() {
