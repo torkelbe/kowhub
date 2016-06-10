@@ -56,7 +56,21 @@ caption {
     padding-left: 10px;
 }
 
-.selectBtn, .emptyBtn {
+.armyBtn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #f44336;
+    color: white;
+    font-size: 16px;
+    border: 1px solid #5b5b5b;
+    border-radius: 4px;
+    width: 100px;
+    height: 60px;
+    line-height: 30px;
+    margin: 2px;
+}
+
+.unitBtn, .emptyBtn {
     display: inline-block;
     text-decoration: none;
     background-color: #f44336;
@@ -69,14 +83,14 @@ caption {
     margin: 2px;
 }
 
-.selectBtn:hover {
-    background-color: red;
-}
-
 .emptyBtn, .disabled {
     opacity: 0.6;
     cursor: default;
     pointer-events: none;
+}
+
+.emptyBtn {
+    color: #f44336;
 }
 
 #choiceList {
@@ -97,6 +111,10 @@ caption {
     width: 25px;
     line-height: 25px;
     margin: 2px;
+}
+
+.unitBtn:hover, .armyBtn:hover, .removeBtn:hover {
+    background-color: red;
 }
 
 .unitStats {

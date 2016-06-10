@@ -13,10 +13,10 @@ armybuilderController = function() {
 
     function updateRendering(units) {
         // Disable button for chosen unique units
-        $('#forceList a.selectBtn').removeClass('disabled');
+        $('#forceList a.unitBtn').removeClass('disabled');
         $.each(units, function(i,unit) {
             if(unit.name.indexOf('[1]') > -1) {
-                $('#forceList td:contains('+unit.name+')').parents('tr').find('.selectBtn').addClass('disabled');
+                $('#forceList td:contains('+unit.name+')').parents('tr').find('.unitBtn').addClass('disabled');
             }
         });
         updateStatistics(units);
@@ -111,11 +111,16 @@ armybuilderController = function() {
                     storageEngine.remove('units', $(evt.target).parents('tr').data().unitId, function(units) {
                         var name = $(evt.target).parents('tr').children().first().text();
                         if(name.indexOf('[1]') > -1) {
-                            $('#forceList td:contains('+name+')').parents('tr').find('.selectBtn').removeClass('unique');
+                            $('#forceList td:contains('+name+')').parents('tr').find('.unitBtn').removeClass('unique');
                         }
                         $(evt.target).parents('tr').remove();
                         updateRendering(units);
                     }, errorLogger);
+                });
+
+                // Button listener: Select Army
+                $(armyPage).find('#armyselector').on('click', '.armyBtn', function(evt) {
+                    evt.preventDefault();
                 });
 
                 // Button listener: Get armylist PDF
@@ -158,7 +163,7 @@ armybuilderController = function() {
             .done(function() {
                 armybuilderController.loadSelections();
                 // forceList button listeners
-                $(armyPage).find('#forceList tbody').on('click', '.selectBtn', function(evt) {
+                $(armyPage).find('#forceList tbody').on('click', '.unitBtn', function(evt) {
                     evt.preventDefault();
                     var obj = getUnitObject(evt);
                     storageEngine.save('units', obj, function() {

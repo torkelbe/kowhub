@@ -17,6 +17,11 @@
             Torkel's Army Builder
         </header>
         <main id="armybuilderPage">
+        <table id="armyselector">
+            <td><nav><a href="#" class="armyBtn" army_key="elfarmies">Elf Armies</a></nav></td>
+            <td><nav><a href="#" class="armyBtn" army_key="dwarfarmies">Dwarf Armies</a></nav></td>
+            <td><nav><a href="#" class="armyBtn" army_key="undeadarmies">Undead Armies</a></nav></td>
+        </table>
         <span id="forceList">
         </span>
         <table id="choiceList">
@@ -93,7 +98,7 @@ $(document).ready(function() {
 
     <script id="btnTmpl" type="text/x-jsrender">
     {?if prop[~form]?}
-    <td><nav><a href="#" class="selectBtn" data-key={?>key?} data-form={?:~form?}>{?>prop[~form].Pts?}</a></nav></td>
+    <td><nav><a href="#" class="unitBtn" data-key={?>key?} data-form={?:~form?}>{?>prop[~form].Pts?}</a></nav></td>
     {?else?}
     <td><nav><a href="#" class="emptyBtn" >-</a></nav></td>
     {?/if?}
