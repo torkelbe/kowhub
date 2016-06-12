@@ -69,7 +69,11 @@ storageEngine = function() {
             if(storageItem[id]) {
                 delete storageItem[id];
                 localStorage.setItem(type, JSON.stringify(storageItem));
-                successCallback(storageItem);
+                var result = [];
+                $.each(storageItem, function(i,v) {
+                    result.push(v);
+                });
+                successCallback(result);
             } else {
                 errorCallback('object_not_found', 'The object requested could not be found');
             }
