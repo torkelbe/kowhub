@@ -7,8 +7,13 @@ armybuilderController = function() {
     var dataObject;
     var activeArmy;
 
-    function armyData() {
-        return armybuilderController.dataObject[armybuilderController.activeArmy];
+    function getArmyData() {
+        return armybuilderController.dataObject;
+    }
+    function getActiveArmyData() {
+        var obj =  armybuilderController.dataObject[armybuilderController.activeArmy];
+        obj.army = armybuilderController.activeArmy;
+        return obj;
     }
     function errorLogger(errorCode, errorMessage) {
         console.log(errorCode+':'+errorMessage);
@@ -29,7 +34,7 @@ armybuilderController = function() {
     function loadUnitChoices(armySelection) {
         armybuilderController.activeArmy = armySelection;
         var forceListTmpl = $.templates("#forceListTmpl");
-        var forceListHtml = forceListTmpl.render(armyData());
+        var forceListHtml = forceListTmpl.render(getActiveArmyData());
         $('#forceList').html(forceListHtml);
         // forceList button listeners
         $(armyPage).find('#forceList tbody').on('click', '.unitBtn', function(evt) {
@@ -44,6 +49,12 @@ armybuilderController = function() {
     /* Load the set of unit selections from local webstorage */
     function loadUnitSelections() {
         storageEngine.findAll('units', function(units) {
+            var data = getArmyData();
+            $.each(units, function(i, unit) {
+                var unitData = data[unit.army]['units'][unit.key];
+                unit.stats = unitData[unit.form];
+                unit.name = unitData['name'];
+            });
             var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
             var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
             $('#choiceListBody').html(unitChoiceHtml);
@@ -55,7 +66,9 @@ armybuilderController = function() {
     function updateRendering(units) {
         // Disable button for chosen unique units
         $('#forceList a.unitBtn').removeClass('disabled');
+        var data = getArmyData();
         $.each(units, function(i,unit) {
+            unit.name = data[unit.army]['units'][unit.key]['name'];
             if(unit.name.indexOf('[1]') > -1) {
                 $('#forceList td:contains('+unit.name+')').parents('tr').find('.unitBtn').addClass('disabled');
             }
@@ -100,10 +113,10 @@ armybuilderController = function() {
     /* Create a unit object based on the information in a unit choice button click */
     function getUnitObject(evt) {
         var unit = {};
+        unit.army = $(evt.target).parents('table').data().army;
         unit.key = $(evt.target).data().key;
         unit.form = $(evt.target).data().form;
-        unit.stats = armyData()["units"][unit.key][unit.form];
-        unit.name = armyData()["units"][unit.key].name;
+        unit.options = "";
         return unit;
     }
 
@@ -117,8 +130,7 @@ armybuilderController = function() {
         obj.pts = 2000;
         obj.units = [];
         $.each(units, function(i,u) {
-            var options = "";
-            obj.units.push(["elfarmies",u.key,u.form,options]);
+            obj.units.push([u.army,u.key,u.form,u.options]);
         });
         return obj;
     }
