@@ -49,30 +49,26 @@ armybuilderController = function() {
     /* Load the set of unit selections from local webstorage */
     function loadUnitSelections() {
         storageEngine.findAll('units', function(units) {
-            var data = getArmyData();
-            $.each(units, function(i, unit) {
-                var unitData = data[unit.army]['units'][unit.key];
-                unit.stats = unitData[unit.form];
-                unit.name = unitData['name'];
-            });
-            var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
-            var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
-            $('#choiceListBody').html(unitChoiceHtml);
-            updateRendering(units);
+            renderUnitSelections(units);
         }, errorLogger);
     }
 
     /* Adjust application view when unit selections change */
-    function updateRendering(units) {
-        // Disable button for chosen unique units
+    function renderUnitSelections(units) {
         $('#forceList a.unitBtn').removeClass('disabled');
         var data = getArmyData();
         $.each(units, function(i,unit) {
-            unit.name = data[unit.army]['units'][unit.key]['name'];
+            var unitData = data[unit.army]['units'][unit.key];
+            unit.name = unitData['name'];
+            unit.stats = unitData[unit.form];
+            // Disable button for chosen unique units
             if(unit.name.indexOf('[1]') > -1) {
                 $('#forceList td:contains('+unit.name+')').parents('tr').find('.unitBtn').addClass('disabled');
             }
         });
+        var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
+        var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
+        $('#choiceListBody').html(unitChoiceHtml);
         updateStatistics(units);
     }
     
@@ -81,16 +77,16 @@ armybuilderController = function() {
         var stats = {points: 0, count: 0, Troop: 0, Regiment: 0, Horde: 0, Legion: 0, Hero: 0, Monster: 0, Warengine: 0};
         $.each(units, function(i,unit) {
             if(unit.name.indexOf('*') > -1) {
-                stats["Troop"] += 1;
+                stats['Troop'] += 1;
             } else {
                 stats[unit.form] += 1;
             }
-            stats["count"] += 1;
-            stats["points"] += unit.Pts;
+            stats['count'] += 1;
+            stats['points'] += unit['stats'].Pts;
         });
         var herOverflow = stats.Hero - stats.Horde - stats.Legion;
         var monOverflow = stats.Monster - stats.Horde - stats.Legion;
-        var wenOverflow = stats.Warmachine - stats.Horde - stats.Legion;
+        var wenOverflow = stats.Warengine - stats.Horde - stats.Legion;
         var restSlots = stats.Regiment -
             (herOverflow>0 ? herOverflow : 0) -
             (monOverflow>0 ? monOverflow : 0) -
@@ -164,12 +160,7 @@ armybuilderController = function() {
                 $(armyPage).find('#choiceList tbody').on('click', '.removeBtn', function(evt) {
                     evt.preventDefault();
                     storageEngine.remove('units', $(evt.target).parents('tr').data().unitId, function(units) {
-                        var name = $(evt.target).parents('tr').children().first().text();
-                        if(name.indexOf('[1]') > -1) {
-                            $('#forceList td:contains('+name+')').parents('tr').find('.unitBtn').removeClass('unique');
-                        }
-                        $(evt.target).parents('tr').remove();
-                        updateRendering(units);
+                        renderUnitSelections(units);
                     }, errorLogger);
                 });
 
