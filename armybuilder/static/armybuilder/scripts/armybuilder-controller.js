@@ -117,15 +117,10 @@ armybuilderController = function() {
 
     /* Configure armylist data for communication with server */
     function generate_armylist_obj(armyList) {
-        units = armyList.items;
-        var obj = {};
-        obj.player = "Torkel";
-        obj.army = "elfarmies";
-        obj.name = "My new list";
-        //obj.tournament = "";
-        obj.pts = 2000;
+        var obj = {'player':'Orcy','army':'Not specified','name':'New Army List','pts':2000}; // default values
+        $.extend(obj, armyList.meta);
         obj.units = [];
-        $.each(units, function(i,u) {
+        $.each(armyList.items, function(i,u) {
             obj.units.push([u.army,u.key,u.form,u.options]);
         });
         return obj;
