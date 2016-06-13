@@ -37,9 +37,7 @@
         </table>
         <span id="armylistDetails">
             <button class="armyChoice">Army type</button>
-            <ul class="armyOptions">
-                <li><a href="#" data-army="elfarmies">Elf Armies</a></li>
-                <li><a href="#" data-army="dwarfarmies">Dwarf Armies</a></li>
+            <ul id="primaryArmyOptions" class="armyOptions">
             </ul>
         </span>
         <span>
@@ -109,7 +107,11 @@ $(document).ready(function() {
     </script>
 
     <script id="armyChoiceTmpl" type="text/x-jsrender">
-<td><nav><a href="#" class="armyBtn" data-army-key={?:key?}>{?:name?}</a></nav></td>
+<td><nav><a href="#" class="armyBtn" data-army={?:key?}>{?:name?}</a></nav></td>
+    </script>
+
+    <script id="primaryArmyTmpl" type="text/x-jsrender">
+<li><a href="#" data-army={?:key?}>{?:name?}</a></li>
     </script>
 
     <script id="unitChoiceTmpl" type="text/x-jsrender">

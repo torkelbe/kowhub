@@ -26,6 +26,9 @@ armybuilderController = function() {
         var armyChoiceTmpl = $.templates("#armyChoiceTmpl");
         var armyChoiceHtml = armyChoiceTmpl.render(armyChoiceList);
         $('#armyselector').html(armyChoiceHtml);
+        var primaryArmyTmpl = $.templates("#primaryArmyTmpl");
+        var primaryArmyHtml = primaryArmyTmpl.render(armyChoiceList);
+        $('#primaryArmyOptions').html(primaryArmyHtml);
     }
 
     /* Load the forceList view with unit choices from seleted armySelection */
@@ -162,7 +165,7 @@ armybuilderController = function() {
                 // Button listener: Select army to view choices for
                 $(armyPage).find('#armyselector').on('click', '.armyBtn', function(evt) {
                     evt.preventDefault();
-                    var armyChoice = $(evt.target).data().armyKey;
+                    var armyChoice = $(evt.target).data().army;
                     loadUnitChoices(armyChoice);
                 });
 
