@@ -38,25 +38,26 @@ armybuilderController = function() {
         $(armyPage).find('#forceList tbody').on('click', '.unitBtn', function(evt) {
             evt.preventDefault();
             var obj = getUnitObject(evt);
-            storageEngine.save('units', obj, function() {
-                loadUnitSelections();
+            storageEngine.save('units', obj, function(data) {
+                renderUnitSelections(data);
             }, errorLogger);
         });
     }
 
     /* Load the set of unit selections from local webstorage */
     function loadUnitSelections() {
-        storageEngine.findAll('units', function(units) {
-            renderUnitSelections(units);
+        storageEngine.findAll('units', function(data) {
+            renderUnitSelections(data);
         }, errorLogger);
     }
 
     /* Adjust application view when unit selections change */
-    function renderUnitSelections(units) {
+    function renderUnitSelections(armyList) {
+        units = armyList.items;
         $('#forceList a.unitBtn').removeClass('disabled');
-        var data = getArmyData();
+        var armyData = getArmyData();
         $.each(units, function(i,unit) {
-            var unitData = data[unit.army]['units'][unit.key];
+            var unitData = armyData[unit.army]['units'][unit.key];
             unit.name = unitData['name'];
             unit.stats = unitData[unit.form];
             // Disable button for chosen unique units
@@ -115,7 +116,8 @@ armybuilderController = function() {
     }
 
     /* Configure armylist data for communication with server */
-    function generate_armylist_obj(units) {
+    function generate_armylist_obj(armyList) {
+        units = armyList.items;
         var obj = {};
         obj.player = "Torkel";
         obj.army = "elfarmies";
@@ -157,8 +159,8 @@ armybuilderController = function() {
                 // Button listener: Remove unit choice
                 $(armyPage).find('#choiceList tbody').on('click', '.removeBtn', function(evt) {
                     evt.preventDefault();
-                    storageEngine.remove('units', $(evt.target).parents('tr').data().unitId, function(units) {
-                        renderUnitSelections(units);
+                    storageEngine.remove('units', $(evt.target).parents('tr').data().unitId, function(data) {
+                        renderUnitSelections(data);
                     }, errorLogger);
                 });
 
@@ -173,8 +175,8 @@ armybuilderController = function() {
                 $(armyPage).on('click', '.pdfBtn', function(evt) {
                     evt.preventDefault();
                     var senddata;
-                    storageEngine.findAll('units', function(units) {
-                        var sendobj = generate_armylist_obj(units);
+                    storageEngine.findAll('units', function(data) {
+                        var sendobj = generate_armylist_obj(data);
                         senddata = JSON.stringify(sendobj);
                     }, errorLogger);
                     if(senddata.length < 10) {
