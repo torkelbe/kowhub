@@ -159,11 +159,32 @@ armybuilderController = function() {
                     }, errorLogger);
                 });
 
-                // Button listener: Select Army
+                // Button listener: Select army to view choices for
                 $(armyPage).find('#armyselector').on('click', '.armyBtn', function(evt) {
                     evt.preventDefault();
                     var armyChoice = $(evt.target).data().armyKey;
                     loadUnitChoices(armyChoice);
+                });
+
+                // Button listener: Display drop-down menu for selecting primary army
+                $(armyPage).find('#armylistDetails').on('click', '.armyChoice', function(evt) {
+                    evt.preventDefault();
+                    var options = $('.armyOptions');
+                    options.toggleClass('active');
+                    options.slideToggle(200);
+                });
+
+                // Button listener: Select primary army from drop-down menu
+                $(armyPage).find('#armylistDetails').on('click', '.armyOptions', function(evt) {
+                    evt.preventDefault();
+                    var meta = {'army':$(evt.target).data().army};
+                    storageEngine.setMeta('units', meta, function(data) {
+                        var tar = $(evt.target).closest('li').children('a');
+                        var button = $('.armyChoice');
+                        button.html(tar.html());
+                        button.click();
+                        renderUnitSelections(data);
+                    }, errorLogger);
                 });
 
                 // Button listener: Get armylist PDF

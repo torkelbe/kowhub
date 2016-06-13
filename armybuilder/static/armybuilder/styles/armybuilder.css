@@ -137,5 +137,36 @@ caption {
 [legal=false] {
     color: red;
 }
+
+.armyChoice, .pdfBtn {
+    width: 200px;
+    background: #222;
+    color: #eee;
+    line-height: 25px;
+    font-size: 14px;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.armyOptions {
+    display: none;
+    position: absolute;
+    margin: 0;
+    background: #dddddd;
+    text-decoration: none;
+}
+
+.armyOptions > li {
+    width: 200px;
+    background: #eee;
+    line-height: 25px;
+    font-size: 14px;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.armyOptions > li:hover {
+    background: #bbb;
+}
 /*
 */
