@@ -29,7 +29,8 @@ def openpdf(request, pdfid):
     if os.path.exists(filename):
         with open(filename, 'r') as f:
             pdf = f.read()
-            return HttpResponse(pdf, content_type='application/pdf')
+        os.unlink(filename);
+        return HttpResponse(pdf, content_type='application/pdf')
     else:
         raise Http404("Requested file does not exist.")
 
