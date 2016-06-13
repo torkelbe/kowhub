@@ -47,7 +47,7 @@ storageEngine = function() {
                 errorCallback('store_not_initialized', 'The object store '+type+' has not been initialized');
             }
             var storageItem = getStorageObject(type);
-            storageItem['meta'] = obj;
+            $.extend(storageItem['meta'], obj);
             localStorage.setItem(type, JSON.stringify(storageItem));
             successCallback(formatReturnData(storageItem));
         },
