@@ -11,9 +11,7 @@ armybuilderController = function() {
         return armybuilderController.dataObject;
     }
     function getActiveArmyData() {
-        var obj =  armybuilderController.dataObject[armybuilderController.activeArmy];
-        obj.army = armybuilderController.activeArmy;
-        return obj;
+        return  armybuilderController.dataObject[armybuilderController.activeArmy];
     }
     function errorLogger(errorCode, errorMessage) {
         console.log(errorCode+':'+errorMessage);
@@ -202,6 +200,9 @@ armybuilderController = function() {
 
         loadForceListJSON: function() {
             $.getJSON("armydata", function(data) {
+                $.each(data, function(i,v) {
+                    v.key = i;
+                });
                 armybuilderController.dataObject = data;
             })
             .done(function(data) {
