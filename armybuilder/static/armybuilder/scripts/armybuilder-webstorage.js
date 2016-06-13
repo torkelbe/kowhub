@@ -39,6 +39,18 @@ storageEngine = function() {
             successCallback(null);
         },
 
+        setMeta: function(type, obj, successCallback, errorCallback) {
+            if(!initialized) {
+                errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
+            } else if(!initializedObjectStores[type]) {
+                errorCallback('store_not_initialized', 'The object store '+type+' has not been initialized');
+            }
+            var storageItem = getStorageObject(type);
+            storageItem['meta'] = obj;
+            localStorage.setItem(type, JSON.stringify(storageItem));
+            successCallback(formatReturnData(storageItem));
+        },
+
         save: function(type, obj, successCallback, errorCallback) {
             if(!initialized) {
                 errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
