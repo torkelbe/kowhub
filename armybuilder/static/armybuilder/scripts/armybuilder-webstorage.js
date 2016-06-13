@@ -12,6 +12,7 @@ storageEngine = function() {
         obj = {'meta':data['meta'], 'items':[] }
         $.each(data, function(i,v) {
             if(i != 'meta') {
+                v.id = i;
                 obj['items'].push(v);
             }
         });
@@ -57,11 +58,9 @@ storageEngine = function() {
             } else if(!initializedObjectStores[type]) {
                 errorCallback('store_not_initialized', 'The object store '+type+' has not been initialized');
             }
-            if(!obj.id) {
-                obj.id = $.now();
-            }
+            var id = $.now();
             var storageItem = getStorageObject(type);
-            storageItem[obj.id] = obj;
+            storageItem[id] = obj;
             localStorage.setItem(type, JSON.stringify(storageItem));
             successCallback(formatReturnData(storageItem));
         },
