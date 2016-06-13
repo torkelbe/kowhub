@@ -8,6 +8,15 @@ storageEngine = function() {
         var parsedItem = JSON.parse(item);
         return parsedItem;
     }
+    function formatReturnData(data) {
+        obj = {'meta':data['meta'], 'items':[] }
+        $.each(data, function(i,v) {
+            if(i != 'meta') {
+                obj['items'].push(v);
+            }
+        });
+        return obj;
+    }
 
     return {
 
@@ -42,7 +51,7 @@ storageEngine = function() {
             var storageItem = getStorageObject(type);
             storageItem[obj.id] = obj;
             localStorage.setItem(type, JSON.stringify(storageItem));
-            successCallback(obj);
+            successCallback(formatReturnData(storageItem));
         },
         
         findAll: function(type, successCallback, errorCallback) {
@@ -51,12 +60,8 @@ storageEngine = function() {
             } else if(!initializedObjectStores[type]) {
                 errorCallback('store_not_initialized', 'The object store '+type+' has not been initialized');
             }
-            var result = [];
             var storageItem = getStorageObject(type);
-            $.each(storageItem, function(i,v) {
-                result.push(v);
-            });
-            successCallback(result);
+            successCallback(formatReturnData(storageItem));
         },
 
         remove: function(type, id, successCallback, errorCallback) {
@@ -69,11 +74,7 @@ storageEngine = function() {
             if(storageItem[id]) {
                 delete storageItem[id];
                 localStorage.setItem(type, JSON.stringify(storageItem));
-                var result = [];
-                $.each(storageItem, function(i,v) {
-                    result.push(v);
-                });
-                successCallback(result);
+                successCallback(formatReturnData(storageItem));
             } else {
                 errorCallback('object_not_found', 'The object requested could not be found');
             }
