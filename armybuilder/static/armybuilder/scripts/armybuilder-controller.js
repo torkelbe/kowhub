@@ -194,9 +194,9 @@ armybuilderController = function() {
                 // Button listener: Select primary army from drop-down menu
                 $(armyPage).find('#armylistDetails').on('click', '.armyOptions', function(evt) {
                     evt.preventDefault();
-                    var meta = {'army':$(evt.target).data().army};
+                    var tar = $(evt.target).closest('li').children('a');
+                    var meta = {'army':tar.data().army};
                     storageEngine.setMeta('units', meta, function(data) {
-                        var tar = $(evt.target).closest('li').children('a');
                         var button = $('.armyChoice');
                         button.html(tar.html());
                         button.click();
