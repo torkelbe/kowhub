@@ -85,12 +85,12 @@ armybuilderController = function() {
         var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
         var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
         $('#choiceListBody').html(unitChoiceHtml);
-        updateStatistics(units);
+        updateStatistics(units, armyList.meta.army);
     }
     
     /* Calculate statistics for unit selections and update info table */
-    function updateStatistics(units) {
-        var stats = {points: 0, count: 0, Troop: 0, Regiment: 0, Horde: 0, Legion: 0, Hero: 0, Monster: 0, Warengine: 0};
+    function updateStatistics(units, army) {
+        var stats = {points: 0, allies: 0, count: 0, Troop: 0, Regiment: 0, Horde: 0, Legion: 0, Hero: 0, Monster: 0, Warengine: 0};
         $.each(units, function(i,unit) {
             if(unit.name.indexOf('*') > -1) {
                 stats['Troop'] += 1;
@@ -99,6 +99,9 @@ armybuilderController = function() {
             }
             stats['count'] += 1;
             stats['points'] += unit['stats'].Pts;
+            if(unit.army != army) {
+                stats.allies += unit.stats.Pts;
+            }
         });
         var herOverflow = stats.Hero - stats.Horde - stats.Legion;
         var monOverflow = stats.Monster - stats.Horde - stats.Legion;
@@ -115,7 +118,8 @@ armybuilderController = function() {
         stats.legalMon = stats.slotsMon >= 0;
         stats.slotsWen = restSlots - (wenOverflow<0 ? wenOverflow : 0);
         stats.legalWen = stats.slotsWen >= 0;
-        stats.legalAllies = "true"; //incomplete
+        stats.allies = Math.ceil(100 * stats.allies / (stats.points+1));
+        stats.legalAllies = stats.allies <= 25;
         var statsTmpl = $.templates("#statsTmpl");
         var statsHtml = statsTmpl.render(stats);
         $('#statsTable').html(statsHtml);
