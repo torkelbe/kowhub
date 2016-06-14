@@ -35,7 +35,7 @@ armybuilderController = function() {
     function loadUnitChoices(armySelection) {
         armybuilderController.activeArmy = armySelection;
         var forceListTmpl = $.templates("#forceListTmpl");
-        var forceListHtml = forceListTmpl.render(getActiveArmyData());
+        var forceListHtml = forceListTmpl.render(getActiveArmyData(), tmplHelper);
         $('#forceList').html(forceListHtml);
         // forceList button listeners
         $(armyPage).find('#forceList tbody').on('click', '.unitBtn', function(evt) {
@@ -172,13 +172,10 @@ armybuilderController = function() {
 
     /* Helper functions for forceList html template (jsrender) */
     var tmplHelper = {
-        suffix: function(form) {
-            if(jQuery.inArray(form,["Troop","Regiment","Horde","Legion"]) >= 0) {
-                return " "+form;
-            } else {
-                return "";
-            }
-        }
+        suffix: function(form) { return $.inArray(form,["Troop","Regiment","Horde","Legion"]) >= 0 ? " "+form : ""; },
+        isUnit: function(u) { return (u.Troop || u.Regiment || u.Horde || u.Legion) },
+        isMon: function(u) { return (u.Monster || u.Warengine) },
+        isHero: function(u) { return (u.Hero) }
     }
 
     return {

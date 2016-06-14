@@ -62,21 +62,8 @@ $(document).ready(function() {
     <script id="forceListTmpl" type="text/x-jsrender">
 <table id="unitList" data-army={?>key?} class="forceList">
     <caption>{?>name?}</caption>
-    <colgroup>
-        <col width="30%">
-        <col width="10%">
-        <col width="10%">
-        <col width="10%">
-        <col width="10%">
-        <col width="10%">
-        <col width="10%">
-        <col width="10%">
-    </colgroup>
     <thead>
-        <th>Unit Type</th>
-        <th>Hero</th>
-        <th>Monster</th>
-        <th>War Engine</th>
+        <th></th>
         <th>Troop</th>
         <th>Regiment</th>
         <th>Horde</th>
@@ -84,16 +71,51 @@ $(document).ready(function() {
     </thead>
     <tbody>
     {?props units?}
-        <tr>
-            <td>{?>prop.name?}</td>
-            {?include ~form="Hero" tmpl="#btnTmpl"/?}
-            {?include ~form="Monster" tmpl="#btnTmpl"/?}
-            {?include ~form="Warengine" tmpl="#btnTmpl"/?}
-            {?include ~form="Troop" tmpl="#btnTmpl"/?}
-            {?include ~form="Regiment" tmpl="#btnTmpl"/?}
-            {?include ~form="Horde" tmpl="#btnTmpl"/?}
-            {?include ~form="Legion" tmpl="#btnTmpl"/?}
-        </tr>
+        {?if ~isUnit(prop)?}
+            <tr>
+                <td>{?>prop.name?}</td>
+                {?include ~form="Troop" tmpl="#btnTmpl"/?}
+                {?include ~form="Regiment" tmpl="#btnTmpl"/?}
+                {?include ~form="Horde" tmpl="#btnTmpl"/?}
+                {?include ~form="Legion" tmpl="#btnTmpl"/?}
+            </tr>
+        {?/if?}
+    {?/props?}
+    </tbody>
+</table>
+<table id="monList" data-army={?>key?} class="forceList">
+    <caption>{?>name?}</caption>
+    <thead>
+        <th></th>
+        <th>Monster</th>
+        <th>War Engine</th>
+    </thead>
+    <tbody>
+    {?props units?}
+        {?if ~isMon(prop)?}
+            <tr>
+                <td>{?>prop.name?}</td>
+                {?include ~form="Monster" tmpl="#btnTmpl"/?}
+                {?include ~form="Warengine" tmpl="#btnTmpl"/?}
+            </tr>
+        {?/if?}
+    {?/props?}
+    </tbody>
+</table>
+<table id="heroList" data-army={?>key?} class="forceList">
+    <caption>{?>name?}</caption>
+    <thead>
+        <th></th>
+        <th>Hero</th>
+    </thead>
+    <tbody>
+    {?props units?}
+        {?if ~isHero(prop)?}
+            <tr>
+                <td>{?>prop.name?}</td>
+                {?include ~form="Hero" tmpl="#btnTmpl"/?}
+            </tr>
+        {?/if?}
     {?/props?}
     </tbody>
 </table>
