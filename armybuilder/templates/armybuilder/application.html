@@ -22,7 +22,9 @@
         <span id="forceList">
         </span>
         <table id="choiceList">
-            <caption>Army List</caption>
+            <caption>
+                <span id="armylistTitle">Army List</span>
+            </caption>
             <colgroup>
                 <col width="45%">
                 <col width="45%">
@@ -108,6 +110,10 @@ $(document).ready(function() {
 
     <script id="armyChoiceTmpl" type="text/x-jsrender">
 <td><nav><a href="#" class="armyBtn" data-army={?:key?}>{?:name?}</a></nav></td>
+    </script>
+
+    <script id="listTitleTmpl" type="text/x-jsrender">
+<textarea rows="1" cols="30" maxlength="30" id="titleChange" data-old-value="{?:value?}" onblur="{?:func?}()" onkeydown="if(event.keyCode==13){?:func?}()">{?:value?}</textarea>
     </script>
 
     <script id="primaryArmyTmpl" type="text/x-jsrender">

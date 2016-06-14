@@ -54,6 +54,19 @@ armybuilderController = function() {
         }, errorLogger);
     }
 
+    /* Button listener: Change name of armylist */
+    function buttonListenerArmylistName() {
+        $(armyPage).find('#armylistTitle').on('click', function(evt) {
+            evt.preventDefault();
+            var func = 'armybuilderController.changeArmyListTitle';
+            var value = $(evt.target).html();
+            var inputTmpl = $.templates('#listTitleTmpl');
+            var inputHtml = inputTmpl.render({'value':value, 'func':func});
+            $(evt.target).parents('caption').html(inputHtml);
+            $(armyPage).find('#titleChange').select();
+        });
+    }
+
     /* Adjust application view when unit selections change */
     function renderUnitSelections(armyList) {
         units = armyList.items;
@@ -190,6 +203,9 @@ armybuilderController = function() {
                     }, errorLogger);
                 });
 
+                // Button listener: Change name of armylist
+                buttonListenerArmylistName();
+
                 // Button listener: Get armylist PDF
                 $(armyPage).on('click', '.pdfBtn', function(evt) {
                     evt.preventDefault();
@@ -217,6 +233,22 @@ armybuilderController = function() {
 
                 initialized = true;
             }
+        },
+
+        changeArmyListTitle: function() {
+            var caption = $('#titleChange').parents('caption');
+            var title = $('#titleChange').val();
+            if(title.length<1) {
+                title = $('#titleChange').data().oldValue;
+            }
+            var meta = {'name':title};
+            storageEngine.setMeta('units', meta, function() {}, function() {
+                errorLogger(errorCode, errorMessage);
+                title = $('#titleChange').data().oldValue;
+            });
+            var newCaptionHtml = '<span id="armylistTitle">'+title+'</span>';
+            caption.html(newCaptionHtml);
+            buttonListenerArmylistName();
         },
 
         loadForceListJSON: function() {
