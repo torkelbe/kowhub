@@ -86,15 +86,23 @@ armybuilderController = function() {
         $('.armyChoice').html(armyData[armyList.meta.army].name);
         // Set armylist title
         $('#armylistTitle').html(armyList.meta.name);
-        // Set armylist
+        // Render armylist
         var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
         var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
         $('#choiceListBody').html(unitChoiceHtml);
-        updateStatistics(units, armyList.meta.army);
+        // Render statistics
+        var stats = calculateStatistics(armyList);
+        var statsTmpl = $.templates("#statsTmpl");
+        var statsHtml = statsTmpl.render(stats);
+        $('#statsTable').html(statsHtml);
+        // Set total points value
+        $('#pointsTotal').html(stats.points);
     }
     
     /* Calculate statistics for unit selections and update info table */
-    function updateStatistics(units, army) {
+    function calculateStatistics(armyList) {
+        var primaryArmy = armyList.meta.army;
+        var units = armyList.items;
         var stats = {points: 0, allies: 0, count: 0, Troop: 0, Regiment: 0, Horde: 0, Legion: 0, Hero: 0, Monster: 0, Warengine: 0};
         $.each(units, function(i,unit) {
             if(unit.name.indexOf('*') > -1) {
@@ -104,7 +112,7 @@ armybuilderController = function() {
             }
             stats['count'] += 1;
             stats['points'] += unit['stats'].Pts;
-            if(unit.army != army) {
+            if(unit.army != primaryArmy) {
                 stats.allies += unit.stats.Pts;
             }
         });
@@ -125,10 +133,7 @@ armybuilderController = function() {
         stats.legalWen = stats.slotsWen >= 0;
         stats.allies = Math.ceil(100 * stats.allies / (stats.points+1));
         stats.legalAllies = stats.allies <= 25;
-        var statsTmpl = $.templates("#statsTmpl");
-        var statsHtml = statsTmpl.render(stats);
-        $('#statsTable').html(statsHtml);
-        $('#pointsTotal').html(stats.points);
+        return stats;
     }
 
     /* Create a unit object based on the information in a unit choice button click */
@@ -148,6 +153,19 @@ armybuilderController = function() {
         obj.units = [];
         $.each(armyList.items, function(i,u) {
             obj.units.push([u.army,u.key,u.form,u.options]);
+        });
+        var armyData = getArmyData();
+        $.each(armyList.items, function(i,unit) {
+            var unitData = armyData[unit.army]['units'][unit.key];
+            unit.name = unitData.name;
+            unit.stats = unitData[unit.form];
+        });
+        var stats = calculateStatistics(armyList);
+        obj.legal = true;
+        $.each(stats, function(i,v) {
+            if(i.indexOf('legal') > -1) {
+                if(!v) obj.legal = false;
+            }
         });
         return obj;
     }
