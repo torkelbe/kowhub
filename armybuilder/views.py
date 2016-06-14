@@ -14,9 +14,12 @@ class AppView(generic.TemplateView):
     template_name = 'armybuilder/application.html'
 
 def armydata(request):
-    with open(DATAFILE, 'r') as f:
-        data = f.read()
-        return HttpResponse(data, content_type="application/json")
+    if request.is_ajax():
+        with open(DATAFILE, 'r') as f:
+            data = f.read()
+            return HttpResponse(data, content_type="application/json")
+    else:
+        raise Http404()
 
 def makepdf(request):
     for value in request.GET:
