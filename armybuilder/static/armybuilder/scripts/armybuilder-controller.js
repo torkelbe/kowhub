@@ -45,6 +45,7 @@ armybuilderController = function() {
                 renderUnitSelections(data);
             }, errorLogger);
         });
+        loadUnitSelections();
     }
 
     /* Load the set of unit selections from local webstorage */
