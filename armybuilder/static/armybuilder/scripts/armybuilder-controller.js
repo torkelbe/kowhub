@@ -82,6 +82,11 @@ armybuilderController = function() {
                 $('#forceList td:contains('+unit.name+')').parents('tr').find('.unitBtn').addClass('disabled');
             }
         });
+        // Set primary army
+        $('.armyChoice').html(armyData[armyList.meta.army].name);
+        // Set armylist title
+        $('#armylistTitle').html(armyList.meta.name);
+        // Set armylist
         var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
         var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
         $('#choiceListBody').html(unitChoiceHtml);
@@ -201,9 +206,7 @@ armybuilderController = function() {
                     var tar = $(evt.target).closest('li').children('a');
                     var meta = {'army':tar.data().army};
                     storageEngine.setMeta('units', meta, function(data) {
-                        var button = $('.armyChoice');
-                        button.html(tar.html());
-                        button.click();
+                        $('.armyChoice').click();
                         renderUnitSelections(data);
                     }, errorLogger);
                 });
