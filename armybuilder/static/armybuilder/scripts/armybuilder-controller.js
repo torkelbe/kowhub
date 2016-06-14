@@ -57,7 +57,7 @@ armybuilderController = function() {
 
     /* Button listener: Change name of armylist */
     function buttonListenerArmylistName() {
-        $(armyPage).find('#armylistTitle').on('click', function(evt) {
+        $(armyPage).on('click', '#armylistTitle', function(evt) {
             evt.preventDefault();
             var func = 'armybuilderController.changeArmyListTitle';
             var value = $(evt.target).html();
@@ -83,7 +83,7 @@ armybuilderController = function() {
             }
         });
         // Set primary army
-        $('.armyChoice').html(armyData[armyList.meta.army].name);
+        $('#primaryArmyBtn').html(armyData[armyList.meta.army].name);
         // Set armylist title
         $('#armylistTitle').html(armyList.meta.name);
         // Render armylist
@@ -211,20 +211,20 @@ armybuilderController = function() {
                 });
 
                 // Button listener: Display drop-down menu for selecting primary army
-                $(armyPage).find('#armylistDetails').on('click', '.armyChoice', function(evt) {
+                $(armyPage).on('click', '#primaryArmyBtn', function(evt) {
                     evt.preventDefault();
-                    var options = $('.armyOptions');
+                    var options = $('#primaryArmyOptions');
                     options.toggleClass('active');
                     options.slideToggle(200);
                 });
 
                 // Button listener: Select primary army from drop-down menu
-                $(armyPage).find('#armylistDetails').on('click', '.armyOptions', function(evt) {
+                $(armyPage).on('click', '#primaryArmyOptions', function(evt) {
                     evt.preventDefault();
                     var tar = $(evt.target).closest('li').children('a');
                     var meta = {'army':tar.data().army};
                     storageEngine.setMeta('units', meta, function(data) {
-                        $('.armyChoice').click();
+                        $('#primaryArmyBtn').click();
                         renderUnitSelections(data);
                     }, errorLogger);
                 });
