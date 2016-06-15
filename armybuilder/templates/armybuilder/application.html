@@ -17,7 +17,7 @@
             Torkel's Army Builder
         </header>
         <main id="armybuilderPage">
-            <table id="armyselector"></table>
+            <div id="armySelectionPanel"></div>
             <span id="leftPanel"></span>
             <span id="rightPanel">
                 <table id="choiceList">
@@ -128,8 +128,8 @@ $(document).ready(function() {
     {?/if?}
     </script>
 
-    <script id="armyChoiceTmpl" type="text/x-jsrender">
-<td><nav><a href="#" class="armyBtn" data-army={?:key?}>{?:name?}</a></nav></td>
+    <script id="armySelectionPanelTmpl" type="text/x-jsrender">
+<span><a href="#" class="armyBtn" data-army={?:key?}>{?:name?}</a></span>
     </script>
 
     <script id="listTitleTmpl" type="text/x-jsrender">

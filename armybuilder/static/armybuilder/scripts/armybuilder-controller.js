@@ -23,9 +23,9 @@ armybuilderController = function() {
         $.each(data, function(key, army) {
             armyChoiceList.push({"key":key,"name":army["name"]});
         });
-        var armyChoiceTmpl = $.templates("#armyChoiceTmpl");
+        var armyChoiceTmpl = $.templates("#armySelectionPanelTmpl");
         var armyChoiceHtml = armyChoiceTmpl.render(armyChoiceList);
-        $('#armyselector').html(armyChoiceHtml);
+        $('#armySelectionPanel').html(armyChoiceHtml);
         var primaryArmyTmpl = $.templates("#primaryArmyTmpl");
         var primaryArmyHtml = primaryArmyTmpl.render(armyChoiceList);
         $('#primaryArmyOptions').html(primaryArmyHtml);
@@ -201,7 +201,7 @@ armybuilderController = function() {
                 });
 
                 // Button listener: Select army to view choices for
-                $(armyPage).find('#armyselector').on('click', '.armyBtn', function(evt) {
+                $(armyPage).find('#armySelectionPanel').on('click', '.armyBtn', function(evt) {
                     evt.preventDefault();
                     var armyChoice = $(evt.target).data().army;
                     loadUnitChoices(armyChoice);
