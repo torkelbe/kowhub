@@ -36,7 +36,6 @@
                         <td><span id="pointsTotal">0</span></td>
                     </tfoot>
                 </table>
-            </span>
             <span id="armylistDetails">
                 <button id="primaryArmyBtn">Army type</button>
                 <ul id="primaryArmyOptions"></ul>
@@ -44,6 +43,7 @@
             <span>
                 <button class="pdfBtn">PDF</button>
                 <table id="statsTable"></table>
+            </span>
             </span>
         </main>
         <footer>
@@ -83,7 +83,6 @@ $(document).ready(function() {
     </tbody>
 </table>
 <table id="monList" data-army={?>key?} class="forceList">
-    <caption>{?>name?}</caption>
     <thead>
         <th></th>
         <th>Monster</th>
@@ -102,7 +101,6 @@ $(document).ready(function() {
     </tbody>
 </table>
 <table id="heroList" data-army={?>key?} class="forceList">
-    <caption>{?>name?}</caption>
     <thead>
         <th></th>
         <th>Hero</th>
