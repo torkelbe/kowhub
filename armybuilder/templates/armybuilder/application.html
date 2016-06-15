@@ -17,35 +17,34 @@
             Torkel's Army Builder
         </header>
         <main id="armybuilderPage">
-        <table id="armyselector">
-        </table>
-        <span id="forceList">
-        </span>
-        <table id="choiceList">
-            <caption>
-                <span id="armylistTitle">Army List</span>
-            </caption>
-            <colgroup>
-                <col width="45%">
-                <col width="45%">
-                <col width="10%">
-            </colgroup>
-            <tbody id="choiceListBody">
-            </tbody>
-            <tfoot>
-                <td>Points total:</td>
-                <td><span id="pointsTotal">0</span></td>
-            </tfoot>
-        </table>
-        <span id="armylistDetails">
-            <button id="primaryArmyBtn">Army type</button>
-            <ul id="primaryArmyOptions"></ul>
-        </span>
-        <span>
-            <button class="pdfBtn">PDF</button>
-            <table id="statsTable">
-            </table>
-        </span>
+            <table id="armyselector"></table>
+            <span id="leftPanel"></span>
+            <span id="rightPanel">
+                <table id="choiceList">
+                    <caption>
+                        <span id="armylistTitle">Army List</span>
+                    </caption>
+                    <colgroup>
+                        <col width="45%">
+                        <col width="45%">
+                        <col width="10%">
+                    </colgroup>
+                    <tbody id="choiceListBody">
+                    </tbody>
+                    <tfoot>
+                        <td>Points total:</td>
+                        <td><span id="pointsTotal">0</span></td>
+                    </tfoot>
+                </table>
+            </span>
+            <span id="armylistDetails">
+                <button id="primaryArmyBtn">Army type</button>
+                <ul id="primaryArmyOptions"></ul>
+            </span>
+            <span>
+                <button class="pdfBtn">PDF</button>
+                <table id="statsTable"></table>
+            </span>
         </main>
         <footer>
         </footer>
@@ -73,7 +72,7 @@ $(document).ready(function() {
     {?props units?}
         {?if ~isUnit(prop)?}
             <tr>
-                <td>{?>prop.name?}</td>
+                <td class="unitName">{?>prop.name?}</td>
                 {?include ~form="Troop" tmpl="#btnTmpl"/?}
                 {?include ~form="Regiment" tmpl="#btnTmpl"/?}
                 {?include ~form="Horde" tmpl="#btnTmpl"/?}
@@ -94,7 +93,7 @@ $(document).ready(function() {
     {?props units?}
         {?if ~isMon(prop)?}
             <tr>
-                <td>{?>prop.name?}</td>
+                <td class="unitName">{?>prop.name?}</td>
                 {?include ~form="Monster" tmpl="#btnTmpl"/?}
                 {?include ~form="Warengine" tmpl="#btnTmpl"/?}
             </tr>
@@ -112,7 +111,7 @@ $(document).ready(function() {
     {?props units?}
         {?if ~isHero(prop)?}
             <tr>
-                <td>{?>prop.name?}</td>
+                <td class="unitName">{?>prop.name?}</td>
                 {?include ~form="Hero" tmpl="#btnTmpl"/?}
             </tr>
         {?/if?}
@@ -143,7 +142,7 @@ $(document).ready(function() {
 
     <script id="unitChoiceTmpl" type="text/x-jsrender">
     <tr data-unit-id={?:id?}>
-        <td>{?:name?}{?:~suffix(form)?}</td>
+        <td class="unitName">{?:name?}{?:~suffix(form)?}</td>
         <td>{?include stats tmpl="#unitStatsTmpl"/?}</td>
         <td><nav><a href="#" class="removeBtn">X</a></nav></td>
     </tr>

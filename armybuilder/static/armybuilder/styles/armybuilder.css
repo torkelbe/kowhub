@@ -10,6 +10,10 @@ table, thead, tbody, tfoot, th, tr, td, textarea, select {
     margin: 0;
 }
 
+body {
+    background: #ffefaf;
+}
+
 header {
     width: 100%;
     height: 60px;
@@ -28,6 +32,19 @@ table {
 caption {
     line-height: 40px;
     font-size: 18px;
+    font-weight: bold;
+}
+
+#leftPanel {
+    overflow-x: auto;
+}
+
+#rightPanel {
+    overflow-x: auto;
+}
+
+.unitName {
+    font-variant: small-caps;
     font-weight: bold;
 }
 
@@ -97,6 +114,10 @@ caption {
 
 #choiceList>tbody>tr {
     border: 1px solid blue;
+}
+
+#choiceList>tbody>tr:hover {
+    background-color: #f3f3f3;
 }
 
 .removeBtn {

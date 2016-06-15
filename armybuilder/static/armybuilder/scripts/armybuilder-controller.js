@@ -36,9 +36,9 @@ armybuilderController = function() {
         armybuilderController.activeArmy = armySelection;
         var forceListTmpl = $.templates("#forceListTmpl");
         var forceListHtml = forceListTmpl.render(getActiveArmyData(), tmplHelper);
-        $('#forceList').html(forceListHtml);
+        $('#leftPanel').html(forceListHtml);
         // forceList button listeners
-        $(armyPage).find('#forceList tbody').on('click', '.unitBtn', function(evt) {
+        $(armyPage).find('.forceList tbody').on('click', '.unitBtn', function(evt) {
             evt.preventDefault();
             var obj = getUnitObject(evt);
             storageEngine.save('units', obj, function(data) {
@@ -71,7 +71,7 @@ armybuilderController = function() {
     /* Adjust application view when unit selections change */
     function renderUnitSelections(armyList) {
         units = armyList.items;
-        $('#forceList a.unitBtn').removeClass('disabled');
+        $('.forceList a.unitBtn').removeClass('disabled');
         var armyData = getArmyData();
         $.each(units, function(i,unit) {
             var unitData = armyData[unit.army]['units'][unit.key];
@@ -79,7 +79,7 @@ armybuilderController = function() {
             unit.stats = unitData[unit.form];
             // Disable button for chosen unique units
             if(unit.name.indexOf('[1]') > -1) {
-                $('#forceList td:contains('+unit.name+')').parents('tr').find('.unitBtn').addClass('disabled');
+                $('.forceList td:contains('+unit.name+')').parents('tr').find('.unitBtn').addClass('disabled');
             }
         });
         // Set primary army
