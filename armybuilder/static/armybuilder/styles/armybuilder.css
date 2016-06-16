@@ -12,6 +12,7 @@ table, thead, tbody, tfoot, th, tr, td, textarea, select {
 
 body {
     background: #ffefaf;
+    min-width: 950px;
 }
 
 header {
@@ -62,23 +63,35 @@ caption {
     padding-left: 10px;
 }
 
-.forceList {
-    width: 90%;
+table.forceList {
+    width: 93%;
 }
-
-.forceList th {
+table.forceList thead {
+    display: block;
+}
+table.forceList tbody {
+    display: block;
+    height: 400px;
+    overflow-y: auto;
+}
+table.forceList th {
     font-weight: bold;
+    height: 25px;
+    line-height: 25px;
 }
-
-.forceList>tbody>tr {
+table.forceList>tbody>tr {
     background-color: lightgrey;
     border: 1px solid black;
     border-radius: 4px;
     height: 30px;
 }
+table.forceList td:not(.unitName) {
+    width: 66px;
+}
 
-.forceList td {
-    line-height: 25px;
+#armySelectionPanel>span {
+    margin: 0px;
+    padding: 0px;
 }
 
 .armyBtn {
@@ -183,6 +196,7 @@ caption {
     margin: 0;
     background: #dddddd;
     text-decoration: none;
+    list-style-type: none;
 }
 
 #primaryArmyOptions > li {
@@ -196,4 +210,8 @@ caption {
 
 #primaryArmyOptions > li:hover {
     background: #bbb;
+}
+
+.nodisplay {
+    display: none;
 }

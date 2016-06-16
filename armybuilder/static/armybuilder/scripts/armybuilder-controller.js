@@ -45,6 +45,15 @@ armybuilderController = function() {
                 renderUnitSelections(data);
             }, errorLogger);
         });
+        // Dynamically calculate length of table headers
+        var $table = $('table.forceList');
+        var padding = 26; // Text padding + width of scrollbar
+        var btnWidth = $table.find('tbody .unitName').siblings().first().width();
+        var btnCount = $table.find('.unitName').first().siblings().length;
+        var unitNameWidth = $table.width() - (btnCount*btnWidth) - padding;
+        $table.find('th.unitName').siblings().width(btnWidth);
+        $table.find('.unitName').width(unitNameWidth);
+        // Rerender unit selections
         loadUnitSelections();
     }
 

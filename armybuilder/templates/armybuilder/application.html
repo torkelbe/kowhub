@@ -62,7 +62,7 @@ $(document).ready(function() {
 <table id="unitList" data-army={?>key?} class="forceList">
     <caption>{?>name?}</caption>
     <thead>
-        <th></th>
+        <th class="unitName"></th>
         <th>Troop</th>
         <th>Regiment</th>
         <th>Horde</th>
@@ -82,9 +82,9 @@ $(document).ready(function() {
     {?/props?}
     </tbody>
 </table>
-<table id="monList" data-army={?>key?} class="forceList">
+<table id="monList" data-army={?>key?} class="forceList nodisplay">
     <thead>
-        <th></th>
+        <th class="unitName"></th>
         <th>Monster</th>
         <th>War Engine</th>
     </thead>
@@ -100,9 +100,9 @@ $(document).ready(function() {
     {?/props?}
     </tbody>
 </table>
-<table id="heroList" data-army={?>key?} class="forceList">
+<table id="heroList" data-army={?>key?} class="forceList nodisplay">
     <thead>
-        <th></th>
+        <th class="unitName"></th>
         <th>Hero</th>
     </thead>
     <tbody>
