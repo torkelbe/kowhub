@@ -18,8 +18,19 @@
         </header>
         <main id="armybuilderPage">
             <div id="armySelectionPanel"></div>
-            <span id="leftPanel"></span>
-            <span id="rightPanel">
+            <div id="leftPanel">
+                <div id="leftPanelHeader">
+                    <div id="forceListHeader">
+                        <button class="forceListReturnBtn">- <span>Army Title</span></button>
+                        <button class="forceSectionBtn" data-section="unitList">Units</button>
+                        <button class="forceSectionBtn" data-section="monList">Monsters &<br>Warengines</button>
+                        <button class="forceSectionBtn" data-section="heroList">Heroes</button>
+                    </div>
+                </div>
+                <div id="leftPanelBody"></div>
+                <div id="leftPanelFooter"></div>
+            </div>
+            <div id="rightPanel">
                 <table id="choiceList">
                     <caption>
                         <span id="armylistTitle">Army List</span>
@@ -44,7 +55,7 @@
                 <button class="pdfBtn">PDF</button>
                 <table id="statsTable"></table>
             </span>
-            </span>
+            </div>
         </main>
         <footer>
         </footer>
@@ -60,7 +71,6 @@ $(document).ready(function() {
 
     <script id="forceListTmpl" type="text/x-jsrender">
 <table id="unitList" data-army={?>key?} class="forceList">
-    <caption>{?>name?}</caption>
     <thead>
         <th class="unitName"></th>
         <th>Troop</th>

@@ -36,7 +36,7 @@ armybuilderController = function() {
         armybuilderController.activeArmy = armySelection;
         var forceListTmpl = $.templates("#forceListTmpl");
         var forceListHtml = forceListTmpl.render(getActiveArmyData(), tmplHelper);
-        $('#leftPanel').html(forceListHtml);
+        $('#leftPanelBody').html(forceListHtml);
         // forceList button listeners
         $(armyPage).find('.forceList tbody').on('click', '.unitBtn', function(evt) {
             evt.preventDefault();

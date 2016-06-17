@@ -73,6 +73,7 @@ table.forceList tbody {
     display: block;
     height: 400px;
     overflow-y: auto;
+    outline: 1px solid black;
 }
 table.forceList th {
     font-weight: bold;
@@ -87,6 +88,31 @@ table.forceList>tbody>tr {
 }
 table.forceList td:not(.unitName) {
     width: 66px;
+}
+
+.forceSectionBtn,
+.forceListReturnBtn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #f44336;
+    color: white;
+    font-size: 14px;
+    border: 1px solid #5b5b5b;
+    border-radius: 4px;
+    height: 60px;
+}
+.forceSectionBtn {
+    width: 120px;
+    margin: 1px;
+}
+.forceListReturnBtn {
+    text-align: left;
+    width: 150px;
+    margin: 8px;
+}
+.forceListReturnBtn:hover,
+.forceSectionBtn:hover {
+    background-color: red;
 }
 
 #armySelectionPanel>span {
