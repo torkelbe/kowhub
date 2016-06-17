@@ -45,15 +45,18 @@ caption {
     overflow-x: auto;
     overflow-y: auto;
 }
-
 #leftPanel {
     background-color: lightblue;
     float: left;
 }
-
 #rightPanel {
     background-color: lightgreen;
     float: right;
+}
+#leftPanelHeader {
+    height: 50px;
+    width:100%;
+    overflow: hidden;
 }
 
 .unitName {
@@ -90,25 +93,29 @@ table.forceList td:not(.unitName) {
     width: 66px;
 }
 
+#forceListHeader {
+    display: table;
+}
 .forceSectionBtn,
 .forceListReturnBtn {
-    display: inline-block;
+    display: table-cell;
     text-decoration: none;
     background-color: #f44336;
     color: white;
     font-size: 14px;
     border: 1px solid #5b5b5b;
     border-radius: 4px;
-    height: 60px;
+    height: 45px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
 }
 .forceSectionBtn {
-    width: 120px;
-    margin: 1px;
+    width: 100px;
 }
 .forceListReturnBtn {
     text-align: left;
-    width: 150px;
-    margin: 8px;
+    width: 180px;
 }
 .forceListReturnBtn:hover,
 .forceSectionBtn:hover {
