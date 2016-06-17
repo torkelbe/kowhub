@@ -50,11 +50,11 @@ armybuilderController = function() {
         loadUnitSelections();
     }
     
-    /* Dynamically calculate size of elements */
+    /* Dynamically calculate size of elements in left panel*/
     function renderUnitChoices() {
         var $forceList = $('table.forceList');
         var tableWidth = $forceList.width();
-        var padding = 26; // Text padding + width of scrollbar
+        var padding = 12;
         $.each($forceList, function(i,table) {
             var btnWidth = $(table).find('tbody .unitName').siblings().first().width();
             var btnCount = $(table).find('.unitName').first().siblings().length;

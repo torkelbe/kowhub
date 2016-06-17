@@ -248,3 +248,7 @@ table.forceList td:not(.unitName) {
 .nodisplay {
     display: none;
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
