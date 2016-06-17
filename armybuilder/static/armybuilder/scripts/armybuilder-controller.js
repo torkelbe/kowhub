@@ -23,20 +23,23 @@ armybuilderController = function() {
         $.each(data, function(key, army) {
             armyChoiceList.push({"key":key,"name":army["name"]});
         });
-        var armyChoiceTmpl = $.templates("#armySelectionPanelTmpl");
+        var armyChoiceTmpl = $.templates("#armyChoicePanelTmpl");
         var armyChoiceHtml = armyChoiceTmpl.render(armyChoiceList);
-        $('#armySelectionPanel').html(armyChoiceHtml);
+        $('#armyChoicePanel').html(armyChoiceHtml);
         var primaryArmyTmpl = $.templates("#primaryArmyTmpl");
         var primaryArmyHtml = primaryArmyTmpl.render(armyChoiceList);
         $('#primaryArmyOptions').html(primaryArmyHtml);
+        $(armyPage).find('#forceListHeader').addClass('disabled');
     }
 
     /* Load the forceList view with unit choices from seleted armySelection */
-    function loadUnitChoices(armySelection) {
+    function loadUnitChoices(armySelection, armyName) {
         armybuilderController.activeArmy = armySelection;
         var forceListTmpl = $.templates("#forceListTmpl");
         var forceListHtml = forceListTmpl.render(getActiveArmyData(), tmplHelper);
-        $('#leftPanelBody').html(forceListHtml);
+        $('#unitChoicePanel').html(forceListHtml);
+        $('#armyChoicePanel').addClass('nodisplay');
+        $('#forceListHeader').find('.forceListReturnBtn span').html(armyName);
         // forceList button listeners
         $(armyPage).find('.forceList tbody').on('click', '.unitBtn', function(evt) {
             evt.preventDefault();
@@ -50,7 +53,7 @@ armybuilderController = function() {
         loadUnitSelections();
     }
     
-    /* Dynamically calculate size of elements in left panel*/
+    /* Dynamically calculate size of elements in left panel */
     function renderUnitChoices() {
         var $forceList = $('table.forceList');
         var tableWidth = $forceList.width();
@@ -216,17 +219,27 @@ armybuilderController = function() {
                     }, errorLogger);
                 });
 
-                // Button listener: Select army to view choices for
-                $(armyPage).find('#armySelectionPanel').on('click', '.armyBtn', function(evt) {
+                // Button listener: Move to army selection view */
+                $(armyPage).find('#forceListHeader').on('click', '.forceListReturnBtn', function(evt) {
                     evt.preventDefault();
-                    var armyChoice = $(evt.target).data().army;
-                    loadUnitChoices(armyChoice);
+                    $(armyPage).find('#forceListHeader').addClass('disabled');
+                    $(armyPage).find('#unitChoicePanel').children().addClass('nodisplay');
+                    $(armyPage).find('#armyChoicePanel').removeClass('nodisplay');
+                });
+
+                // Button listener: Select army to view choices for
+                $(armyPage).find('#armyChoicePanel').on('click', '.armyBtn', function(evt) {
+                    evt.preventDefault();
+                    var armyKey = $(evt.target).data().army;
+                    var armyName = $(evt.target).html();
+                    loadUnitChoices(armyKey, armyName);
+                    $(armyPage).find('#forceListHeader').removeClass('disabled');
                 });
                 
                 // Button listener: Select section of current army (units/monsters/heroes)
                 $(armyPage).find('#forceListHeader').on('click', '.forceSectionBtn', function(evt) {
                     evt.preventDefault();
-                    var $sections = $(armyPage).find('#leftPanelBody');
+                    var $sections = $(armyPage).find('#unitChoicePanel');
                     $sections.children().addClass('nodisplay');
                     var sectionChoice = $(evt.target).closest('p').data().section;
                     $sections.find('#'+sectionChoice).removeClass('nodisplay');
@@ -309,7 +322,6 @@ armybuilderController = function() {
             .done(function(data) {
                 loadUnitSelections();
                 loadArmyChoices(data);
-                //loadUnitChoices("elfarmies");
             })
             .fail(function() {
                 errorLogger("JSON", "getJSON failed to load army data");
