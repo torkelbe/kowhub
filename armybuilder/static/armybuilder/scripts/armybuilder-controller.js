@@ -45,16 +45,23 @@ armybuilderController = function() {
                 renderUnitSelections(data);
             }, errorLogger);
         });
-        // Dynamically calculate length of table headers
-        var $table = $('table.forceList');
-        var padding = 26; // Text padding + width of scrollbar
-        var btnWidth = $table.find('tbody .unitName').siblings().first().width();
-        var btnCount = $table.find('.unitName').first().siblings().length;
-        var unitNameWidth = $table.width() - (btnCount*btnWidth) - padding;
-        $table.find('th.unitName').siblings().width(btnWidth);
-        $table.find('.unitName').width(unitNameWidth);
+        renderUnitChoices();
         // Rerender unit selections
         loadUnitSelections();
+    }
+    
+    /* Dynamically calculate size of elements */
+    function renderUnitChoices() {
+        var $forceList = $('table.forceList');
+        var tableWidth = $forceList.width();
+        var padding = 26; // Text padding + width of scrollbar
+        $.each($forceList, function(i,table) {
+            var btnWidth = $(table).find('tbody .unitName').siblings().first().width();
+            var btnCount = $(table).find('.unitName').first().siblings().length;
+            var unitNameWidth = tableWidth - (btnCount*btnWidth) - padding;
+            $(table).find('th.unitName').siblings().width(btnWidth);
+            $(table).find('.unitName').width(unitNameWidth);
+        });
     }
 
     /* Load the set of unit selections from local webstorage */
