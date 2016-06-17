@@ -215,6 +215,15 @@ armybuilderController = function() {
                     var armyChoice = $(evt.target).data().army;
                     loadUnitChoices(armyChoice);
                 });
+                
+                // Button listener: Select section of current army (units/monsters/heroes)
+                $(armyPage).find('#forceListHeader').on('click', '.forceSectionBtn', function(evt) {
+                    evt.preventDefault();
+                    var $sections = $(armyPage).find('#leftPanelBody');
+                    $sections.children().addClass('nodisplay');
+                    var sectionChoice = $(evt.target).closest('p').data().section;
+                    $sections.find('#'+sectionChoice).removeClass('nodisplay');
+                });
 
                 // Button listener: Display drop-down menu for selecting primary army
                 $(armyPage).on('click', '#primaryArmyBtn', function(evt) {
