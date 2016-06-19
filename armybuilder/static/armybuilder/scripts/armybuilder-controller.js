@@ -25,7 +25,7 @@ armybuilderController = function() {
         });
         var armyChoiceTmpl = $.templates("#armyChoicePanelTmpl");
         var armyChoiceHtml = armyChoiceTmpl.render(armyChoiceList);
-        $('#armyChoicePanel').html(armyChoiceHtml);
+        $('#armyChoicePanel tbody').html(armyChoiceHtml);
         var primaryArmyTmpl = $.templates("#primaryArmyTmpl");
         var primaryArmyHtml = primaryArmyTmpl.render(armyChoiceList);
         $('#primaryArmyOptions').html(primaryArmyHtml);

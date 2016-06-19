@@ -66,6 +66,11 @@ caption {
     padding-left: 10px;
 }
 
+table.listOfArmies {
+    width: 93%;
+    margin-top: 40px;
+}
+
 table.forceList {
     width: 93%;
     display: none;
@@ -123,13 +128,7 @@ table.forceList td:not(.unitName) {
     background-color: red;
 }
 
-#armyChoicePanel {
-    margin: 0px;
-    padding: 0px;
-}
-
 .armyBtn {
-    display: inline-block;
     text-decoration: none;
     background-color: #f44336;
     color: white;
@@ -139,6 +138,10 @@ table.forceList td:not(.unitName) {
     width: 150px;
     height: 60px;
     margin: 2px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    padding: 4pt;
 }
 
 .unitBtn, .emptyBtn {

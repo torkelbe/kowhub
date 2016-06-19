@@ -27,7 +27,11 @@
                     </div>
                 </div>
                 <div id="leftPanelBody">
-                    <div id="armyChoicePanel"></div>
+                    <div id="armyChoicePanel">
+                        <table class="listOfArmies">
+                            <tbody></tbody>
+                        </table>
+                    </div>
                     <div id="unitChoicePanel"></div>
                 </div>
                 <div id="leftPanelFooter"></div>
@@ -139,7 +143,7 @@ $(document).ready(function() {
     </script>
 
     <script id="armyChoicePanelTmpl" type="text/x-jsrender">
-<p class="armyBtn" data-army={?:key?}>{?:name?}</p>
+<td class="armyBtn" data-army={?:key?}>{?:name?}</td>
     </script>
 
     <script id="listTitleTmpl" type="text/x-jsrender">
