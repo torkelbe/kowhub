@@ -249,6 +249,26 @@ table.forceList td:not(.unitName) {
     background: #bbb;
 }
 
+#unitChoicePanel {
+    position: relative;
+}
+.scroller {
+    position: absolute;
+    display: none;
+    height: 20px;
+    width: 93%;
+}
+#topScroll {
+    top: 25px;
+    left: 15px;
+    background-color: blue;
+}
+#botScroll {
+    bottom: 0px;
+    left: 15px;
+    background-color: blue;
+}
+
 .nodisplay {
     display: none;
 }

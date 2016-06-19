@@ -49,6 +49,22 @@ armybuilderController = function() {
                 renderUnitSelections(data);
             }, errorLogger);
         });
+        // forceList scroll listener
+        $(armyPage).find('.forceList tbody').on('scroll', function(evt) {
+            var e = $(evt.target);
+            if(e[0].scrollHeight == e.outerHeight()) {
+                $('.scroller').hide();
+            } else if(e.scrollTop() < 10) {
+                $('#topScroll').hide();
+                $('#botScroll').show();
+            } else if(e[0].scrollHeight - e.scrollTop() < e.outerHeight() + 10) {
+                $('#topScroll').show();
+                $('#botScroll').hide();
+            } else {
+                $('.scroller').show();
+            }
+        });
+        $('#unitList tbody').scroll();
         renderUnitChoices();
         // Rerender unit selections
         loadUnitSelections();
@@ -244,6 +260,7 @@ armybuilderController = function() {
                     $sections.children().hide();
                     var sectionChoice = $(evt.target).closest('p').data().section;
                     $sections.find('#'+sectionChoice).show();
+                    $sections.find('#'+sectionChoice+' tbody').scroll();
                 });
 
                 // Button listener: Display drop-down menu for selecting primary army
@@ -281,7 +298,7 @@ armybuilderController = function() {
                         return;
                     }
                     $.getJSON("pdfgen", senddata, function(response) {
-                        pdfurl = "getpdf/" + response.id;
+                        var pdfurl = "getpdf/" + response.id;
                         window.open(pdfurl);
                     })
                     .done(function(data) {
