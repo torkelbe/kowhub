@@ -38,7 +38,8 @@ armybuilderController = function() {
         var forceListTmpl = $.templates("#forceListTmpl");
         var forceListHtml = forceListTmpl.render(getActiveArmyData(), tmplHelper);
         $('#unitChoicePanel').html(forceListHtml);
-        $('#armyChoicePanel').addClass('nodisplay');
+        $('#armyChoicePanel').hide();
+        $('#unitList').show();
         $('#forceListHeader').find('.forceListReturnBtn span').html(armyName);
         // forceList button listeners
         $(armyPage).find('.forceList tbody').on('click', '.unitBtn', function(evt) {
@@ -223,8 +224,8 @@ armybuilderController = function() {
                 $(armyPage).find('#forceListHeader').on('click', '.forceListReturnBtn', function(evt) {
                     evt.preventDefault();
                     $(armyPage).find('#forceListHeader').addClass('disabled');
-                    $(armyPage).find('#unitChoicePanel').children().addClass('nodisplay');
-                    $(armyPage).find('#armyChoicePanel').removeClass('nodisplay');
+                    $(armyPage).find('#unitChoicePanel').children().hide();
+                    $(armyPage).find('#armyChoicePanel').show();
                 });
 
                 // Button listener: Select army to view choices for
@@ -240,9 +241,9 @@ armybuilderController = function() {
                 $(armyPage).find('#forceListHeader').on('click', '.forceSectionBtn', function(evt) {
                     evt.preventDefault();
                     var $sections = $(armyPage).find('#unitChoicePanel');
-                    $sections.children().addClass('nodisplay');
+                    $sections.children().hide();
                     var sectionChoice = $(evt.target).closest('p').data().section;
-                    $sections.find('#'+sectionChoice).removeClass('nodisplay');
+                    $sections.find('#'+sectionChoice).show();
                 });
 
                 // Button listener: Display drop-down menu for selecting primary army
