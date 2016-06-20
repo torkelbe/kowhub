@@ -40,7 +40,7 @@ armybuilderController = function() {
         $('#unitChoicePanel').html(forceListHtml);
         $('#armyChoicePanel').hide();
         $('#unitList').show();
-        $('#forceListHeader').find('.forceListReturnBtn span').html(armyName);
+        $('#forceListHeader').find('.forceListReturnBtn>div>div').html(armyName);
         // forceList button listeners
         $(armyPage).find('.forceList tbody').on('click', '.unitBtn', function(evt) {
             evt.preventDefault();
@@ -242,6 +242,7 @@ armybuilderController = function() {
                     $(armyPage).find('#forceListHeader').addClass('disabled');
                     $(armyPage).find('#unitChoicePanel').children().hide();
                     $(armyPage).find('#armyChoicePanel').show();
+                    $(armyPage).find('.forceListReturnBtn>div>div').html('Select an army');
                 });
 
                 // Button listener: Select army to view choices for
@@ -259,7 +260,7 @@ armybuilderController = function() {
                     evt.preventDefault();
                     var $sections = $(armyPage).find('#unitChoicePanel');
                     $sections.children().hide();
-                    var sectionChoice = $(evt.target).closest('p').data().section;
+                    var sectionChoice = $(evt.target).closest('.forceSectionBtn').data().section;
                     $sections.find('#'+sectionChoice).show();
                     $sections.find('#'+sectionChoice+' tbody').scroll();
                 });

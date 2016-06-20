@@ -74,10 +74,12 @@ caption {
 }
 .buttonWrapper>div {
     display: table-cell;
-    vertical-align: middle;
-    text-align: center;
+    width: 100%;
+    height: 100%;
     margin: 0px;
     padding: 4pt;
+    vertical-align: middle;
+    text-align: center;
 }
 
 #armyChoicePanel {
@@ -115,11 +117,11 @@ table.forceList td:not(.unitName) {
 }
 
 #forceListHeader {
-    display: table;
+    margin: 0px 15px;
 }
 .forceSectionBtn,
 .forceListReturnBtn {
-    display: table-cell;
+    display: inline-block;
     text-decoration: none;
     background-color: #f44336;
     color: white;
@@ -127,16 +129,13 @@ table.forceList td:not(.unitName) {
     border: 1px solid #5b5b5b;
     border-radius: 4px;
     height: 45px;
-    vertical-align: middle;
-    text-align: center;
     cursor: pointer;
 }
 .forceSectionBtn {
-    width: 100px;
+    width: 90px;
 }
 .forceListReturnBtn {
-    text-align: left;
-    width: 180px;
+    width: 150px;
 }
 .forceListReturnBtn:hover,
 .forceSectionBtn:hover {
