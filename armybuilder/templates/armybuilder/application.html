@@ -33,30 +33,34 @@
                 <div id="leftPanelFooter"></div>
             </div>
             <div id="rightPanel">
-                <table id="choiceList">
-                    <caption>
-                        <span id="armylistTitle">Army List</span>
-                    </caption>
-                    <colgroup>
-                        <col width="45%">
-                        <col width="45%">
-                        <col width="10%">
-                    </colgroup>
-                    <tbody id="choiceListBody">
-                    </tbody>
-                    <tfoot>
-                        <td>Points total:</td>
-                        <td><span id="pointsTotal">0</span></td>
-                    </tfoot>
-                </table>
-            <span id="armylistDetails">
-                <button id="primaryArmyBtn">Army type</button>
-                <ul id="primaryArmyOptions"></ul>
-            </span>
-            <span>
-                <button class="pdfBtn">PDF</button>
-                <table id="statsTable"></table>
-            </span>
+                <div id="rightPanelHeader">
+                    <div id="armylistTitle" class="rightHeaderField">Army List</div>
+                </div>
+                <div id="rightPanelBody">
+                    <table id="choiceList">
+                        <colgroup>
+                            <col width="45%">
+                            <col width="45%">
+                            <col width="10%">
+                        </colgroup>
+                        <tbody id="choiceListBody">
+                        </tbody>
+                        <tfoot>
+                            <td>Points total:</td>
+                            <td><span id="pointsTotal">0</span></td>
+                        </tfoot>
+                    </table>
+                </div>
+                <div id="rightPanelFooter">
+                    <span id="armylistDetails">
+                        <button id="primaryArmyBtn">Army type</button>
+                        <ul id="primaryArmyOptions"></ul>
+                    </span>
+                    <span>
+                        <button class="pdfBtn">PDF</button>
+                    </span>
+                    <div id="statsTable"></div>
+                </div>
             </div>
         </main>
         <footer>
@@ -186,14 +190,17 @@ $(document).ready(function() {
     </script>
 
     <script id="statsTmpl" type="text/x-jsrender">
-    <tr><td>Total number of units: {?:count?}</td></tr>
-    <tr><td>{?:Horde?} Hordes, {?:Legion?} Legions</td></tr>
-    <tr><td>{?:Regiment?} Regiments</td></tr>
-    <tr><td legal="{?:legalTro?}">{?:Troop?} Troops ({?:slotsTro?} slots left)</td></tr>
-    <tr><td legal="{?:legalHer?}">{?:Hero?} Heroes ({?:slotsHer?} slots left)</td></tr>
-    <tr><td legal="{?:legalMon?}">{?:Monster?} Monsters ({?:slotsMon?} slots left)</td></tr>
-    <tr><td legal="{?:legalWen?}">{?:Warengine?} War Engines ({?:slotsWen?} slots left)</td></tr>
-    <tr><td legal="{?:legalAllies?}">{?:allies?}% Allies</td></tr>
+<table>
+    <thead>
+        <tr><th>Total number of units: {?:count?}</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>{?:Legion?} Legions</td><td legal="{?:legalHer?}">{?:Hero?} Heroes ({?:slotsHer?} slots left)</td></tr>
+        <tr><td>{?:Horde?} Hordes</td><td legal="{?:legalMon?}">{?:Monster?} Monsters ({?:slotsMon?} slots left)</td></tr>
+        <tr><td>{?:Regiment?} Regiments</td><td legal="{?:legalWen?}">{?:Warengine?} War Engines ({?:slotsWen?} slots left)</td></tr>
+        <tr><td legal="{?:legalTro?}">{?:Troop?} Troops ({?:slotsTro?} slots left)</td><td legal="{?:legalAllies?}">{?:allies?}% Allies</td></tr>
+    </tbody>
+</table>
     </script>
 </html>
 

@@ -37,12 +37,13 @@ caption {
 }
 
 #leftPanel, #rightPanel {
+    position: relative;
     height: 550px;
     width: 50%;
     padding: 0px;
     border: 0px;
     margin: 0px;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
 }
 #leftPanel {
@@ -57,6 +58,20 @@ caption {
     height: 50px;
     width:100%;
     overflow: hidden;
+}
+#rightPanelHeader {
+    height: 30px;
+    width: 100%;
+    margin: 5px 15px;
+}
+#leftPanelFooter {
+    width: 100%;
+}
+#rightPanelFooter {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
 }
 
 .unitName {
@@ -222,7 +237,14 @@ table.forceList td:not(.unitName) {
 }
 
 #statsTable {
-    border: 1px solid black;
+    border-top: 1px solid black;
+}
+#statsTable thead {
+    text-align: left;
+}
+#statsTable tbody {
+    border-top: 1px solid black;
+    text-align: left;
 }
 
 [legal=false] {
@@ -247,7 +269,6 @@ table.forceList td:not(.unitName) {
     text-decoration: none;
     list-style-type: none;
 }
-
 #primaryArmyOptions > li {
     width: 200px;
     background: #eee;
