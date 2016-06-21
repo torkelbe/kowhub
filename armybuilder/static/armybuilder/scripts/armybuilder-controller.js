@@ -269,19 +269,10 @@ armybuilderController = function() {
                     $sections.find('#'+sectionChoice+' tbody').scroll();
                 });
 
-                // Button listener: Display drop-down menu for selecting primary army
-                $(armyPage).on('click', '#primaryArmyBtn', function(evt) {
+                // Button listener: Display drop-down menus
+                $(armyPage).on('click', '.dropdownBtn', function(evt) {
                     evt.preventDefault();
-                    var options = $('#primaryArmyOptions');
-                    options.toggleClass('active');
-                    options.slideToggle(200);
-                });
-
-                // Button listener: Display drop-down menu for selecting points limit
-                $(armyPage).on('click', '#primaryArmyBtn', function(evt) {
-                    evt.preventDefault();
-                    var options = $('#primaryArmyOptions');
-                    options.toggleClass('active');
+                    var options = $(evt.target).closest('.dropdownBtn').siblings('.dropdownMenu');
                     options.slideToggle(200);
                 });
 

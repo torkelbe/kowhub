@@ -267,6 +267,7 @@ table.forceList td:not(.unitName) {
 
 .dropdownMenu {
     display: none;
+    width: 150px;
     position: absolute;
     margin: 0;
     background: #dddddd;
@@ -274,7 +275,6 @@ table.forceList td:not(.unitName) {
     list-style-type: none;
 }
 .dropdownMenu > li {
-    width: 150px;
     background: #eee;
     line-height: 25px;
     font-size: 14px;
