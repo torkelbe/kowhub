@@ -239,6 +239,9 @@ table.forceList td:not(.unitName) {
 #statsTable {
     border-top: 1px solid black;
 }
+#statsTable table {
+    margin: 15px auto;
+}
 #statsTable thead {
     text-align: left;
 }
