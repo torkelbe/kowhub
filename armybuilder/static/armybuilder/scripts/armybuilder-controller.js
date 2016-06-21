@@ -122,10 +122,10 @@ armybuilderController = function() {
                 $('.forceList td:contains('+unit.name+')').parents('tr').find('.unitBtn').addClass('disabled');
             }
         });
-        // Set primary army
-        $('#primaryArmyBtn').html(armyData[armyList.meta.army].name);
-        // Set armylist title
+        // Set armylist title, primary army, and points limit
         $(armyPage).find('#armylistTitle>div').html(armyList.meta.name);
+        $(armyPage).find('#primaryArmyBtn').html(armyData[armyList.meta.army].name);
+        $(armyPage).find('#armylistPoints').html(armyList.meta.pts+" Points");
         // Render armylist
         var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
         var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
@@ -279,10 +279,21 @@ armybuilderController = function() {
                 // Button listener: Select primary army from drop-down menu
                 $(armyPage).on('click', '#primaryArmyOptions', function(evt) {
                     evt.preventDefault();
-                    var tar = $(evt.target).closest('li').children('a');
-                    var meta = {'army':tar.data().army};
+                    var $tar = $(evt.target).closest('li').children('a');
+                    var meta = {'army':$tar.data().army};
                     storageEngine.setMeta('units', meta, function(data) {
-                        $('#primaryArmyBtn').click();
+                        $tar.closest('.dropdownMenu').slideUp(200);
+                        renderUnitSelections(data);
+                    }, errorLogger);
+                });
+
+                // Button listener: Select points limit from drop-down menu
+                $(armyPage).on('click', '#armylistPointsOptions', function(evt) {
+                    evt.preventDefault();
+                    var $tar = $(evt.target).closest('li').children('a');
+                    var meta = {'pts':$tar.html()};
+                    storageEngine.setMeta('units', meta, function(data) {
+                        $tar.closest('.dropdownMenu').slideUp(200);
                         renderUnitSelections(data);
                     }, errorLogger);
                 });
