@@ -69,6 +69,23 @@ armybuilderController = function() {
         // Rerender unit selections
         loadUnitSelections();
     }
+
+    /* Apply change in armylist title */
+    function changeArmyListTitle() {
+        var $div = $(armyPage).find('#armylistTitle>div');
+        var $txt = $(armyPage).find('#armylistTitle>textarea');
+        var title = $txt.val();
+        if(title.length > 0) {
+            var meta = {'name':title};
+            storageEngine.setMeta('units', meta, function() {
+                $div.html(title);
+            }, function() {
+                errorLogger(errorCode, errorMessage);
+            });
+        }
+        $txt.hide();
+        $div.show();
+    }
     
     /* Dynamically calculate size of elements in left panel */
     function renderUnitChoices() {
@@ -91,19 +108,6 @@ armybuilderController = function() {
         }, errorLogger);
     }
 
-    /* Button listener: Change name of armylist */
-    function buttonListenerArmylistName() {
-        $(armyPage).on('click', '#armylistTitle', function(evt) {
-            evt.preventDefault();
-            var func = 'armybuilderController.changeArmyListTitle';
-            var value = $(evt.target).html();
-            var inputTmpl = $.templates('#listTitleTmpl');
-            var inputHtml = inputTmpl.render({'value':value, 'func':func});
-            $(evt.target).parents('caption').html(inputHtml);
-            $(armyPage).find('#titleChange').select();
-        });
-    }
-
     /* Adjust application view when unit selections change */
     function renderUnitSelections(armyList) {
         units = armyList.items;
@@ -121,7 +125,7 @@ armybuilderController = function() {
         // Set primary army
         $('#primaryArmyBtn').html(armyData[armyList.meta.army].name);
         // Set armylist title
-        $('#armylistTitle').html(armyList.meta.name);
+        $(armyPage).find('#armylistTitle>div').html(armyList.meta.name);
         // Render armylist
         var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
         var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
@@ -273,6 +277,14 @@ armybuilderController = function() {
                     options.slideToggle(200);
                 });
 
+                // Button listener: Display drop-down menu for selecting points limit
+                $(armyPage).on('click', '#primaryArmyBtn', function(evt) {
+                    evt.preventDefault();
+                    var options = $('#primaryArmyOptions');
+                    options.toggleClass('active');
+                    options.slideToggle(200);
+                });
+
                 // Button listener: Select primary army from drop-down menu
                 $(armyPage).on('click', '#primaryArmyOptions', function(evt) {
                     evt.preventDefault();
@@ -284,8 +296,27 @@ armybuilderController = function() {
                     }, errorLogger);
                 });
 
-                // Button listener: Change name of armylist
-                buttonListenerArmylistName();
+                // Button listeners: Change name of armylist
+                $(armyPage).on('click', '#armylistTitle', function(evt) {
+                    evt.preventDefault();
+                    var $div = $(evt.target);
+                    var $txt = $div.siblings();
+                    var title = $div.html();
+                    $div.hide();
+                    $txt.show();
+                    $txt.html(title);
+                    $txt.select();
+                });
+                $(armyPage).on('blur', '#armylistTitle>textarea', function(evt) {
+                    evt.preventDefault();
+                    changeArmyListTitle();
+                });
+                $(armyPage).on('keydown', '#armylistTitle>textarea', function(evt) {
+                    if(evt.keyCode === 13 || evt.keyCode === 27) { // esc: 27, enter: 13
+                        evt.preventDefault();
+                        changeArmyListTitle();
+                    }
+                });
 
                 // Button listener: Get armylist PDF
                 $(armyPage).on('click', '.pdfBtn', function(evt) {
@@ -314,22 +345,6 @@ armybuilderController = function() {
 
                 initialized = true;
             }
-        },
-
-        changeArmyListTitle: function() {
-            var caption = $('#titleChange').parents('caption');
-            var title = $('#titleChange').val();
-            if(title.length<1) {
-                title = $('#titleChange').data().oldValue;
-            }
-            var meta = {'name':title};
-            storageEngine.setMeta('units', meta, function() {}, function() {
-                errorLogger(errorCode, errorMessage);
-                title = $('#titleChange').data().oldValue;
-            });
-            var newCaptionHtml = '<span id="armylistTitle">'+title+'</span>';
-            caption.html(newCaptionHtml);
-            buttonListenerArmylistName();
         },
 
         loadForceListJSON: function() {

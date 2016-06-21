@@ -251,8 +251,9 @@ table.forceList td:not(.unitName) {
     color: red;
 }
 
-#primaryArmyBtn, .pdfBtn {
-    width: 200px;
+.dropdownBtn,
+.pdfBtn {
+    width: 150px;
     background: #222;
     color: #eee;
     line-height: 25px;
@@ -261,7 +262,7 @@ table.forceList td:not(.unitName) {
     cursor: pointer;
 }
 
-#primaryArmyOptions {
+.dropdownMenu {
     display: none;
     position: absolute;
     margin: 0;
@@ -269,17 +270,32 @@ table.forceList td:not(.unitName) {
     text-decoration: none;
     list-style-type: none;
 }
-#primaryArmyOptions > li {
-    width: 200px;
+.dropdownMenu > li {
+    width: 150px;
     background: #eee;
     line-height: 25px;
     font-size: 14px;
     padding: 0 10px;
     cursor: pointer;
 }
-
-#primaryArmyOptions > li:hover {
+.dropdownMenu > li:hover {
     background: #bbb;
+}
+
+.rightHeaderField {
+    display: inline-block;
+}
+#armylistTitle {
+    font-weight: bold;
+    height: 30px;
+    width: 120px;
+    line-height: 30px;
+}
+#titleChange {
+    font-weight: bold;
+    height: 30px;
+    width: 120px;
+    line-height: 30px;
 }
 
 #unitChoicePanel {
