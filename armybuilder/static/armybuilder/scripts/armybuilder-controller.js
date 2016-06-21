@@ -272,8 +272,10 @@ armybuilderController = function() {
                 // Button listener: Display drop-down menus
                 $(armyPage).on('click', '.dropdownBtn', function(evt) {
                     evt.preventDefault();
-                    var options = $(evt.target).closest('.dropdownBtn').siblings('.dropdownMenu');
-                    options.slideToggle(200);
+                    $(evt.target).closest('.dropdownBtn').siblings('.dropdownMenu').slideToggle(200);
+                });
+                $(armyPage).on('blur', '.dropdownBtn', function(evt) {
+                    $(evt.target).closest('.dropdownBtn').siblings('.dropdownMenu').delay(100).slideUp(200);
                 });
 
                 // Button listener: Select primary army from drop-down menu
