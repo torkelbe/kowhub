@@ -199,7 +199,7 @@ $(document).ready(function() {
     <script id="statsTmpl" type="text/x-jsrender">
 <table>
     <thead>
-        <tr><th>Total number of units: {?:count?}</th></tr>
+        <tr><th>Total number of units: {?:count?}</th><th legal="{?:legalPts?}">{?:points?}/{?:pointsLimit?} Points</th></tr>
     </thead>
     <tbody>
         <tr><td>{?:Legion?} Legions</td><td legal="{?:legalHer?}">{?:Hero?} Heroes ({?:slotsHer?} slots left)</td></tr>

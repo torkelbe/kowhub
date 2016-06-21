@@ -173,6 +173,8 @@ armybuilderController = function() {
         stats.legalWen = stats.slotsWen >= 0;
         stats.allies = Math.ceil(100 * stats.allies / (stats.points+1));
         stats.legalAllies = stats.allies <= 25;
+        stats.pointsLimit = armyList.meta.pts;
+        stats.legalPts = stats.points <= stats.pointsLimit;
         return stats;
     }
 

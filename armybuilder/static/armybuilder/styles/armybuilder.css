@@ -241,13 +241,13 @@ table.forceList td:not(.unitName) {
 }
 #statsTable table {
     margin: 15px auto;
-}
-#statsTable thead {
     text-align: left;
 }
 #statsTable tbody {
     border-top: 1px solid black;
-    text-align: left;
+}
+#statsTable th, #statsTable td {
+    padding: 0px 10px;
 }
 
 [legal=false] {
