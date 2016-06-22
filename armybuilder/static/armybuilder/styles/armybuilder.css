@@ -26,7 +26,6 @@ header {
 
 table {
     text-align: center;
-    margin: 15px 15px;
     border-collapse: collapse;
 }
 
@@ -39,8 +38,7 @@ caption {
 #leftPanel, #rightPanel {
     position: relative;
     height: 550px;
-    width: 50%;
-    padding: 0px;
+    padding: 5px 15px;
     border: 0px;
     margin: 0px;
     overflow-x: hidden;
@@ -49,20 +47,25 @@ caption {
 #leftPanel {
     background-color: lightblue;
     float: left;
+    width: 445px;
 }
 #rightPanel {
     background-color: lightgreen;
-    float: right;
+    margin-left: 475px;
+}
+#leftPanel>div, #rightPanel>div {
+    width: 100%;
 }
 #leftPanelHeader {
     height: 50px;
+    margin-bottom: 10px;
     width:100%;
     overflow: hidden;
 }
 #rightPanelHeader {
     height: 30px;
+    margin-bottom: 10px;
     width: 100%;
-    margin: 5px 15px;
 }
 #leftPanelFooter {
     width: 100%;
@@ -98,14 +101,14 @@ caption {
 }
 
 #armyChoicePanel {
-    width: 93%;
     height: 400px;
-    margin: 40px 15px 15px 15px;
+    margin-top: 25px;
+    padding-left: 2px;
 }
 
 table.forceList {
-    width: 93%;
     display: none;
+    width: 100%;
 }
 table.forceList thead {
     display: block;
@@ -132,7 +135,6 @@ table.forceList td:not(.unitName) {
 }
 
 #forceListHeader {
-    margin: 0px 15px;
 }
 .forceSectionBtn,
 .forceListReturnBtn {
@@ -150,7 +152,7 @@ table.forceList td:not(.unitName) {
     width: 90px;
 }
 .forceListReturnBtn {
-    width: 150px;
+    width: 155px;
 }
 .forceListReturnBtn:hover,
 .forceSectionBtn:hover {
@@ -165,8 +167,8 @@ table.forceList td:not(.unitName) {
     font-size: 16px;
     border: 1px solid #5b5b5b;
     border-radius: 4px;
-    width: 82px;
-    height: 82px;
+    width: 83px;
+    height: 83px;
     margin: 0px;
     cursor: pointer;
 }
@@ -308,16 +310,14 @@ table.forceList td:not(.unitName) {
     position: absolute;
     display: none;
     height: 20px;
-    width: 93%;
+    width: 100%;
 }
 #topScroll {
     top: 25px;
-    left: 15px;
     background-color: blue;
 }
 #botScroll {
     bottom: 0px;
-    left: 15px;
     background-color: blue;
 }
 
