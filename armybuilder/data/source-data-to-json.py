@@ -61,10 +61,8 @@ def parse_special_rules():
                 while line:
                     name, description = properties(line);
                     name, value = get_rule_elements(name)
-                    description = "" # Description not yet used
                     special[counter] = {}
                     special[counter]["name"] = name
-                    special[counter]["desc"] = description
                     if value: special[counter]["value"] = value
                     counter += 1
                     line = file.readline()
@@ -82,14 +80,12 @@ def parse_magic_items():
                 while line:
                     name, pts, action, description, limitation = properties(line);
                     action = "" # Action not yet used
-                    description = "" # Description not yet used
                     limitation = "" # Limitation not yet used
                     items[counter] = {}
                     items[counter]["name"] = name
                     items[counter]["pts"] = int(pts)
                     items[counter]["act"] = action
                     items[counter]["lim"] = limitation
-                    items[counter]["desc"] = description
                     counter += 1
                     line = file.readline()
                 break
@@ -106,11 +102,9 @@ def parse_spells():
                 while line:
                     name, rang, description = properties(line);
                     rang = rang[:2]
-                    description = "" # Description not yet used
                     spells[counter] = {}
                     spells[counter]["name"] = name
                     spells[counter]["rang"] = rang
-                    spells[counter]["desc"] = description
                     counter += 1
                     line = file.readline()
                 break
