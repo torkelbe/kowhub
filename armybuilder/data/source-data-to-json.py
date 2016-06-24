@@ -46,7 +46,7 @@ def parse():
     obj["items"] = parse_magic_items()
     obj["spells"] = parse_spells()
     obj["armies"] = parse_all_armies()
-    format_unit_special_rules(obj["armies"], obj["special"])
+    format_unit_special_rules(obj["armies"], obj["special"], obj["spells"])
     sys.stdout.write(json.dumps(obj, separators=(',',':')))
     return
 
@@ -173,25 +173,34 @@ def parse_unit(line, file):
         new_line = file.readline()
     return unit, new_line
 
-def format_unit_special_rules(armies, rules_data):
-    dataObj = {}
-    for key, item in rules_data.items():
-        dataObj[item] = key
+def format_unit_special_rules(armies, rules_data, spells_data):
+    specialObj = {}
+    spellsObj = {}
+    for key, name in rules_data.items():
+        specialObj[name] = key
+    for key, item in spells_data.items():
+        spellsObj[item["name"]] = key
     for army in armies.itervalues():
         for unit in army["units"].itervalues():
             rules = unit["special"].split(',')
             if len(rules[0]) < 1: continue
             rulekey_list = []
-            rangedkey_list = []
+            spellkey_list = []
             for rule in rules:
                 name, value = get_rule_elements(rule)
-                try:
-                    key = dataObj[name]
+                if name in specialObj:
+                    key = specialObj[name]
                     if value: rulekey_list.append(str(key)+':'+str(value))
                     else: rulekey_list.append(str(key))
-                except:
+                elif name in spellsObj:
+                    key = spellsObj[name]
+                    if value: spellkey_list.append(str(key)+':'+str(value))
+                    else: spellkey_list.append(str(key))
+                else:
+                    error("Special rule: "+name+" could not be parsed.", "SpecialRules")
                     continue
-            unit["special"] = rulekey_list if len(rulekey_list)>0 else ""
+            unit["special"] = rulekey_list
+            unit["spells"] = spellkey_list
 
 # === Main ===
 if __name__ == "__main__":
