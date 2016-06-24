@@ -46,6 +46,7 @@ def parse():
     obj["items"] = parse_magic_items()
     obj["spells"] = parse_spells()
     obj["armies"] = parse_all_armies()
+    format_unit_special_rules(obj["armies"], obj["special"])
     sys.stdout.write(json.dumps(obj, separators=(',',':')))
     return
 
@@ -152,6 +153,7 @@ def parse_unit(line, file):
     unit["name"] = name
     unit["type"] = typ
     unit["hero"] = "true" if entry=="hero" else "false"
+    unit["special"] = special
     name=""
     new_line = ""
     if not size:
@@ -178,6 +180,26 @@ def parse_unit(line, file):
         unit["Legion"] = get_stats_obj(sp, me, ra, de, att, ne, pts)
         new_line = file.readline()
     return unit, new_line
+
+def format_unit_special_rules(armies, rules_data):
+    dataObj = {}
+    for key, item in rules_data.items():
+        dataObj[item["name"]] = key
+    for army in armies.itervalues():
+        for unit in army["units"].itervalues():
+            rules = unit["special"].split(',')
+            if len(rules[0]) < 1: continue
+            rulekey_list = []
+            rangedkey_list = []
+            for rule in rules:
+                name, value = get_rule_elements(rule)
+                try:
+                    key = dataObj[name]
+                    if value: rulekey_list.append(str(key)+':'+str(value))
+                    else: rulekey_list.append(str(key))
+                except:
+                    continue
+            unit["special"] = rulekey_list if len(rulekey_list)>0 else ""
 
 # === Main ===
 if __name__ == "__main__":
