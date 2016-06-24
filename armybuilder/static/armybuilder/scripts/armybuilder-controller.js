@@ -4,14 +4,23 @@ armybuilderController = function() {
 
     var armyPage;
     var initialized = false;
-    var dataObject;
     var activeArmy;
+    var dataObj;
 
     function getArmyData() {
-        return armybuilderController.dataObject;
+        return armybuilderController.dataObj["armies"];
     }
     function getActiveArmyData() {
-        return  armybuilderController.dataObject[armybuilderController.activeArmy];
+        return  armybuilderController.dataObj["armies"][armybuilderController.activeArmy];
+    }
+    function getSpecialRules() {
+        return armybuilderController.dataObj["special"];
+    }
+    function getItems() {
+        return armybuilderController.dataObj["items"];
+    }
+    function getSpells() {
+        return armybuilderController.dataObj["spells"];
     }
     function errorLogger(errorCode, errorMessage) {
         console.log(errorCode+':'+errorMessage);
@@ -354,15 +363,15 @@ armybuilderController = function() {
         },
 
         loadForceListJSON: function() {
-            $.getJSON("armydata", function(data) {
-                $.each(data, function(i,v) {
+            $.getJSON("dataobj", function(data) {
+                $.each(data["armies"], function(i,v) {
                     v.key = i;
                 });
-                armybuilderController.dataObject = data;
+                armybuilderController.dataObj = data;
             })
             .done(function(data) {
                 loadUnitSelections();
-                loadArmyChoices(data);
+                loadArmyChoices(data["armies"]);
             })
             .fail(function() {
                 errorLogger("JSON", "getJSON failed to load army data");

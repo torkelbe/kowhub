@@ -7,13 +7,13 @@ import json
 
 from kowpdfs import latexpdf
 
-DATAFILE = "armybuilder/data/armies.json"
+DATAFILE = "armybuilder/data/data.json"
 PDFSDIR = "armybuilder/kowpdfs/temp/"
 
 class AppView(generic.TemplateView):
     template_name = 'armybuilder/application.html'
 
-def armydata(request):
+def dataobj(request):
     if request.is_ajax():
         with open(DATAFILE, 'r') as f:
             data = f.read()

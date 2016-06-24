@@ -6,7 +6,7 @@ app_name= 'armybuilder'
 
 urlpatterns= [
     url(r'^$', views.AppView.as_view(), name='armybuilder-index'),
-    url(r'^armydata/', views.armydata, name='armybuilder-armydata'),
+    url(r'^dataobj/', views.dataobj, name='armybuilder-dataobj'),
     url(r'^pdfgen/', views.makepdf, name='armybuilder-pdfgen'),
     url(r'^getpdf/(?P<pdfid>[0-9]+)', views.openpdf, name='armybuilder-getpdf'),
 ]

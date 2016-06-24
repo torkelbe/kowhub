@@ -6,3 +6,4 @@ notes/*
 docs/*
 **/temp/*
 armybuilder/data/sources/*
+armybuilder/data/data.json
