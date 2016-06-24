@@ -26,7 +26,7 @@ def properties(line):
         e = e.strip()
     return elements
 
-def get_rule_key(name):
+def get_rule_elements(name):
     parts = name.split('(')
     name = parts[0].strip()
     value = parts[1].split(')')[0] if len(parts)>1 else ""
@@ -59,11 +59,12 @@ def parse_special_rules():
                 line = file.readline()
                 while line:
                     name, description = properties(line);
-                    name, value = get_rule_key(name)
+                    name, value = get_rule_elements(name)
                     description = "" # Description not yet used
-                    special[name] = {}
-                    special[name]["desc"] = description
-                    if value: special[name]["value"] = value
+                    special[counter] = {}
+                    special[counter]["name"] = name
+                    special[counter]["desc"] = description
+                    if value: special[counter]["value"] = value
                     counter += 1
                     line = file.readline()
                 break
@@ -82,11 +83,12 @@ def parse_magic_items():
                     action = "" # Action not yet used
                     description = "" # Description not yet used
                     limitation = "" # Limitation not yet used
-                    items[name] = {}
-                    items[name]["pts"] = int(pts)
-                    items[name]["act"] = action
-                    items[name]["lim"] = limitation
-                    items[name]["desc"] = description
+                    items[counter] = {}
+                    items[counter]["name"] = name
+                    items[counter]["pts"] = int(pts)
+                    items[counter]["act"] = action
+                    items[counter]["lim"] = limitation
+                    items[counter]["desc"] = description
                     counter += 1
                     line = file.readline()
                 break
@@ -104,9 +106,10 @@ def parse_spells():
                     name, rang, description = properties(line);
                     rang = rang[:2]
                     description = "" # Description not yet used
-                    spells[name] = {}
-                    spells[name]["rang"] = rang
-                    spells[name]["desc"] = description
+                    spells[counter] = {}
+                    spells[counter]["name"] = name
+                    spells[counter]["rang"] = rang
+                    spells[counter]["desc"] = description
                     counter += 1
                     line = file.readline()
                 break
