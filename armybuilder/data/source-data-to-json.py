@@ -61,9 +61,7 @@ def parse_special_rules():
                 while line:
                     name, description = properties(line);
                     name, value = get_rule_elements(name)
-                    special[counter] = {}
-                    special[counter]["name"] = name
-                    if value: special[counter]["value"] = value
+                    special[counter] = name
                     counter += 1
                     line = file.readline()
                 break
@@ -178,7 +176,7 @@ def parse_unit(line, file):
 def format_unit_special_rules(armies, rules_data):
     dataObj = {}
     for key, item in rules_data.items():
-        dataObj[item["name"]] = key
+        dataObj[item] = key
     for army in armies.itervalues():
         for unit in army["units"].itervalues():
             rules = unit["special"].split(',')
