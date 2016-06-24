@@ -25,6 +25,9 @@ armybuilderController = function() {
     function errorLogger(errorCode, errorMessage) {
         console.log(errorCode+':'+errorMessage);
     }
+    function getStatsObj(s) {
+        return {"Sp":s[0],"Me":s[1],"Ra":s[2],"De":s[3],"Att":s[4],"Ne":s[5],"Pts":s[6]}
+    }
 
     /* Load buttons for selecting which army to handle */
     function loadArmyChoices(data) {
@@ -364,8 +367,13 @@ armybuilderController = function() {
 
         loadForceListJSON: function() {
             $.getJSON("dataobj", function(data) {
-                $.each(data["armies"], function(i,v) {
-                    v.key = i;
+                $.each(data["armies"], function(i,army) {
+                    army.key = i;
+                    $.each(army.units, function(i,unit) {
+                        $.each(["Troop","Regiment","Horde","Legion","Warengine","Monster","Hero"], function(i,form) {
+                            if(unit[form]) unit[form] = getStatsObj(unit[form]);
+                        });
+                    });
                 });
                 armybuilderController.dataObj = data;
             })

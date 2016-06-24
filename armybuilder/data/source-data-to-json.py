@@ -18,7 +18,7 @@ def get_stats_obj(sp, me, ra, de, att, ne, pts):
     me = me if me=='-' else me+'+'
     ra = ra if ra=='-' else ra+'+'
     de = de+'+'
-    return {"Sp":sp,"Me":me,"Ra":ra,"De":de,"Att":att,"Ne":ne,"Pts":int(pts)}
+    return [sp, me, ra, de, att, ne, int(pts)]
 
 def properties(line):
     elements =  line.rstrip('\r\n').split(SEPARATOR_KEY)
@@ -143,7 +143,6 @@ def parse_unit(line, file):
     entry, name, typ, size, sp, me, ra, de, att, ne, pts, special, options = properties(line)
     unit["name"] = name
     unit["type"] = typ
-    unit["hero"] = "true" if entry=="hero" else "false"
     unit["special"] = special
     name=""
     new_line = ""
