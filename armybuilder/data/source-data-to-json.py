@@ -44,9 +44,9 @@ def parse():
     obj = {}
     obj["special"] = parse_special_rules()
     obj["items"] = parse_magic_items()
-    obj["spells"] = parse_spells()
+    obj["ranged"] = parse_ranged()
     obj["armies"] = parse_all_armies()
-    format_unit_special_rules(obj["armies"], obj["special"], obj["spells"])
+    format_unit_special_rules(obj["armies"], obj["special"], obj["ranged"])
     sys.stdout.write(json.dumps(obj, separators=(',',':')))
     return
 
@@ -89,24 +89,23 @@ def parse_magic_items():
                 break
     return items
 
-def parse_spells():
-    spells = {}
+def parse_ranged():
+    ranged = {}
     for filename in listdir(RULES_DIR):
-        if "spells" in filename and filename.endswith('.csv'):
+        if "ranged" in filename and filename.endswith('.csv'):
             with open(RULES_DIR+filename, 'r') as file:
                 file.readline() # throw first line
                 counter = 1
                 line = file.readline()
                 while line:
-                    name, rang, description = properties(line);
-                    rang = rang[:2]
-                    spells[counter] = {}
-                    spells[counter]["name"] = name
-                    spells[counter]["rang"] = rang
+                    name, reach, description = properties(line);
+                    ranged[counter] = {}
+                    ranged[counter]["name"] = name
+                    ranged[counter]["reach"] = reach
                     counter += 1
                     line = file.readline()
                 break
-    return spells
+    return ranged
 
 def parse_all_armies():
     armies = {}
@@ -173,34 +172,34 @@ def parse_unit(line, file):
         new_line = file.readline()
     return unit, new_line
 
-def format_unit_special_rules(armies, rules_data, spells_data):
+def format_unit_special_rules(armies, rules_data, ranged_data):
     specialObj = {}
-    spellsObj = {}
+    rangedObj = {}
     for key, name in rules_data.items():
         specialObj[name] = key
-    for key, item in spells_data.items():
-        spellsObj[item["name"]] = key
+    for key, item in ranged_data.items():
+        rangedObj[item["name"]] = key
     for army in armies.itervalues():
         for unit in army["units"].itervalues():
             rules = unit["special"].split(',')
             if len(rules[0]) < 1: continue
-            rulekey_list = []
-            spellkey_list = []
+            specialkey_list = []
+            rangedkey_list = []
             for rule in rules:
                 name, value = get_rule_elements(rule)
                 if name in specialObj:
                     key = specialObj[name]
-                    if value: rulekey_list.append(str(key)+':'+str(value))
-                    else: rulekey_list.append(str(key))
-                elif name in spellsObj:
-                    key = spellsObj[name]
-                    if value: spellkey_list.append(str(key)+':'+str(value))
-                    else: spellkey_list.append(str(key))
+                    if value: specialkey_list.append(str(key)+':'+str(value))
+                    else: specialkey_list.append(str(key))
+                elif name in rangedObj:
+                    key = rangedObj[name]
+                    if value: rangedkey_list.append(str(key)+':'+str(value))
+                    else: rangedkey_list.append(str(key))
                 else:
                     error("Special rule: "+name+" could not be parsed.", "SpecialRules")
-                    continue
-            unit["special"] = rulekey_list
-            unit["spells"] = spellkey_list
+                    specialkey_list.append(rule)
+            unit["special"] = specialkey_list
+            unit["ranged"] = rangedkey_list
 
 # === Main ===
 if __name__ == "__main__":

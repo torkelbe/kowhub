@@ -19,8 +19,8 @@ armybuilderController = function() {
     function getItems() {
         return armybuilderController.dataObj["items"];
     }
-    function getSpells() {
-        return armybuilderController.dataObj["spells"];
+    function getRanged() {
+        return armybuilderController.dataObj["ranged"];
     }
     function errorLogger(errorCode, errorMessage) {
         console.log(errorCode+':'+errorMessage);
