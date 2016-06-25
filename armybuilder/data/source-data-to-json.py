@@ -80,10 +80,10 @@ def parse_magic_items():
                     action = "" # Action not yet used
                     limitation = "" # Limitation not yet used
                     items[counter] = {}
-                    items[counter]["name"] = name
-                    items[counter]["pts"] = int(pts)
-                    items[counter]["act"] = action
-                    items[counter]["lim"] = limitation
+                    items[counter]["n"] = name
+                    items[counter]["p"] = int(pts)
+                    items[counter]["a"] = action
+                    items[counter]["l"] = limitation
                     counter += 1
                     line = file.readline()
                 break
@@ -100,8 +100,8 @@ def parse_ranged():
                 while line:
                     name, reach, description = properties(line);
                     ranged[counter] = {}
-                    ranged[counter]["name"] = name
-                    ranged[counter]["reach"] = reach
+                    ranged[counter]["n"] = name
+                    ranged[counter]["r"] = reach
                     counter += 1
                     line = file.readline()
                 break
@@ -177,7 +177,7 @@ def format_unit_special_rules(armies, rules_data, ranged_data):
     for key, name in rules_data.items():
         specialObj[name] = key
     for key, item in ranged_data.items():
-        rangedObj[item["name"]] = key
+        rangedObj[item["n"]] = key
     for army in armies.itervalues():
         for unit in army["units"].itervalues():
             rules = unit["special"].split(',')
@@ -195,7 +195,7 @@ def format_unit_special_rules(armies, rules_data, ranged_data):
                     if value: rangedkey_list.append(str(key)+':'+str(value))
                     else: rangedkey_list.append(str(key))
                 else:
-                    error("Special rule: "+name+" could not be parsed.", "SpecialRules")
+                    print >>sys.stderr, "Unrecognized special rule:  "+name
                     specialkey_list.append(rule)
             unit["special"] = specialkey_list
             unit["ranged"] = rangedkey_list
