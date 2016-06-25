@@ -122,7 +122,9 @@ armybuilderController = function() {
 
     /* Adjust application view when unit selections change */
     function renderUnitSelections(armyList) {
-        units = armyList.items;
+        var default_values = {'player':'Orcy','army':'elfarmies','name':'New Army List','pts':2000};
+        armyList.meta = $.extend(default_values, armyList.meta);
+        var units = armyList.items;
         $('.forceList a.unitBtn').removeClass('disabled');
         var armyData = getArmyData();
         $.each(units, function(i,unit) {
