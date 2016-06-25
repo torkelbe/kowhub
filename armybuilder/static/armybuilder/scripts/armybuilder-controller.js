@@ -35,6 +35,11 @@ armybuilderController = function() {
         $.each(data, function(key, army) {
             armyChoiceList.push({"key":key,"name":army["name"]});
         });
+        armyChoiceList.sort(function(a,b) {
+            if (a.key < b.key) { return -1 }
+            if (a.key > b.key) { return 1 }
+            return 0;
+        });
         var armyChoiceTmpl = $.templates("#armyChoicePanelTmpl");
         var armyChoiceHtml = armyChoiceTmpl.render(armyChoiceList);
         $('#armyChoicePanel').html(armyChoiceHtml);
