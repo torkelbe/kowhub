@@ -62,7 +62,7 @@ armybuilderController = function() {
         $(armyPage).find('.forceList tbody').on('click', '.unitBtn', function(evt) {
             evt.preventDefault();
             var obj = getUnitObject(evt);
-            storageEngine.save('units', obj, function(data) {
+            storageEngine.addUnit('units', obj, function(data) {
                 renderUnitSelections(data);
             }, errorLogger);
         });
@@ -120,7 +120,7 @@ armybuilderController = function() {
 
     /* Load the set of unit selections from local webstorage */
     function loadUnitSelections() {
-        storageEngine.findAll('units', function(data) {
+        storageEngine.getList('units', function(data) {
             renderUnitSelections(data);
         }, errorLogger);
     }
@@ -248,7 +248,7 @@ armybuilderController = function() {
 
                 // Initialize storage engine
                 storageEngine.init(function() {
-                    storageEngine.initObjectStore('units', function() {
+                    storageEngine.initList('units', function() {
                         callback();
                     }, errorLogger)
                 }, errorLogger);
@@ -256,7 +256,7 @@ armybuilderController = function() {
                 // Button listener: Remove unit choice
                 $(armyPage).find('#choiceList tbody').on('click', '.removeBtn', function(evt) {
                     evt.preventDefault();
-                    storageEngine.remove('units', $(evt.target).parents('tr').data().unitId, function(data) {
+                    storageEngine.removeUnit('units', $(evt.target).parents('tr').data().unitId, function(data) {
                         renderUnitSelections(data);
                     }, errorLogger);
                 });
@@ -347,7 +347,7 @@ armybuilderController = function() {
                 $(armyPage).on('click', '.pdfBtn', function(evt) {
                     evt.preventDefault();
                     var senddata;
-                    storageEngine.findAll('units', function(data) {
+                    storageEngine.getList('units', function(data) {
                         var sendobj = generate_armylist_obj(data);
                         senddata = JSON.stringify(sendobj);
                     }, errorLogger);

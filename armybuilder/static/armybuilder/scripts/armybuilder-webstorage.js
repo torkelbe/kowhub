@@ -30,7 +30,7 @@ storageEngine = function() {
             }
         },
 
-        initObjectStore: function(type, successCallback, errorCallback) {
+        initList: function(type, successCallback, errorCallback) {
             if(!initialized) {
                 errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
             } else if(!localStorage.getItem(type)) {
@@ -38,6 +38,16 @@ storageEngine = function() {
             }
             initializedObjectStores[type] = true;
             successCallback(null);
+        },
+
+        removeList: function(type, successCallback, errorCallback) {
+            if(!initialized) {
+                errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
+            } else if(!localStorage.getItem(type)) {
+                errorCallback('store_not_initialized', 'The object store '+type+' has not been initialized');
+            }
+            localStorage.removeItem(type);
+            successCallback();
         },
 
         setMeta: function(type, obj, successCallback, errorCallback) {
@@ -52,7 +62,7 @@ storageEngine = function() {
             successCallback(formatReturnData(storageItem));
         },
 
-        save: function(type, obj, successCallback, errorCallback) {
+        addUnit: function(type, obj, successCallback, errorCallback) {
             if(!initialized) {
                 errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
             } else if(!initializedObjectStores[type]) {
@@ -65,7 +75,7 @@ storageEngine = function() {
             successCallback(formatReturnData(storageItem));
         },
         
-        findAll: function(type, successCallback, errorCallback) {
+        getList: function(type, successCallback, errorCallback) {
             if(!initialized) {
                 errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
             } else if(!initializedObjectStores[type]) {
@@ -75,7 +85,7 @@ storageEngine = function() {
             successCallback(formatReturnData(storageItem));
         },
 
-        remove: function(type, id, successCallback, errorCallback) {
+        removeUnit: function(type, id, successCallback, errorCallback) {
             if(!initialized) {
                 errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
             } else if(!initializedObjectStores[type]) {
@@ -89,35 +99,7 @@ storageEngine = function() {
             } else {
                 errorCallback('object_not_found', 'The object requested could not be found');
             }
-        },
-
-        findByProperty: function(type, propertyName, propertyValue, successCallback, errorCallback) {
-            if(!initialized) {
-                errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
-            } else if(!initializedObjectStores[type]) {
-                errorCallback('store_not_initialized', 'The object store '+type+' has not been initialized');
-            }
-            var result = [];
-            var storageItem = getStorageObject(type);
-            $.each(storageItem, function(i,v) {
-                if(v[propertyName] === propertyValue) {
-                    result.push(v);
-                }
-            });
-            successCallback(result);
-        },
-
-        findById: function(type, id, successCallback, errorCallback) {
-            if(!initialized) {
-                errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
-            } else if(!initializedObjectStores[type]) {
-                errorCallback('store_not_initialized', 'The object store '+type+' has not been initialized');
-            }
-            var storageItem = getStorageObject(type);
-            var result = storageItem[id];
-            successCallback(result);
         }
-
     }
 }();
 
