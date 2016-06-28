@@ -32,13 +32,6 @@ def get_rule_elements(name):
     value = parts[1].split(')')[0] if len(parts)>1 else ""
     return name, value
 
-def get_name_key(name):
-    return "".join(name.split()).replace('*','').replace('[1]','').lower()
-
-def error(line, filename):
-    print >>sys.stderr, "Format error when parsing "+filename+":"
-    print >>sys.stderr, "    "+line
-
 # === Parser ===
 def parse():
     obj = {}
@@ -127,14 +120,12 @@ def parse_army(file):
     #--- Units ---
     army["units"] = {}
     line = file.readline()
+    counter = 1
     while line:
         entry, name, typ, size, sp, me, ra, de, att, ne, pts, special, options = properties(line)
-        unitnamekey = get_name_key(name)
-        if not unitnamekey:
-            error(line, file.name)
-            exit(1)
         unit, line = parse_unit(line, file)
-        army["units"][unitnamekey] = unit
+        army["units"][counter] = unit
+        counter += 1
     return armynamekey, army
 
 def parse_unit(line, file):
