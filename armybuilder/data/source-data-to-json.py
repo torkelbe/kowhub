@@ -121,8 +121,7 @@ def parse_army(file):
     file.readline() # throw first line
     #--- Army Header ---
     line = file.readline()
-    entry, armyname, alignment = properties(line)[:3]
-    armynamekey = get_name_key(armyname)
+    entry, armyname, alignment, armynamekey = properties(line)[:4]
     army["name"] = armyname
     army["alignment"] = alignment
     #--- Units ---
