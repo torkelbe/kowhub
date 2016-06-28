@@ -99,6 +99,13 @@ storageEngine = function() {
             } else {
                 errorCallback('object_not_found', 'The object requested could not be found');
             }
+        },
+
+        findAllLists: function(successCallback, errorCallback) {
+            if(!initialized) {
+                errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
+            }
+            successCallback(Object.keys(localStorage));
         }
     }
 }();
