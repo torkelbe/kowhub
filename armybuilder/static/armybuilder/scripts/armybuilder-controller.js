@@ -29,6 +29,30 @@ armybuilderController = function() {
         return {"Sp":s[0],"Me":s[1],"Ra":s[2],"De":s[3],"Att":s[4],"Ne":s[5],"Pts":s[6]}
     }
 
+    /* Helper structure to avoid firing multiple identical events within the 500ms delay */
+    var waitForFinalEvent = (function() {
+        var timers = {};
+        return function (callback, ms, uniqueId) {
+            if (!uniqueId) {
+                uniqueId = "default uniqueId";
+            }
+            if (timers[uniqueId]) {
+                clearTimeout(timers[uniqueId]);
+            }
+            timers[uniqueId] = setTimeout(callback, ms);
+        };
+    })();
+    
+    /* Window resize listener */
+    $(window).on('resize', function(evt) {
+        waitForFinalEvent(function() {
+            var height = $(window).height() - $('#headerPanel').outerHeight(true) - $('#footerPanel').outerHeight(true);
+            height = height > 500 ? height : 500;
+            $('#mainPanel').outerHeight(height);
+            $('#leftPanelBody').height($('#leftPanel').height() - $('#leftPanelHeader').outerHeight(true));
+        }, 500, "resize string");
+    });
+
     /* Load buttons for selecting which army to handle */
     function loadArmyChoices(data) {
         var armyChoiceList = [];
@@ -367,6 +391,8 @@ armybuilderController = function() {
                     .always(function() {
                     });
                 });
+
+                $(window).resize();
 
                 initialized = true;
             }
