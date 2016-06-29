@@ -13,69 +13,76 @@
     </head>
 
     <body>
-        <header>
-            Torkel's Army Builder
-        </header>
+        <header></header>
         <main id="armybuilderPage">
-            <div id="leftPanel">
-                <div id="leftPanelHeader">
-                    <div id="forceListHeader">
-                        <div class="forceListReturnBtn"><div class="buttonWrapper"><div>Select an army</div></div></div>
-                        <div class="forceSectionBtn" data-section="unitList"><div class="buttonWrapper"><div>Units</div></div></div>
-                        <div class="forceSectionBtn" data-section="monList"><div class="buttonWrapper"><div>Monsters & Warengines</div></div></div>
-                        <div class="forceSectionBtn" data-section="heroList"><div class="buttonWrapper"><div>Heroes</div></div></div>
-                    </div>
-                </div>
-                <div id="leftPanelBody">
-                    <div id="armyChoicePanel"></div>
-                    <div id="unitChoicePanel"></div>
-                </div>
-                <div id="leftPanelFooter"></div>
+            <div id="headerPanel">
+                Torkel's Army Builder
             </div>
-            <div id="rightPanel">
-                <div id="rightPanelHeader">
-                    <div id="armylistTitle" class="rightHeaderField">
-                        <div></div>
-                        <textarea id="titleChange" style="display:none;" rows="1" cols="30" maxlength="30"></textarea>
+            <div id="mainPanel">
+                <div id="leftPanel">
+                    <div id="leftPanelHeader">
+                        <div id="forceListHeader">
+                            <div class="forceListReturnBtn"><div class="buttonWrapper"><div>Select an army</div></div></div>
+                            <div class="forceSectionBtn" data-section="unitList"><div class="buttonWrapper"><div>Units</div></div></div>
+                            <div class="forceSectionBtn" data-section="monList"><div class="buttonWrapper"><div>Monsters & Warengines</div></div></div>
+                            <div class="forceSectionBtn" data-section="heroList"><div class="buttonWrapper"><div>Heroes</div></div></div>
+                        </div>
                     </div>
-                    <div class="rightHeaderField">
-                        <button id="primaryArmyBtn" class="dropdownBtn"></button>
-                        <ul id="primaryArmyOptions" class="dropdownMenu"></ul>
+                    <div id="leftPanelBody">
+                        <div id="armyChoicePanel"></div>
+                        <div id="unitChoicePanel"></div>
                     </div>
-                    <div class="rightHeaderField">
-                        <button id="armylistPoints" class="dropdownBtn"></button>
-                        <ul id="armylistPointsOptions" class="dropdownMenu">
-                            <li><a href="#">1500</a></li>
-                            <li><a href="#">2000</a></li>
-                            <li><a href="#">2500</a></li>
-                        </ul>
+                    <div id="leftPanelFooter"></div>
+                </div>
+                <div id="rightPanel">
+                    <div id="rightPanelHeader">
+                        <div id="armylistTitle" class="rightHeaderField">
+                            <div></div>
+                            <textarea id="titleChange" style="display:none;" rows="1" cols="30" maxlength="30"></textarea>
+                        </div>
+                        <div class="rightHeaderField">
+                            <button id="primaryArmyBtn" class="dropdownBtn"></button>
+                            <ul id="primaryArmyOptions" class="dropdownMenu"></ul>
+                        </div>
+                        <div class="rightHeaderField">
+                            <button id="armylistPoints" class="dropdownBtn"></button>
+                            <ul id="armylistPointsOptions" class="dropdownMenu">
+                                <li><a href="#">1500</a></li>
+                                <li><a href="#">2000</a></li>
+                                <li><a href="#">2500</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="rightPanelBody">
+                        <table id="choiceList">
+                            <colgroup>
+                                <col width="45%">
+                                <col width="45%">
+                                <col width="10%">
+                            </colgroup>
+                            <tbody id="choiceListBody">
+                            </tbody>
+                            <tfoot>
+                                <td>Points total:</td>
+                                <td><span id="pointsTotal">0</span></td>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div id="rightPanelFooter">
+                        <span>
+                            <button class="pdfBtn">PDF</button>
+                        </span>
+                        <div id="statsTable"></div>
                     </div>
                 </div>
-                <div id="rightPanelBody">
-                    <table id="choiceList">
-                        <colgroup>
-                            <col width="45%">
-                            <col width="45%">
-                            <col width="10%">
-                        </colgroup>
-                        <tbody id="choiceListBody">
-                        </tbody>
-                        <tfoot>
-                            <td>Points total:</td>
-                            <td><span id="pointsTotal">0</span></td>
-                        </tfoot>
-                    </table>
-                </div>
-                <div id="rightPanelFooter">
-                    <span>
-                        <button class="pdfBtn">PDF</button>
-                    </span>
-                    <div id="statsTable"></div>
-                </div>
+            </div>
+            <div id="footerPanel">
+                <div id="footerLeftPanel"></div>
+                <div id="footerCenterPanel"></div>
+                <div id="footerRightPanel"></div>
             </div>
         </main>
-        <footer>
-        </footer>
+        <footer></footer>
     </body>
 
     <script>
