@@ -69,20 +69,16 @@ caption {
 #leftPanelHeader {
     height: 50px;
     margin-bottom: 10px;
-    width:100%;
     overflow: hidden;
 }
 #rightPanelHeader {
     height: 30px;
     margin-bottom: 10px;
-    width: 100%;
 }
 #leftPanelFooter {
-    width: 100%;
 }
 #rightPanelFooter {
     position: absolute;
-    width: 100%;
     bottom: 0px;
     left: 0px;
 }
