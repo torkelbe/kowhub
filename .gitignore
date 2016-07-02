@@ -5,6 +5,7 @@ db.sqlite3
 notes/*
 docs/*
 **/temp/*
+kowhub/static/*
 kowhubenv/*
 armybuilder/data/sources/*
 armybuilder/data/data.json
