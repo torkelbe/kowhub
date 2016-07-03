@@ -7,7 +7,7 @@ import json
 
 from kowpdfs import latexpdf
 
-DATAFILE = "armybuilder/data/data.json"
+DATAFILE = "armybuilder/data/kowdata.json"
 PDFSDIR = "armybuilder/kowpdfs/temp/"
 
 class AppView(generic.TemplateView):

@@ -7,6 +7,6 @@ docs/*
 **/temp/*
 kowhub/static/*
 kowhubenv/*
-armybuilder/data/sources/*
-armybuilder/data/data.json
+armybuilder/kowdatagen/sources/*
+**/kowdata.json
 kowhub/settings/local.py
