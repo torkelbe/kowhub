@@ -370,25 +370,38 @@ armybuilderController = function() {
                 // Button listener: Get armylist PDF
                 $(armyPage).on('click', '.pdfBtn', function(evt) {
                     evt.preventDefault();
-                    var senddata;
-                    storageEngine.getList('units', function(data) {
-                        var sendobj = generate_armylist_obj(data);
-                        senddata = JSON.stringify(sendobj);
-                    }, errorLogger);
-                    if(senddata.length < 10) {
-                        console.log("Error in senddata, did not request PDF");
-                        return;
+                    $(evt.target).addClass('disabled');
+                    var $tooltip = $(evt.target).siblings('.riseTooltip');
+                    if(true) {
+                        $tooltip.html("PDF generation is not yet enabled.");
+                    } else { // PDF generation not yet implemented
+                        var senddata, sendobj;
+                        storageEngine.getList('units', function(data) {
+                            sendobj = generate_armylist_obj(data);
+                            senddata = JSON.stringify(sendobj);
+                        }, errorLogger);
+                        if(sendobj.units.length > 0) {
+                            $.getJSON("pdfgen", senddata, function(response) {
+                                var pdfurl = "getpdf/" + response.id;
+                                window.open(pdfurl);
+                            })
+                            .done(function(data) {
+                                $tooltip.html("PDF successful");
+                            })
+                            .fail(function(d, textStatus, error) {
+                                $tooltip.html("Armylist PDF generator failed. Please try again, or notify admin.");
+                            })
+                            .always(function() {
+                            });
+                        } else {
+                            $tooltip.html("Empty armylist. PDF not requested");
+                        }
                     }
-                    $.getJSON("pdfgen", senddata, function(response) {
-                        var pdfurl = "getpdf/" + response.id;
-                        window.open(pdfurl);
-                    })
-                    .done(function(data) {
-                    })
-                    .fail(function(d, textStatus, error) {
-                        console.log("getJSON failed, status: " + textStatus + ", error: " + error);
-                    })
-                    .always(function() {
+                    $tooltip.slideDown(200).delay(2000).slideUp(200);
+                    $(evt.target).delay(2400).queue(function(next) {
+                        $(this).removeClass('disabled');
+                        $tooltip.html("");
+                        next();
                     });
                 });
 

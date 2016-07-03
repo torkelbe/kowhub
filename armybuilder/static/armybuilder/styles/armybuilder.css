@@ -82,6 +82,9 @@ caption {
     bottom: 0px;
     left: 0px;
 }
+#footerPanel {
+    padding: 0px 15px;
+}
 
 .unitName {
     font-variant: small-caps;
@@ -295,6 +298,15 @@ table.forceList td:not(.unitName) {
 }
 .dropdownMenu > li:hover {
     background: #bbb;
+}
+
+.riseTooltip {
+    display: none;
+    position: absolute;
+    transform: translateY(-100%);
+    width: 130px;
+    background-color: #dddddd;
+    padding: 10px;
 }
 
 .rightHeaderField {

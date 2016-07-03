@@ -5,10 +5,7 @@ from django.http import HttpResponse, Http404
 from django.views import generic
 import json
 
-from kowpdfs import latexpdf
-
 DATAFILE = "armybuilder/data/kowdata.json"
-PDFSDIR = "armybuilder/kowpdfs/temp/"
 
 class AppView(generic.TemplateView):
     template_name = 'armybuilder/application.html'
@@ -24,11 +21,11 @@ def dataobj(request):
 def makepdf(request):
     for value in request.GET:
         recvobj = json.loads(value)
-    fileid = latexpdf.make_latex_pdf(recvobj, DATAFILE)
+    fileid = 0000 # Not yet implemented
     return HttpResponse('{"id":'+fileid+'}', content_type="application/json")
 
 def openpdf(request, pdfid):
-    filename = PDFSDIR + pdfid + '.pdf'
+    filename = '' # Not yet implemented
     if os.path.exists(filename):
         with open(filename, 'r') as f:
             pdf = f.read()
