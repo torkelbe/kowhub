@@ -12,8 +12,9 @@ table, thead, tbody, tfoot, th, tr, td, textarea, select {
 
 body {
     background-color: lightblue;
-    min-width: 950px;
+    width: 950px;
     min-height: 600px;
+    margin: auto;
 }
 
 #headerPanel {
@@ -62,6 +63,7 @@ caption {
 }
 #rightPanel {
     margin-left: 475px;
+    width: 445px;
 }
 #leftPanel>div, #rightPanel>div {
     width: 100%;
@@ -81,9 +83,6 @@ caption {
     position: absolute;
     bottom: 0px;
     left: 0px;
-}
-#footerPanel {
-    padding: 0px 15px;
 }
 
 .unitName {
