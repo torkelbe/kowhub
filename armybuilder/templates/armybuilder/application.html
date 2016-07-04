@@ -94,14 +94,6 @@
         <footer></footer>
     </body>
 
-    <script>
-$(document).ready(function() {
-    armybuilderController.init($('#armybuilderPage'), function(army) {
-            armybuilderController.loadForceListJSON();
-    });
-});
-    </script>
-
     <script id="forceListTmpl" type="text/x-jsrender">
 <table id="unitList" data-army={?>key?} class="forceList">
     <thead>

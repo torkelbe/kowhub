@@ -436,3 +436,9 @@ armybuilderController = function() {
     }
 }();
 
+$(document).ready(function() {
+    armybuilderController.init($('#armybuilderPage'), function(army) {
+            armybuilderController.loadForceListJSON();
+    });
+});
+
