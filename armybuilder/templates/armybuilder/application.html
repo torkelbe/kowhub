@@ -5,11 +5,18 @@
     <head>
         <meta charset="utf=8">
         <title>Army Builder</title>
+
+        {% load compress %}
+        {% compress css %}
         <link rel="stylesheet" type="text/css" href="{% static "armybuilder/styles/armybuilder.css" %}" media="screen" />
-        <script src="{% static "armybuilder/scripts/jquery-2.2.3.js" %}"></script>
-        <script src="{% static "armybuilder/scripts/jsrender.js" %}"></script>
+        {% endcompress %}
+
+        {% compress js %}
+        <script src="{% static "armybuilder/scripts/jquery-3.0.0.min.js" %}"></script>
+        <script src="{% static "armybuilder/scripts/jsrender.min.js" %}"></script>
         <script src="{% static "armybuilder/scripts/armybuilder-controller.js" %}"></script>
         <script src="{% static "armybuilder/scripts/armybuilder-webstorage.js" %}"></script>
+        {% endcompress %}
     </head>
 
     <body>
@@ -78,7 +85,7 @@
                 <div id="footerCenterPanel"></div>
                 <div id="footerRightPanel">
                     <div id="mainPdfBtn">
-                        <span class="riseTooltip">This is a long tooltip about the result of the PDF request</span>
+                        <span class="riseTooltip"></span>
                         <button class="pdfBtn">PDF</button>
                     </div>
                 </div>
