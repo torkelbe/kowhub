@@ -5,9 +5,9 @@
     border: 1pt solid black;
     border-radius: 2pt;
     margin-bottom: 2px;
-}
-.alUnit:hover {
-    outline: 1pt solid black;
+    &:hover {
+        outline: 1pt solid black;
+    }
 }
 .alUnit:hover .alUnitBtnSet, .alUnitBtnSet:hover {
     visibility: visible;
@@ -25,6 +25,7 @@
     width: 70px;
     z-index: 2;
     padding-left: 2px;
+    background-color: white;
 
     div {
         display: inline-block;
@@ -42,16 +43,14 @@
     .alUnitBtnRm {
         font-size: 16px;
         background-color: #f44336;
-    }
-    .alUnitBtnRm:hover {
-        background-color: red;
+        &:hover {
+            background-color: red;
+        }
     }
     .alUnitBtnOpt {
         font-size: 16px;
         background-color: green;
     }
-}
-.alUnitBtnSet:hover {
 }
 .alUnitOpt {
     display: none;
@@ -127,16 +126,5 @@
         background-color: #bbb;
         width: 40px;
     }
-}
-
-#choiceList {
-}
-
-#choiceList>tbody>tr {
-    border: 1px solid blue;
-}
-
-#choiceList>tbody>tr:hover {
-    background-color: #f3f3f3;
 }
 
