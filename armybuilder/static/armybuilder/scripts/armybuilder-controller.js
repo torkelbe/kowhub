@@ -203,10 +203,7 @@ armybuilderController = function() {
         var herOverflow = stats.Hero - stats.Horde - stats.Legion;
         var monOverflow = stats.Monster - stats.Horde - stats.Legion;
         var wenOverflow = stats.Warengine - stats.Horde - stats.Legion;
-        var restSlots = stats.Regiment -
-            (herOverflow>0 ? herOverflow : 0) -
-            (monOverflow>0 ? monOverflow : 0) -
-            (wenOverflow>0 ? wenOverflow : 0);
+        var restSlots = stats.Regiment - (herOverflow>0 ? herOverflow : 0) - (monOverflow>0 ? monOverflow : 0) - (wenOverflow>0 ? wenOverflow : 0);
         stats.slotsTro = (2*stats.Regiment + 4*stats.Horde + 4*stats.Legion) - stats.Troop;
         stats.legalTro = stats.slotsTro >= 0;
         stats.slotsHer = restSlots - (herOverflow<0 ? herOverflow : 0);
