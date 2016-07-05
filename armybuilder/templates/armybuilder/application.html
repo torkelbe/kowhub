@@ -9,6 +9,7 @@
         {% load compress %}
         {% compress css %}
         <link rel="stylesheet" type="text/x-scss" href="{% static "armybuilder/styles/armybuilder.scss" %}" media="screen" />
+        <link rel="stylesheet" type="text/x-scss" href="{% static "armybuilder/styles/armylist.scss" %}" />
         {% endcompress %}
 
         {% compress js %}
@@ -42,38 +43,33 @@
                     <div id="leftPanelFooter"></div>
                 </div>
                 <div id="rightPanel">
-                    <div id="rightPanelHeader">
-                        <div id="armylistTitle" class="rightHeaderField">
-                            <div></div>
-                            <textarea id="titleChange" style="display:none;" rows="1" cols="30" maxlength="30"></textarea>
+                    <div id="armylistPanel">
+                        <div id="alHeader">
+                            <div id="armylistTitle" class="rightHeaderField">
+                                <div></div>
+                                <textarea id="titleChange" style="display:none;" rows="1" cols="30" maxlength="30"></textarea>
+                            </div>
+                            <div class="rightHeaderField">
+                                <button id="primaryArmyBtn" class="dropdownBtn"></button>
+                                <ul id="primaryArmyOptions" class="dropdownMenu"></ul>
+                            </div>
+                            <div class="rightHeaderField">
+                                <button id="armylistPoints" class="dropdownBtn"></button>
+                                <ul id="armylistPointsOptions" class="dropdownMenu">
+                                    <li><a href="#">1500</a></li>
+                                    <li><a href="#">2000</a></li>
+                                    <li><a href="#">2500</a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="rightHeaderField">
-                            <button id="primaryArmyBtn" class="dropdownBtn"></button>
-                            <ul id="primaryArmyOptions" class="dropdownMenu"></ul>
+                        <div id="alBody">
                         </div>
-                        <div class="rightHeaderField">
-                            <button id="armylistPoints" class="dropdownBtn"></button>
-                            <ul id="armylistPointsOptions" class="dropdownMenu">
-                                <li><a href="#">1500</a></li>
-                                <li><a href="#">2000</a></li>
-                                <li><a href="#">2500</a></li>
-                            </ul>
+                        <div id="alFooter">
+                            <div id="alPointsTotal">
+                            </div>
+                            <div id="alBtnPanel">
+                            </div>
                         </div>
-                    </div>
-                    <div id="rightPanelBody">
-                        <table id="choiceList">
-                            <colgroup>
-                                <col width="45%">
-                                <col width="45%">
-                                <col width="10%">
-                            </colgroup>
-                            <tbody id="choiceListBody">
-                            </tbody>
-                            <tfoot>
-                                <td>Points total:</td>
-                                <td><span id="pointsTotal">0</span></td>
-                            </tfoot>
-                        </table>
                     </div>
                     <div id="rightPanelFooter">
                         <div id="statsTable"></div>
@@ -173,35 +169,41 @@
 <li><a href="#" data-army={?:key?}>{?:name?}</a></li>
     </script>
 
-    <script id="unitChoiceTmpl" type="text/x-jsrender">
-    <tr data-unit-id={?:id?}>
-        <td class="unitName">{?:name?}{?:~suffix(form)?}</td>
-        <td>{?include stats tmpl="#unitStatsTmpl"/?}</td>
-        <td><nav><a href="#" class="removeBtn">X</a></nav></td>
-    </tr>
+    <script id="alBodyTmpl" type="text/x-jsrender">
+<div class="alUnit" data-unit-id={?>id?}>
+    <div class="alUnitOpt">UnitOpt</div>
+    <div class="alUnitType">{?:form?}<br>{?:~typeFormat(type)?}</div>
+    <div class="alUnitPts">{?:stats.Pts?}</div>
+    <div class="alUnitName">{?>name?}</div>
+    <div class="alUnitStats">
+        {?include stats tmpl="#unitStatsTmpl"/?}
+    </div>
+    <div class="alUnitBtnSet">
+        <div class="alUnitBtnRm"></div>
+        <div class="alUnitBtnOpt"></div>
+    </div>
+</div>
     </script>
 
     <script id="unitStatsTmpl" type="text/x-jsrender">
-    <table class="unitStats">
-        <thead>
-            <th>Sp</th>
-            <th>Me</th>
-            <th>Ra</th>
-            <th>De</th>
-            <th>Att</th>
-            <th>Ne</th>
-            <th>Pts</th>
-        </thead>
-        <tbody>
-            <td>{?>Sp?}</td>
-            <td>{?>Me?}</td>
-            <td>{?>Ra?}</td>
-            <td>{?>De?}</td>
-            <td>{?>Att?}</td>
-            <td>{?>Ne?}</td>
-            <td>{?>Pts?}</td>
-        </tbody>
-    </table>
+<table>
+    <thead>
+        <th class="alsp">Sp</th>
+        <th class="alme">Me</th>
+        <th class="alra">Ra</th>
+        <th class="alde">De</th>
+        <th class="alat">Att</th>
+        <th class="alne">Ne</th>
+    </thead>
+    <tbody>
+        <td class="alsp">{?>Sp?}</td>
+        <td class="alme">{?>Me?}</td>
+        <td class="alra">{?>Ra?}</td>
+        <td class="alde">{?>De?}</td>
+        <td class="alat">{?>Att?}</td>
+        <td class="alne">{?>Ne?}</td>
+    </tbody>
+</table>
     </script>
 
     <script id="statsTmpl" type="text/x-jsrender">
@@ -218,4 +220,3 @@
 </table>
     </script>
 </html>
-

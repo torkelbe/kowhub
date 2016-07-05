@@ -160,6 +160,7 @@ armybuilderController = function() {
             var unitData = armyData[unit.army]['units'][unit.key];
             unit.name = unitData['name'];
             unit.stats = unitData[unit.form];
+            unit.type = unitData['type'];
             // Disable button for chosen unique units
             if(unit.name.indexOf('[1]') > -1) {
                 $('.forceList td:contains('+unit.name+')').parents('tr').find('.unitBtn').addClass('disabled');
@@ -170,9 +171,9 @@ armybuilderController = function() {
         $(armyPage).find('#primaryArmyBtn').html(armyData[armyList.meta.army].name);
         $(armyPage).find('#armylistPoints').html(armyList.meta.pts+" Points");
         // Render armylist
-        var unitChoiceTmpl = $.templates("#unitChoiceTmpl");
-        var unitChoiceHtml = unitChoiceTmpl.render(units, tmplHelper);
-        $('#choiceListBody').html(unitChoiceHtml);
+        var alBodyTmpl = $.templates("#alBodyTmpl");
+        var alBodyHtml = alBodyTmpl.render(units, tmplHelper);
+        $('#alBody').html(alBodyHtml);
         // Render statistics
         var stats = calculateStatistics(armyList);
         var statsTmpl = $.templates("#statsTmpl");
@@ -257,10 +258,23 @@ armybuilderController = function() {
 
     /* Helper functions for forceList html template (jsrender) */
     var tmplHelper = {
-        suffix: function(form) { return $.inArray(form,["Troop","Regiment","Horde","Legion"]) >= 0 ? " "+form : ""; },
         isUnit: function(u) { return (u.Troop || u.Regiment || u.Horde || u.Legion) },
         isMon: function(u) { return (u.Monster || u.Warengine) },
-        isHero: function(u) { return (u.Hero) }
+        isHero: function(u) { return (u.Hero) },
+        typeFormat: function(form) {
+            if(form==="Monster" || form==="War Engine") {
+                return "";
+            } else {
+                return (
+                    {"Infantry":" (Inf)",
+                    "Large Infantry":" (Lrg Inf)",
+                    "Cavalry":" (Cav)",
+                    "Large Cavalry":" (Lrg Cav)",
+                    "Monster":" (Mon)",
+                    "War Engine":" (War Eng)"}
+                    )[form];
+            }
+        }
     }
 
     return {
@@ -278,9 +292,9 @@ armybuilderController = function() {
                 }, errorLogger);
 
                 // Button listener: Remove unit choice
-                $(armyPage).find('#choiceList tbody').on('click', '.removeBtn', function(evt) {
+                $(armyPage).find('#alBody').on('click', '.alUnitBtnRm', function(evt) {
                     evt.preventDefault();
-                    storageEngine.removeUnit('units', $(evt.target).parents('tr').data().unitId, function(data) {
+                    storageEngine.removeUnit('units', $(evt.target).parents('.alUnit').data().unitId, function(data) {
                         renderUnitSelections(data);
                     }, errorLogger);
                 });

@@ -1,0 +1,142 @@
+.alUnit {
+    display: block;
+    position: relative;
+    overflow: hidden; // To give it height when all content is floating
+    border: 1pt solid black;
+    border-radius: 2pt;
+    margin-bottom: 2px;
+}
+.alUnit:hover {
+    outline: 1pt solid black;
+}
+.alUnit:hover .alUnitBtnSet, .alUnitBtnSet:hover {
+    visibility: visible;
+}
+.alUnit>div {
+    float: left;
+    height: 40px;
+    align-items: center;
+}
+.alUnitBtnSet {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    width: 70px;
+    z-index: 2;
+    padding-left: 2px;
+
+    div {
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+        width: 30px;
+        margin-top: 5px;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        border: 1px solid #5b5b5b;
+        border-radius: 4px;
+    }
+    .alUnitBtnRm {
+        font-size: 16px;
+        background-color: #f44336;
+    }
+    .alUnitBtnRm:hover {
+        background-color: red;
+    }
+    .alUnitBtnOpt {
+        font-size: 16px;
+        background-color: green;
+    }
+}
+.alUnitBtnSet:hover {
+}
+.alUnitOpt {
+    display: none;
+}
+.alUnitType {
+    width: 70px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    text-align: center;
+    font-variant: small-caps;
+    font-weight: bold;
+}
+.alUnitPts {
+    display: flex;
+    justify-content: center;
+    width: 50px;
+    background-color: #ddd;
+}
+.alUnitName {
+    display: flex;
+    justify-content: left;
+    width: 143px;
+    padding: 4px 8px;
+    background-color: white;
+}
+.alUnitStats {
+    display: flex;
+    justify-content: center;
+    width: 180px;
+    height: 100%;
+
+    table {
+        table-layout: fixed;
+    }
+    th, td {
+        vertical-align: middle;
+        text-align: center;
+    }
+    th {
+        font-size: 10px;
+        height: 18px;
+        border-bottom: thin solid black;
+        font-weight: bold;
+    }
+    td {
+        font-size: 12px;
+        height: 22px;
+    }
+    .alsp {
+        background-color: #ddd;
+        width: 28px;
+    }
+    .alme {
+        background-color: #bbb;
+        width: 24px;
+    }
+    .alra {
+        background-color: #ddd;
+        width: 24px;
+    }
+    .alde {
+        background-color: #bbb;
+        width: 24px;
+    }
+    .alat {
+        background-color: #ddd;
+        width: 40px;
+    }
+    .alne {
+        background-color: #bbb;
+        width: 40px;
+    }
+}
+
+#choiceList {
+}
+
+#choiceList>tbody>tr {
+    border: 1px solid blue;
+}
+
+#choiceList>tbody>tr:hover {
+    background-color: #f3f3f3;
+}
+

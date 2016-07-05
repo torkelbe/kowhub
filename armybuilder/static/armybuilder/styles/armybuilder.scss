@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+* {
+    box-sizing: border-box;
+}
+
 body, h1, h2, h3, h4, h5, h6, p, ul, dl, ol, form, fieldset, input, label,
 table, thead, tbody, tfoot, th, tr, td, textarea, select {
     font-family: "helvetica neue";
@@ -54,16 +58,14 @@ caption {
     padding: 0px 15px;
     border: 0px;
     margin: 0px;
-    overflow-x: hidden;
     overflow-y: hidden;
 }
 #leftPanel {
     float: left;
-    width: 445px;
+    width: 475px;
 }
 #rightPanel {
-    margin-left: 475px;
-    width: 445px;
+    width: 475px;
 }
 #leftPanel>div, #rightPanel>div {
     width: 100%;
@@ -179,8 +181,8 @@ table.forceList td:not(.unitName) {
     font-size: 16px;
     border: 1px solid #5b5b5b;
     border-radius: 4px;
-    width: 83px;
-    height: 83px;
+    width: 85px;
+    height: 85px;
     margin: 0px;
     cursor: pointer;
 }
@@ -208,46 +210,14 @@ table.forceList td:not(.unitName) {
     color: #f44336;
 }
 
-#choiceList {
-}
-
-#choiceList>tbody>tr {
-    border: 1px solid blue;
-}
-
-#choiceList>tbody>tr:hover {
-    background-color: #f3f3f3;
-}
-
-.removeBtn {
-    display: inline-block;
-    text-decoration: none;
-    background-color: #f44336;
-    color: white;
-    font-size: 16px;
-    border: 1px solid #5b5b5b;
-    border-radius: 4px;
-    width: 25px;
-    line-height: 25px;
-    margin: 2px;
-}
-
-.unitBtn:hover, .armyBtn:hover, .removeBtn:hover {
+.unitBtn:hover, .armyBtn:hover {
     background-color: red;
 }
 
-.unitStats {
-    margin: 2px 15px;
+#alHeader {
+    margin-bottom: 15px;
 }
-
-.unitStats th, .unitStats td {
-    padding: 0px 2px;
-    font-size: 12px;
-}
-
-.unitStats th {
-    border-bottom: thin solid black;
-    font-weight: bold;
+#alBody {
 }
 
 #statsTable {
@@ -287,6 +257,7 @@ table.forceList td:not(.unitName) {
     background: #dddddd;
     text-decoration: none;
     list-style-type: none;
+    z-index: 4;
 }
 .dropdownMenu > li {
     background: #eee;
@@ -303,7 +274,7 @@ table.forceList td:not(.unitName) {
     display: none;
     position: absolute;
     transform: translateY(-100%);
-    width: 130px;
+    width: 150px;
     background-color: #dddddd;
     padding: 10px;
 }
