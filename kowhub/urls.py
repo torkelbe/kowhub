@@ -16,9 +16,14 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import RedirectView
+from django.conf import settings
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
     url(r'^armybuilder/', include('armybuilder.urls')),
     url(r'^$', RedirectView.as_view(url='armybuilder')),
 ]
+
+if settings.ADMIN_ENABLED:
+    urlpatterns += [
+        url(r'^admin/', admin.site.urls),
+    ]

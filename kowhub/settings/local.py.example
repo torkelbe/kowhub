@@ -3,6 +3,7 @@ from kowhub.settings.base import BASE_DIR
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+ADMIN_ENABLED = True
 
 COMPRESS_ENABLED = False
 
