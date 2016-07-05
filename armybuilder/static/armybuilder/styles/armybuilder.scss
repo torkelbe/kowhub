@@ -296,17 +296,17 @@ table.forceList {
     line-height: 30px;
 }
 
-.scroller {
+.topScroll, .botScroll {
     position: absolute;
     visibility: hidden;
     height: 20px;
     width: 100%;
 }
-#topScroll {
+.topScroll {
     top: 25px;
     background-color: blue;
 }
-#botScroll {
+.botScroll {
     bottom: 0px;
     background-color: blue;
 }

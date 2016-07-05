@@ -35,6 +35,26 @@ armybuilderController = function() {
     jQuery.fn.hideV = function() {
         this.css('visibility', 'hidden');
     }
+    jQuery.fn.addScrollIndicator = function() {
+        this.on('scroll', function(evt) {
+            var e = $(evt.target);
+            var topScoll = e.closest('.scrollPanel').children('.topScroll');
+            var botScoll = e.closest('.scrollPanel').children('.botScroll');
+            if(e.scrollHeight == e.outerHeight()) {
+                topScroll.hideV();
+                botScroll.hideV();
+            } else if(e.scrollTop() < 10) {
+                topScroll.hideV();
+                botScroll.showV();
+            } else if(e.scrollHeight - e.scrollTop() < e.outerHeight() + 10) {
+                topScroll.showV();
+                botScroll.hideV();
+            } else {
+                topScroll.showV();
+                botScroll.showV();
+            }
+        });
+    }
 
     /* Helper structure to avoid firing multiple identical events within the 500ms delay */
     var waitForFinalEvent = (function() {
@@ -100,16 +120,20 @@ armybuilderController = function() {
         // forceList scroll listener
         $(armyPage).find('.forceList tbody').on('scroll', function(evt) {
             var e = $(evt.target);
+            var topScroll = e.closest('table').siblings('.topScroll');
+            var botScroll = e.closest('table').siblings('.botScroll');
             if(e[0].scrollHeight == e.outerHeight()) {
-                $('.scroller').hideV();
+                topScroll.hideV();
+                botScroll.hideV();
             } else if(e.scrollTop() < 10) {
-                $('#topScroll').hideV();
-                $('#botScroll').showV();
+                topScroll.hideV();
+                botScroll.showV();
             } else if(e[0].scrollHeight - e.scrollTop() < e.outerHeight() + 10) {
-                $('#topScroll').showV();
-                $('#botScroll').hideV();
+                topScroll.showV();
+                botScroll.hideV();
             } else {
-                $('.scroller').showV();
+                topScroll.showV();
+                botScroll.showV();
             }
         });
         $('#unitList tbody').scroll();
