@@ -297,7 +297,7 @@ table.forceList td:not(.unitName) {
 
 .scroller {
     position: absolute;
-    display: none;
+    visibility: hidden;
     height: 20px;
     width: 100%;
 }

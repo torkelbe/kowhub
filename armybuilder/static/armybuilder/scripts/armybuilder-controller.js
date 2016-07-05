@@ -29,6 +29,13 @@ armybuilderController = function() {
         return {"Sp":s[0],"Me":s[1],"Ra":s[2],"De":s[3],"Att":s[4],"Ne":s[5],"Pts":s[6]}
     }
 
+    jQuery.fn.showV = function() {
+        this.css('visibility', 'visible');
+    }
+    jQuery.fn.hideV = function() {
+        this.css('visibility', 'hidden');
+    }
+
     /* Helper structure to avoid firing multiple identical events within the 500ms delay */
     var waitForFinalEvent = (function() {
         var timers = {};
@@ -94,15 +101,15 @@ armybuilderController = function() {
         $(armyPage).find('.forceList tbody').on('scroll', function(evt) {
             var e = $(evt.target);
             if(e[0].scrollHeight == e.outerHeight()) {
-                $('.scroller').hide();
+                $('.scroller').hideV();
             } else if(e.scrollTop() < 10) {
-                $('#topScroll').hide();
-                $('#botScroll').show();
+                $('#topScroll').hideV();
+                $('#botScroll').showV();
             } else if(e[0].scrollHeight - e.scrollTop() < e.outerHeight() + 10) {
-                $('#topScroll').show();
-                $('#botScroll').hide();
+                $('#topScroll').showV();
+                $('#botScroll').hideV();
             } else {
-                $('.scroller').show();
+                $('.scroller').showV();
             }
         });
         $('#unitList tbody').scroll();
