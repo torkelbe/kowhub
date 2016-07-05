@@ -204,7 +204,7 @@ armybuilderController = function() {
         // Render armylist
         var alBodyTmpl = $.templates("#alBodyTmpl");
         var alBodyHtml = alBodyTmpl.render(units, tmplHelper);
-        $('#alBody').html(alBodyHtml);
+        $('#armylistPanel>section').html(alBodyHtml);
         // Render statistics
         var stats = calculateStatistics(armyList);
         var statsTmpl = $.templates("#statsTmpl");
@@ -320,7 +320,7 @@ armybuilderController = function() {
                 }, errorLogger);
 
                 // Button listener: Remove unit choice
-                $(armyPage).find('#alBody').on('click', '.alUnitBtnRm', function(evt) {
+                $(armyPage).find('#armylistPanel>section').on('click', '.alUnitBtnRm', function(evt) {
                     evt.preventDefault();
                     storageEngine.removeUnit('units', $(evt.target).parents('.alUnit').data().unitId, function(data) {
                         renderUnitSelections(data);

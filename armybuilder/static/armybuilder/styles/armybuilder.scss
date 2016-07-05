@@ -197,26 +197,31 @@ table.forceList {
 #rightPanel {
     width: 475px;
     height: 100%;
-    position: relative;
     padding: 0px 15px;
-    border: 0px;
-    margin: 0px;
-    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
 
-    #alHeader {
-        margin-bottom: 15px;
-    }
-    #alBody {
-        height: 300px;
-        overflow-y: auto;
-        outline: 1px solid black;
+    #armylistPanel {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+
+        header {
+            flex: 0 1 content;
+            margin-bottom: 15px;
+        }
+        section {
+            flex: 1 1 auto;
+            height: 300px;
+            overflow-y: auto;
+        }
+        footer {
+            flex: 0 1 content;
+        }
     }
 
     #rightPanelFooter {
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        width: 100%;
+        flex: 0 1 content;
     }
 }
 
