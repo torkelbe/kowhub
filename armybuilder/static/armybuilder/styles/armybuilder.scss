@@ -41,18 +41,7 @@ body {
     background-color: #d1e0e1;
 }
 
-table {
-    text-align: center;
-    border-collapse: collapse;
-}
-
-caption {
-    line-height: 40px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-#leftPanel, #rightPanel {
+#leftPanel {
     height: 100%;
     position: relative;
     padding: 0px 15px;
@@ -62,9 +51,6 @@ caption {
 }
 #leftPanel {
     float: left;
-    width: 475px;
-}
-#rightPanel {
     width: 475px;
 }
 #leftPanelHeader {
@@ -77,11 +63,6 @@ caption {
     margin-bottom: 10px;
 }
 #leftPanelFooter {
-}
-#rightPanelFooter {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
 }
 
 .unitName {
@@ -120,6 +101,8 @@ caption {
 table.forceList {
     display: none;
     width: 100%;
+    text-align: center;
+    border-collapse: collapse;
     thead {
         display: block;
     }
@@ -208,10 +191,33 @@ table.forceList {
     background-color: red;
 }
 
-#alHeader {
-    margin-bottom: 15px;
-}
-#alBody {
+
+
+
+#rightPanel {
+    width: 475px;
+    height: 100%;
+    position: relative;
+    padding: 0px 15px;
+    border: 0px;
+    margin: 0px;
+    overflow-y: hidden;
+
+    #alHeader {
+        margin-bottom: 15px;
+    }
+    #alBody {
+        height: 300px;
+        overflow-y: auto;
+        outline: 1px solid black;
+    }
+
+    #rightPanelFooter {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+    }
 }
 
 #statsTable {
@@ -219,6 +225,7 @@ table.forceList {
     table {
         margin: 15px auto;
         text-align: left;
+        border-collapse: collapse;
     }
     tbody {
         border-top: 1px solid black;

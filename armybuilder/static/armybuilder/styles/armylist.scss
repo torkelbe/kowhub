@@ -5,17 +5,17 @@
     border: 1pt solid black;
     border-radius: 2pt;
     margin-bottom: 2px;
+    &>div {
+        float: left;
+        height: 40px;
+        align-items: center;
+    }
     &:hover {
         outline: 1pt solid black;
     }
 }
 .alUnit:hover .alUnitBtnSet, .alUnitBtnSet:hover {
     visibility: visible;
-}
-.alUnit>div {
-    float: left;
-    height: 40px;
-    align-items: center;
 }
 .alUnitBtnSet {
     position: absolute;
@@ -87,6 +87,7 @@
 
     table {
         table-layout: fixed;
+        border-collapse: collapse;
     }
     th, td {
         vertical-align: middle;
