@@ -177,15 +177,16 @@
     <script id="armylistUnitTmpl" type="text/x-jsrender">
 <div class="alUnit" data-unit-id={?>id?}>
     <div class="alUnitOpt">UnitOpt</div>
-    <div class="alUnitType">{?:form?}<br>{?:~typeFormat(type)?}</div>
+    <div class="alUnitType">{?:form?}<br>{?:~typeFormat(type)?}
+        <div class="alUnitBtnSet">
+            <div class="alUnitBtnRm"></div>
+            <div class="alUnitBtnOpt"></div>
+        </div>
+    </div>
     <div class="alUnitPts">{?:stats.Pts?}</div>
     <div class="alUnitName">{?>name?}</div>
     <div class="alUnitStats">
         {?include stats tmpl="#unitStatsTmpl"/?}
-    </div>
-    <div class="alUnitBtnSet">
-        <div class="alUnitBtnRm"></div>
-        <div class="alUnitBtnOpt"></div>
     </div>
 </div>
     </script>
