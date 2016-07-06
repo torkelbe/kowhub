@@ -36,17 +36,17 @@ armybuilderController = function() {
         this.css('visibility', 'hidden');
     }
     jQuery.fn.addScrollIndicator = function() {
-        this.on('scroll', function(evt) {
+        $(this).children('div').on('scroll', function(evt) {
             var e = $(evt.target);
-            var topScoll = e.closest('.scrollPanel').children('.topScroll');
-            var botScoll = e.closest('.scrollPanel').children('.botScroll');
-            if(e.scrollHeight == e.outerHeight()) {
+            var topScroll = e.children('.topScroll');
+            var botScroll = e.children('.botScroll');
+            if(e[0].scrollHeight == e.outerHeight()) {
                 topScroll.hideV();
                 botScroll.hideV();
             } else if(e.scrollTop() < 10) {
                 topScroll.hideV();
                 botScroll.showV();
-            } else if(e.scrollHeight - e.scrollTop() < e.outerHeight() + 10) {
+            } else if(e[0].scrollHeight - e.scrollTop() < e.outerHeight() + 10) {
                 topScroll.showV();
                 botScroll.hideV();
             } else {
@@ -202,9 +202,9 @@ armybuilderController = function() {
         $(armyPage).find('#primaryArmyBtn').html(armyData[armyList.meta.army].name);
         $(armyPage).find('#armylistPoints').html(armyList.meta.pts+" Points");
         // Render armylist
-        var alBodyTmpl = $.templates("#alBodyTmpl");
-        var alBodyHtml = alBodyTmpl.render(units, tmplHelper);
-        $('#armylistPanel>section').html(alBodyHtml);
+        var unitTmpl = $.templates("#armylistUnitTmpl");
+        var unitsHtml = unitTmpl.render(units, tmplHelper);
+        $('#armylistPanel .scrollContent').html(unitsHtml);
         // Render statistics
         var stats = calculateStatistics(armyList);
         var statsTmpl = $.templates("#statsTmpl");
@@ -212,6 +212,8 @@ armybuilderController = function() {
         $('#statsTable').html(statsHtml);
         // Set total points value
         $('#pointsTotal').html(stats.points);
+        // Evaluate scroll bar
+        $(armyPage).find('#armylistPanel .scrollPanel>div').scroll();
     }
     
     /* Calculate statistics for unit selections and update info table */
@@ -320,7 +322,7 @@ armybuilderController = function() {
                 }, errorLogger);
 
                 // Button listener: Remove unit choice
-                $(armyPage).find('#armylistPanel>section').on('click', '.alUnitBtnRm', function(evt) {
+                $(armyPage).find('#armylistPanel').on('click', '.alUnitBtnRm', function(evt) {
                     evt.preventDefault();
                     storageEngine.removeUnit('units', $(evt.target).parents('.alUnit').data().unitId, function(data) {
                         renderUnitSelections(data);
@@ -408,6 +410,9 @@ armybuilderController = function() {
                         changeArmyListTitle();
                     }
                 });
+
+                // Button listener: scroll indicator for armylist in right panel
+                $(armyPage).find('#armylistPanel .scrollPanel').addScrollIndicator();
 
                 // Button listener: Get armylist PDF
                 $(armyPage).on('click', '.pdfBtn', function(evt) {

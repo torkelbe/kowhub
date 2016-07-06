@@ -212,8 +212,6 @@ table.forceList {
         }
         section {
             flex: 1 1 auto;
-            height: 300px;
-            overflow-y: auto;
         }
         footer {
             flex: 0 1 content;
@@ -301,6 +299,15 @@ table.forceList {
     line-height: 30px;
 }
 
+.scrollPanel {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    &>div {
+        flex: 1 1 auto;
+        overflow-y: scroll;
+    }
+}
 .topScroll, .botScroll {
     position: absolute;
     visibility: hidden;
@@ -308,12 +315,15 @@ table.forceList {
     width: 100%;
 }
 .topScroll {
-    top: 25px;
+    top: 0px;
     background-color: blue;
 }
 .botScroll {
     bottom: 0px;
     background-color: blue;
+}
+#leftPanelTopScroll {
+    top: 25px;
 }
 
 ::-webkit-scrollbar {

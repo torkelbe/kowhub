@@ -62,7 +62,13 @@
                                 </ul>
                             </div>
                         </header>
-                        <section> </section>
+                        <section class="scrollPanel">
+                            <div>
+                                <div class="scrollContent"></div>
+                                <div class="topScroll"></div>
+                                <div class="botScroll"></div>
+                            </div>
+                        </section>
                         <footer>
                             <div id="alPointsTotal">
                             </div>
@@ -146,7 +152,7 @@
     {?/props?}
     </tbody>
 </table>
-<div class="topScroll">
+<div id="leftPanelTopScroll" class="topScroll">
 </div>
 <div class="botScroll">
 </div>
@@ -168,7 +174,7 @@
 <li><a href="#" data-army={?:key?}>{?:name?}</a></li>
     </script>
 
-    <script id="alBodyTmpl" type="text/x-jsrender">
+    <script id="armylistUnitTmpl" type="text/x-jsrender">
 <div class="alUnit" data-unit-id={?>id?}>
     <div class="alUnitOpt">UnitOpt</div>
     <div class="alUnitType">{?:form?}<br>{?:~typeFormat(type)?}</div>
