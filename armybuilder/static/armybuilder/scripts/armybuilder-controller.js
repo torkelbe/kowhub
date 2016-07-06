@@ -198,11 +198,11 @@ armybuilderController = function() {
         stats.slotsTro = (2*stats.Regiment + 4*stats.Horde + 4*stats.Legion) - stats.Troop;
         stats.legalTro = stats.slotsTro >= 0;
         stats.slotsHer = restSlots - (herOverflow<0 ? herOverflow : 0);
-        stats.legalHer = stats.slotsHer >= 0;
+        stats.legalHer = stats.Hero > 0 ? stats.slotsHer >= 0 : true;
         stats.slotsMon = restSlots - (monOverflow<0 ? monOverflow : 0);
-        stats.legalMon = stats.slotsMon >= 0;
+        stats.legalMon = stats.Monster > 0 ? stats.slotsMon >= 0 : true;
         stats.slotsWen = restSlots - (wenOverflow<0 ? wenOverflow : 0);
-        stats.legalWen = stats.slotsWen >= 0;
+        stats.legalWen = stats.Warengine > 0 ? stats.slotsWen >= 0 : true;
         stats.allies = Math.ceil(100 * stats.allies / (stats.points+1));
         stats.legalAllies = stats.allies <= 25;
         stats.pointsLimit = armyList.meta.pts;
