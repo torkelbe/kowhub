@@ -313,6 +313,7 @@ table.forceList {
     visibility: hidden;
     height: 20px;
     width: 100%;
+    z-index: 2;
 }
 .topScroll {
     top: 0px;
