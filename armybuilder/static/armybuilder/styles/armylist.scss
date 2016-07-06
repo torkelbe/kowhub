@@ -1,12 +1,10 @@
 .alUnit {
-    display: block;
+    display: flex;
     position: relative;
-    overflow: hidden; // To give it height when all content is floating
     border: 1pt solid black;
     border-radius: 2pt;
     margin-bottom: 2px;
     &>div {
-        float: left;
         height: 40px;
         align-items: center;
     }
@@ -26,7 +24,6 @@
     z-index: 2;
     padding-left: 2px;
     background-color: white;
-
     div {
         display: inline-block;
         height: 30px;
@@ -56,12 +53,11 @@
     display: none;
 }
 .alUnitType {
-    width: 70px;
-    background-color: white;
     display: flex;
     justify-content: center;
-    align-items: center;
+    flex: 0 1 70px;
     padding: 2px;
+    background-color: white;
     text-align: center;
     font-variant: small-caps;
     font-weight: bold;
@@ -69,22 +65,18 @@
 .alUnitPts {
     display: flex;
     justify-content: center;
-    width: 50px;
+    flex: 0 2 50px;
     background-color: #ddd;
 }
 .alUnitName {
     display: flex;
     justify-content: left;
-    width: 135px;
+    flex: 1 2 135px;
     padding: 4px 8px;
     background-color: white;
 }
 .alUnitStats {
-    display: flex;
-    justify-content: center;
-    width: 180px;
-    height: 100%;
-
+    flex: 0 0 180px;
     table {
         table-layout: fixed;
         border-collapse: collapse;
@@ -98,6 +90,7 @@
         height: 18px;
         border-bottom: thin solid black;
         font-weight: bold;
+        color: #444;
     }
     td {
         font-size: 12px;
