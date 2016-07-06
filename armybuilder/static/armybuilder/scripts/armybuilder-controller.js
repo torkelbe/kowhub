@@ -35,26 +35,6 @@ armybuilderController = function() {
     jQuery.fn.hideV = function() {
         this.css('visibility', 'hidden');
     }
-    jQuery.fn.addScrollIndicator = function() {
-        $(this).children('div').on('scroll', function(evt) {
-            var e = $(evt.target);
-            var topScroll = e.children('.topScroll');
-            var botScroll = e.children('.botScroll');
-            if(e[0].scrollHeight == e.outerHeight()) {
-                topScroll.hideV();
-                botScroll.hideV();
-            } else if(e.scrollTop() < 10) {
-                topScroll.hideV();
-                botScroll.showV();
-            } else if(e[0].scrollHeight - e.scrollTop() < e.outerHeight() + 10) {
-                topScroll.showV();
-                botScroll.hideV();
-            } else {
-                topScroll.showV();
-                botScroll.showV();
-            }
-        });
-    }
 
     /* Helper structure to avoid firing multiple identical events within the 500ms delay */
     var waitForFinalEvent = (function() {
@@ -117,26 +97,6 @@ armybuilderController = function() {
                 renderUnitSelections(data);
             }, errorLogger);
         });
-        // forceList scroll listener
-        $(armyPage).find('.forceList tbody').on('scroll', function(evt) {
-            var e = $(evt.target);
-            var topScroll = e.closest('table').siblings('.topScroll');
-            var botScroll = e.closest('table').siblings('.botScroll');
-            if(e[0].scrollHeight == e.outerHeight()) {
-                topScroll.hideV();
-                botScroll.hideV();
-            } else if(e.scrollTop() < 10) {
-                topScroll.hideV();
-                botScroll.showV();
-            } else if(e[0].scrollHeight - e.scrollTop() < e.outerHeight() + 10) {
-                topScroll.showV();
-                botScroll.hideV();
-            } else {
-                topScroll.showV();
-                botScroll.showV();
-            }
-        });
-        $('#unitList tbody').scroll();
         renderUnitChoices();
         // Rerender unit selections
         loadUnitSelections();
@@ -204,7 +164,7 @@ armybuilderController = function() {
         // Render armylist
         var unitTmpl = $.templates("#armylistUnitTmpl");
         var unitsHtml = unitTmpl.render(units, tmplHelper);
-        $('#armylistPanel .scrollContent').html(unitsHtml);
+        $('#armylistPanel>section').html(unitsHtml);
         // Render statistics
         var stats = calculateStatistics(armyList);
         var statsTmpl = $.templates("#statsTmpl");
@@ -212,8 +172,6 @@ armybuilderController = function() {
         $('#statsTable').html(statsHtml);
         // Set total points value
         $('#pointsTotal').html(stats.points);
-        // Evaluate scroll bar
-        $(armyPage).find('#armylistPanel .scrollPanel>div').scroll();
     }
     
     /* Calculate statistics for unit selections and update info table */
@@ -355,7 +313,6 @@ armybuilderController = function() {
                     $sections.children().hide();
                     var sectionChoice = $(evt.target).closest('.forceSectionBtn').data().section;
                     $sections.find('#'+sectionChoice).show();
-                    $sections.find('#'+sectionChoice+' tbody').scroll();
                 });
 
                 // Button listener: Display drop-down menus
@@ -410,9 +367,6 @@ armybuilderController = function() {
                         changeArmyListTitle();
                     }
                 });
-
-                // Button listener: scroll indicator for armylist in right panel
-                $(armyPage).find('#armylistPanel .scrollPanel').addScrollIndicator();
 
                 // Button listener: Get armylist PDF
                 $(armyPage).on('click', '.pdfBtn', function(evt) {

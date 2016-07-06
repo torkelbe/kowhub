@@ -212,6 +212,7 @@ table.forceList {
         }
         section {
             flex: 1 1 auto;
+            overflow-y: scroll;
         }
         footer {
             flex: 0 1 content;
@@ -299,34 +300,22 @@ table.forceList {
     line-height: 30px;
 }
 
-.scrollPanel {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    &>div {
-        flex: 1 1 auto;
-        overflow-y: scroll;
+#mainPanel {
+    ::-webkit-scrollbar {
+        width: 8px;
     }
-}
-.topScroll, .botScroll {
-    position: absolute;
-    visibility: hidden;
-    height: 20px;
-    width: 100%;
-    z-index: 2;
-}
-.topScroll {
-    top: 0px;
-    background-color: blue;
-}
-.botScroll {
-    bottom: 0px;
-    background-color: blue;
-}
-#leftPanelTopScroll {
-    top: 25px;
-}
-
-::-webkit-scrollbar {
-    display: none;
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: rgba(255,0,0,0.6);
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    }
+    ::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(255,0,0,0.3);
+    }
 }
