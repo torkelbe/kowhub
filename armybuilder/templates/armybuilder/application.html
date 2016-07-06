@@ -167,7 +167,8 @@
     <script id="armylistUnitTmpl" type="text/x-jsrender">
 <div class="alUnit" data-unit-id={?>id?}>
     <div class="alUnitOpt">UnitOpt</div>
-    <div class="alUnitType">{?:form?}<br>{?:~typeFormat(type)?}
+    <div class="alUnitType">{?:form?}
+        <div style="display:none;">{?:~typeFormat(type)?}</div>
         <div class="alUnitBtnSet">
             <div class="alUnitBtnRm"></div>
             <div class="alUnitBtnOpt"></div>
