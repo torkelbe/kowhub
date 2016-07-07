@@ -22,6 +22,11 @@ def properties(line, separator):
         e = e.strip()
     return elements
 
+def split_line(line, separator):
+    entry, order, key, name, typ, size, sp, me, ra, de, att, ne, pts, special, options = properties(line, separator)
+    stats = get_stats_obj(sp, me, ra, de, att, ne, pts)
+    return entry, order, key, name, typ, size, stats, special, options
+
 def get_rule_elements(name):
     parts = name.split('(')
     name = parts[0].strip()
@@ -116,7 +121,7 @@ class CsvParser:
         file.readline() # throw first line
         #--- Army Header ---
         line = file.readline()
-        entry, armyname, alignment, armynamekey = properties(line, self.separator)[:4]
+        entry, order, key, armyname, alignment, armynamekey = properties(line, self.separator)[:6]
         army["name"] = armyname
         army["alignment"] = alignment
         #--- Units ---
@@ -124,7 +129,7 @@ class CsvParser:
         line = file.readline()
         counter = 1
         while line:
-            entry, name, typ, size, sp, me, ra, de, att, ne, pts, special, options = properties(line, self.separator)
+            entry, order, key, name, typ, size, stats, special, options = split_line(line, self.separator)
             unit, line = self.parse_unit(line, file)
             army["units"][counter] = unit
             counter += 1
@@ -132,7 +137,7 @@ class CsvParser:
 
     def parse_unit(self, line, file):
         unit = {}
-        entry, name, typ, size, sp, me, ra, de, att, ne, pts, special, options = properties(line, self.separator)
+        entry, order, key, name, typ, size, stats, special, options = split_line(line, self.separator)
         unit["name"] = name
         unit["type"] = typ
         unit["special"] = special
@@ -140,26 +145,26 @@ class CsvParser:
         new_line = ""
         if not size:
             if entry=="hero":
-                unit["Hero"] = get_stats_obj(sp, me, ra, de, att, ne, pts)
+                unit["Hero"] = stats
             elif typ=="Monster":
-                unit["Monster"] = get_stats_obj(sp, me, ra, de, att, ne, pts)
+                unit["Monster"] = stats
             elif typ=="War Engine":
-                unit["Warengine"] = get_stats_obj(sp, me, ra, de, att, ne, pts)
+                unit["Warengine"] = stats
             return unit, file.readline()
         if size=="Troop":
-            unit["Troop"] = get_stats_obj(sp, me, ra, de, att, ne, pts)
+            unit["Troop"] = stats
             new_line = file.readline()
-            entry, name, typ, size, sp, me, ra, de, att, ne, pts, special, options = properties(new_line, self.separator)
+            entry, order, key, name, typ, size, stats, special, options = split_line(new_line, self.separator)
         if size=="Regiment" and not name:
-            unit["Regiment"] = get_stats_obj(sp, me, ra, de, att, ne, pts)
+            unit["Regiment"] = stats
             new_line = file.readline()
-            entry, name, typ, size, sp, me, ra, de, att, ne, pts, special, options = properties(new_line, self.separator)
+            entry, order, key, name, typ, size, stats, special, options = split_line(new_line, self.separator)
         if size=="Horde" and not name:
-            unit["Horde"] = get_stats_obj(sp, me, ra, de, att, ne, pts)
+            unit["Horde"] = stats
             new_line = file.readline()
-            entry, name, typ, size, sp, me, ra, de, att, ne, pts, special, options = properties(new_line, self.separator)
+            entry, order, key, name, typ, size, stats, special, options = split_line(new_line, self.separator)
         if size=="Legion" and not name:
-            unit["Legion"] = get_stats_obj(sp, me, ra, de, att, ne, pts)
+            unit["Legion"] = stats
             new_line = file.readline()
         return unit, new_line
 
