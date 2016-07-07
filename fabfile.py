@@ -1,3 +1,5 @@
+import os
+import subprocess
 from fabric.api import *
 from armybuilder.kowdatagen import source_to_json
 
@@ -55,4 +57,28 @@ def deploy():
 @task
 def update_data():
     source_to_json.generate_data()
+
+@task
+def database(cmd="status"):
+    data_file = "/Users/torkel/Library/Application Support/Postgres/var-9.5"
+    FNULL = open(os.devnull,'w')
+    if cmd=="start":
+        retcode = subprocess.call(["pg_ctl","start","-D",data_file], stdout=FNULL)
+        if retcode==0: print "Started postgres database"
+        else: print "Error when starting postgres database!"
+    elif cmd=="stop":
+        retcode = subprocess.call(["pg_ctl","stop","-D",data_file], stdout=FNULL)
+        if retcode==0: print "Stopped postgres database"
+        else: print "Error when stopping postgres database!"
+    elif cmd=="status":
+        retcode = subprocess.call(["pg_ctl","status","-D",data_file])
+    else:
+        retcode = 1
+        print "Option \""+cmd+"\" not recognized."
+    return retcode
+
+@task
+def runserver():
+    if database(cmd="status"): database(cmd="start")
+    local("kowhubenv/bin/python manage.py runserver")
 
