@@ -37,7 +37,8 @@ storageEngine = function() {
                 localStorage.setItem(type, JSON.stringify({'meta':{}}));
             }
             initializedObjectStores[type] = true;
-            successCallback(null);
+            var storageItem = getStorageObject(type);
+            successCallback(formatReturnData(storageItem));
         },
 
         removeList: function(type, successCallback, errorCallback) {
@@ -46,8 +47,9 @@ storageEngine = function() {
             } else if(!localStorage.getItem(type)) {
                 errorCallback('store_not_initialized', 'The object store '+type+' has not been initialized');
             }
+            var storageItem = getStorageObject(type);
             localStorage.removeItem(type);
-            successCallback();
+            successCallback(formatReturnData(storageItem));
         },
 
         setMeta: function(type, obj, successCallback, errorCallback) {

@@ -136,13 +136,28 @@ armybuilderController = function() {
     /* Load the set of unit selections from local webstorage */
     function loadUnitSelections() {
         storageEngine.getList('units', function(data) {
-            renderUnitSelections(data);
+            try {
+                renderUnitSelections(data);
+            }
+            catch(err) {
+                // Fix to prevent app crash during development as data format and IDs change
+                var meta;
+                storageEngine.removeList('units', function(data){
+                    console.log("Error in data format of stored army list. Data has been reset.");
+                    meta = {'player':data.meta.player,'name':data.meta.name,'pts':data.meta.pts};
+                }, errorLogger);
+                storageEngine.initList('units', function(data){
+                    storageEngine.setMeta('units', meta, function(data){
+                        renderUnitSelections(data);
+                    }, errorLogger);
+                }, errorLogger);
+            }
         }, errorLogger);
     }
 
     /* Adjust application view when unit selections change */
     function renderUnitSelections(armyList) {
-        var default_values = {'player':'Orcy','army':'elf','name':'New Army List','pts':2000};
+        var default_values = {'player':'Orcy','army':'el','name':'New Army List','pts':2000};
         armyList.meta = $.extend(default_values, armyList.meta);
         var units = armyList.items;
         $('.forceList a.unitBtn').removeClass('disabled');
