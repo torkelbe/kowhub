@@ -335,15 +335,6 @@ armybuilderController = function() {
                     loadUnitChoices(armyKey, armyName);
                     $(armyPage).find('#forceListHeader').removeClass('disabled');
                 });
-                
-                // Button listener: Select section of current army (units/monsters/heroes)
-                $(armyPage).find('#forceListHeader').on('click', '.forceSectionBtn', function(evt) {
-                    evt.preventDefault();
-                    var $sections = $(armyPage).find('#unitChoicePanel');
-                    $sections.children().hide();
-                    var sectionChoice = $(evt.target).closest('.forceSectionBtn').data().section;
-                    $sections.find('#'+sectionChoice).show();
-                });
 
                 // Button listener: Display drop-down menus
                 $(armyPage).on('click', '.dropdownBtn', function(evt) {
