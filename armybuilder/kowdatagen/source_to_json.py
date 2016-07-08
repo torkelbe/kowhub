@@ -193,7 +193,7 @@ class CsvParser:
                         else: rangedkey_list.append(str(key))
                     else:
                         if(self.error_print):
-                            print >>sys.stderr, "Unrecognized special rule:  "+name
+                            print >>sys.stdout, "Unrecognized special rule:  "+name
                         specialkey_list.append(rule)
                 unit["special"] = specialkey_list
                 unit["ranged"] = rangedkey_list
