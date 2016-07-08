@@ -177,7 +177,6 @@ table.forceList {
     }
 }
 
-.forceSectionBtn,
 .forceListReturnBtn {
     display: inline-block;
     text-decoration: none;
@@ -191,9 +190,6 @@ table.forceList {
     &:hover {
         background-color: red;
     }
-}
-.forceSectionBtn {
-    width: 90px;
 }
 .forceListReturnBtn {
     width: 155px;
