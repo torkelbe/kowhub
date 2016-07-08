@@ -199,17 +199,17 @@ class CsvParser:
                 unit["ranged"] = rangedkey_list
 
 # === External interface ===
-def generate_data(error_print=False, write_to_file=True):
+def generate_data(error_print=False, write_to_file=False, write_to_console=False):
     base_dir = path.dirname(path.abspath(__file__))
     data_parser = CsvParser(base_dir, error_print)
     data_obj = data_parser.parse()
-    if(write_to_file):
+    if write_to_file:
         filename = path.join(base_dir, "../data/kowdata.json")
         with open(filename, 'w') as output_file:
             output_file.write(json.dumps(data_obj, separators=(',',':')))
-    else:
+    if write_to_console:
         sys.stdout.write(json.dumps(data_obj, separators=(',',':')))
 
 # === Main ===
 if __name__ == "__main__":
-    generate_data(error_print=True, write_to_file=False)
+    generate_data(error_print=True, write_to_file=False, write_to_console=True)

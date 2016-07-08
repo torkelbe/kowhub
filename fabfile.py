@@ -55,8 +55,15 @@ def deploy():
     PROD.deploy()
 
 @task
-def update_data():
-    source_to_json.generate_data()
+def data(arg=""):
+    if arg.startswith("update"):
+        source_to_json.generate_data(error_print=False, write_to_file=True, write_to_console=False)
+    elif arg.startswith("dry"):
+        source_to_json.generate_data(error_print=False, write_to_file=False, write_to_console=True)
+    elif arg.startswith("error"):
+        source_to_json.generate_data(error_print=True, write_to_file=False, write_to_console=False)
+    else:
+        print "Requires argument (update|dry|error)"
 
 @task
 def database(cmd="status"):
