@@ -42,16 +42,12 @@ body {
 }
 
 #leftPanel {
+    float: left;
     height: 100%;
+    width: 475px;
     position: relative;
     padding: 0px 15px;
-    border: 0px;
-    margin: 0px;
     overflow-y: hidden;
-}
-#leftPanel {
-    float: left;
-    width: 475px;
 }
 #leftPanelHeader {
     height: 50px;
@@ -88,14 +84,67 @@ body {
     }
 }
 
-#unitChoicePanel {
-    position: relative;
-}
-
 #armyChoicePanel {
     height: 100%;
     margin-top: 25px;
     padding-left: 2px;
+}
+
+#unitChoicePanel {
+    //background-color: white;
+    overflow-y: scroll;
+    height: 450px;
+    header>div, nav>div {
+            flex: 0 0 60px;
+            margin: 1px;
+    }
+    header {
+        display: flex;
+        justify-content: flex-end;
+        background-color: darkgrey;
+        &:not(:first-of-type) {
+            margin-top: 10px;
+        }
+        div {
+            white-space: nowrap;
+            text-align: center;
+            line-height: 20px;
+            border-top: 2px;
+        }
+    }
+    nav {
+        display:flex;
+        border-top: 2px solid darkgrey;
+        label {
+            flex: 1 1 auto;
+            text-align: left;
+            margin: 1px;
+            line-height: 30px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        div {
+            text-align: center;
+            line-height: 30px;
+            text-decoration: none;
+            font-size: 16px;
+            background-color: #f44336;
+            color: white;
+            border: 1px solid #5b5b5b;
+            border-radius: 4px;
+
+            &.invalid {
+                opacity: 0.6;
+                cursor: default;
+                pointer-events: none;
+            }
+        }
+    }
+    div.wide {
+        //flex-basis: 246px;
+    }
 }
 
 table.forceList {

@@ -90,70 +90,68 @@
     </body>
 
     <script id="forceListTmpl" type="text/x-jsrender">
-<table id="unitList" data-army={?>key?} class="forceList">
-    <thead>
-        <th class="unitName"></th>
-        <th>Troop</th>
-        <th>Regiment</th>
-        <th>Horde</th>
-        <th>Legion</th>
-    </thead>
-    <tbody>
+<header>
+    <div>Troop</div>
+    <div>Regiment</div>
+    <div>Horde</div>
+    <div>Legion</div>
+</header>
+{?props units?}
+    {?if ~isUnit(prop)?}
+        <nav>
+            <label>{?>prop.name?}</label>
+            {?include ~form="Troop" tmpl="#btnTmpl"/?}
+            {?include ~form="Regiment" tmpl="#btnTmpl"/?}
+            {?include ~form="Horde" tmpl="#btnTmpl"/?}
+            {?include ~form="Legion" tmpl="#btnTmpl"/?}
+        </nav>
+    {?/if?}
+{?/props?}
+{?if ~hasWen(units)?}
+    <header>
+        <div>War Engine</div>
+    </header>
     {?props units?}
-        {?if ~isUnit(prop)?}
-            <tr>
-                <td class="unitName">{?>prop.name?}</td>
-                {?include ~form="Troop" tmpl="#btnTmpl"/?}
-                {?include ~form="Regiment" tmpl="#btnTmpl"/?}
-                {?include ~form="Horde" tmpl="#btnTmpl"/?}
-                {?include ~form="Legion" tmpl="#btnTmpl"/?}
-            </tr>
+        {?if ~isWen(prop)?}
+            <nav>
+                <label>{?>prop.name?}</label>
+                {?include ~form="Warengine" tmpl="#btnTmpl"/?}
+            </nav>
         {?/if?}
     {?/props?}
-    </tbody>
-</table>
-<table id="monList" data-army={?>key?} class="forceList">
-    <thead>
-        <th class="unitName"></th>
-        <th>Monster</th>
-        <th>War Eng</th>
-    </thead>
-    <tbody>
+{?/if?}
+{?if ~hasMon(units)?}
+    <header>
+        <div>Monster</div>
+    </header>
     {?props units?}
         {?if ~isMon(prop)?}
-            <tr>
-                <td class="unitName">{?>prop.name?}</td>
+            <nav>
+                <label>{?>prop.name?}</label>
                 {?include ~form="Monster" tmpl="#btnTmpl"/?}
-                {?include ~form="Warengine" tmpl="#btnTmpl"/?}
-            </tr>
+            </nav>
         {?/if?}
     {?/props?}
-    </tbody>
-</table>
-<table id="heroList" data-army={?>key?} class="forceList">
-    <thead>
-        <th class="unitName"></th>
-        <th>Hero</th>
-    </thead>
-    <tbody>
-    {?props units?}
-        {?if ~isHero(prop)?}
-            <tr>
-                <td class="unitName">{?>prop.name?}</td>
-                {?include ~form="Hero" tmpl="#btnTmpl"/?}
-            </tr>
-        {?/if?}
-    {?/props?}
-    </tbody>
-</table>
+{?/if?}
+<header>
+    <div>Hero</div>
+</header>
+{?props units?}
+    {?if ~isHero(prop)?}
+        <nav>
+            <label>{?>prop.name?}</label>
+            {?include ~form="Hero" tmpl="#btnTmpl"/?}
+        </nav>
+    {?/if?}
+{?/props?}
     </script>
 
     <script id="btnTmpl" type="text/x-jsrender">
-    {?if prop[~form]?}
-    <td><nav><a href="#" class="unitBtn" data-key={?>key?} data-form={?:~form?}>{?>prop[~form].Pts?}</a></nav></td>
-    {?else?}
-    <td><nav><a href="#" class="emptyBtn" >-</a></nav></td>
-    {?/if?}
+{?if prop[~form]?}
+    <div data-key={?>key?} data-form={?:~form?}>{?>prop[~form].Pts?}</div>
+{?else?}
+    <div class="invalid"></div>
+{?/if?}
     </script>
 
     <script id="armyChoicePanelTmpl" type="text/x-jsrender">

@@ -262,8 +262,23 @@ armybuilderController = function() {
     /* Helper functions for forceList html template (jsrender) */
     var tmplHelper = {
         isUnit: function(u) { return (u.Troop || u.Regiment || u.Horde || u.Legion) },
-        isMon: function(u) { return (u.Monster || u.Warengine) },
+        isWen: function(u) { return (u.Warengine) },
+        isMon: function(u) { return (u.Monster) },
         isHero: function(u) { return (u.Hero) },
+        hasWen: function(units) {
+            var retval = false;
+            $.each(units, function(i,u) {
+                if (u.Warengine) { retval = true; return false; }
+            });
+            return retval;
+        },
+        hasMon: function(units) {
+            var retval = false;
+            $.each(units, function(i,u) {
+                if (u.Monster) { retval = true; return true; }
+            });
+            return retval;
+        },
         typeFormat: function(form) {
             if(form==="Monster" || form==="War Engine") {
                 return "";
