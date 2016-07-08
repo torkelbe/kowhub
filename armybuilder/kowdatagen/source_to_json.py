@@ -121,25 +121,25 @@ class CsvParser:
         file.readline() # throw first line
         #--- Army Header ---
         line = file.readline()
-        entry, order, key, armyname, alignment, armynamekey = properties(line, self.separator)[:6]
+        entry, order, armykey, armyname, alignment = properties(line, self.separator)[:5]
         army["name"] = armyname
         army["alignment"] = alignment
+        army["order"] = int(order)
         #--- Units ---
         army["units"] = {}
         line = file.readline()
-        counter = 1
         while line:
             entry, order, key, name, typ, size, stats, special, options = split_line(line, self.separator)
             unit, line = self.parse_unit(line, file)
-            army["units"][counter] = unit
-            counter += 1
-        return armynamekey, army
+            army["units"][key] = unit
+        return armykey, army
 
     def parse_unit(self, line, file):
         unit = {}
         entry, order, key, name, typ, size, stats, special, options = split_line(line, self.separator)
         unit["name"] = name
         unit["type"] = typ
+        unit["order"] = int(order)
         unit["special"] = special
         name=""
         new_line = ""
