@@ -198,15 +198,55 @@ class CsvParser:
                 unit["special"] = specialkey_list
                 unit["ranged"] = rangedkey_list
 
+# === Key conformity check ===
+def _check_key_conformity(newobj, oldobj_filename):
+    with open(oldobj_filename, 'r') as oldobj_file:
+        oldobj = json.loads(oldobj_file.read())
+    newkeys = _get_keys_obj(newobj)
+    oldkeys = _get_keys_obj(oldobj)
+    for armykey, army in oldkeys.iteritems():
+        if not newkeys.has_key(armykey):
+            _confirmation_warning("Updated data will lose army key: "+armykey)
+        for unitkey, unitname in army.iteritems():
+            if newkeys[armykey].has_key(unitkey):
+                newname = newkeys[armykey][unitkey]
+                if not unitname == newname:
+                    _confirmation_warning("Name for key '"+unitkey+"' will change from '"+unitname+"' to '"+newname+"'")
+            else:
+                _confirmation_warning("Updated data will lose unit key '"+unitkey+"' : '"+unitname+"'")
+    print >>sys.stderr, "Key conformity check completed"
+
+def _get_keys_obj(dataobj):
+    obj = {}
+    for armykey, armydata in dataobj["armies"].iteritems():
+        armyobj = {}
+        for key, unit in armydata["units"].iteritems():
+            # Remove non-ascii (apostrophes) from names; python does not handle them well
+            armyobj[key] = ''.join([i if ord(i)<128 else '' for i in unit["name"]])
+        obj[armykey] = armyobj
+    return obj
+
+def _confirmation_warning(message):
+    print >>sys.stderr, "DATA KEY WARNING!"
+    print >>sys.stderr, message
+    print >>sys.stderr, "Continue (yes/no)? ",
+    response = raw_input()
+    if not response == "yes":
+        print >>sys.stderr, "Aborted. Data files have not been updated"
+        exit(1)
+
 # === External interface ===
-def generate_data(error_print=False, write_to_file=False, write_to_console=False):
+def generate_data(error_print=False, write_to_file=False, write_to_console=False, check_keys=True):
     base_dir = path.dirname(path.abspath(__file__))
     data_parser = CsvParser(base_dir, error_print)
     data_obj = data_parser.parse()
+    filename = path.join(base_dir, "../data/kowdata.json")
+    if check_keys:
+        _check_key_conformity(data_obj, filename)
     if write_to_file:
-        filename = path.join(base_dir, "../data/kowdata.json")
         with open(filename, 'w') as output_file:
             output_file.write(json.dumps(data_obj, separators=(',',':')))
+        print >>sys.stderr, "Data updated successfully"
     if write_to_console:
         sys.stdout.write(json.dumps(data_obj, separators=(',',':')))
 
