@@ -97,7 +97,6 @@ armybuilderController = function() {
                 renderUnitSelections(data);
             }, errorLogger);
         });
-        renderUnitChoices();
         // Rerender unit selections
         loadUnitSelections();
     }
@@ -117,20 +116,6 @@ armybuilderController = function() {
         }
         $txt.hide();
         $div.show();
-    }
-    
-    /* Dynamically calculate size of elements in left panel */
-    function renderUnitChoices() {
-        var $forceList = $('table.forceList');
-        var tableWidth = $forceList.width();
-        var padding = 12;
-        $.each($forceList, function(i,table) {
-            var btnWidth = $(table).find('tbody .unitName').siblings().first().width();
-            var btnCount = $(table).find('.unitName').first().siblings().length;
-            var unitNameWidth = tableWidth - (btnCount*btnWidth) - padding;
-            $(table).find('th.unitName').siblings().width(btnWidth);
-            $(table).find('.unitName').width(unitNameWidth);
-        });
     }
 
     /* Load the set of unit selections from local webstorage */
