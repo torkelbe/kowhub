@@ -9,11 +9,11 @@ storageEngine = function() {
         return parsedItem;
     }
     function formatReturnData(data) {
-        obj = {'meta':data['meta'], 'items':[] }
+        obj = {'meta':data['meta'], 'units':[] }
         $.each(data, function(i,v) {
             if(i != 'meta') {
                 v.id = i;
-                obj['items'].push(v);
+                obj['units'].push(v);
             }
         });
         return obj;

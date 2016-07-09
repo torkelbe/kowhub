@@ -142,13 +142,12 @@ armybuilderController = function() {
     }
 
     /* Adjust application view when unit selections change */
-    function renderUnitSelections(armyList) {
+    function renderUnitSelections(armylist) {
         var default_values = {'player':'Orcy','army':'el','name':'New Army List','pts':2000};
-        armyList.meta = $.extend(default_values, armyList.meta);
-        var units = armyList.items;
+        armylist.meta = $.extend(default_values, armylist.meta);
         $('#unitOptions nav>div').removeClass('disabled');
         var armyData = getArmyData();
-        $.each(units, function(i,unit) {
+        $.each(armylist.units, function(i,unit) {
             unit.army = unit.key.substr(0,2);
             var unitData = armyData[unit.army]['units'][unit.key];
             unit.name = unitData['name'];
@@ -160,15 +159,15 @@ armybuilderController = function() {
             }
         });
         // Set armylist title, primary army, and points limit
-        $(armyPage).find('#armylistTitle>div').html(armyList.meta.name);
-        $(armyPage).find('#primaryArmyBtn').html(armyData[armyList.meta.army].name);
-        $(armyPage).find('#armylistPoints').html(armyList.meta.pts+" Points");
+        $(armyPage).find('#armylistTitle>div').html(armylist.meta.name);
+        $(armyPage).find('#primaryArmyBtn').html(armyData[armylist.meta.army].name);
+        $(armyPage).find('#armylistPoints').html(armylist.meta.pts+" Points");
         // Render armylist
         var unitTmpl = $.templates("#armylistUnitTmpl");
-        var unitsHtml = unitTmpl.render(units, tmplHelper);
+        var unitsHtml = unitTmpl.render(armylist.units, tmplHelper);
         $('#armylistPanel>section').html(unitsHtml);
         // Render statistics
-        var stats = calculateStatistics(armyList);
+        var stats = calculateStatistics(armylist);
         var statsTmpl = $.templates("#statsTmpl");
         var statsHtml = statsTmpl.render(stats);
         $('#statsTable').html(statsHtml);
@@ -177,11 +176,10 @@ armybuilderController = function() {
     }
     
     /* Calculate statistics for unit selections and update info table */
-    function calculateStatistics(armyList) {
-        var primaryArmy = armyList.meta.army;
-        var units = armyList.items;
+    function calculateStatistics(armylist) {
+        var primaryArmy = armylist.meta.army;
         var stats = {points: 0, allies: 0, count: 0, Troop: 0, Regiment: 0, Horde: 0, Legion: 0, Hero: 0, Monster: 0, Warengine: 0};
-        $.each(units, function(i,unit) {
+        $.each(armylist.units, function(i,unit) {
             if(unit.name.indexOf('*') > -1) {
                 stats['Troop'] += 1;
             } else {
@@ -207,7 +205,7 @@ armybuilderController = function() {
         stats.legalWen = stats.Warengine > 0 ? stats.slotsWen >= 0 : true;
         stats.allies = Math.ceil(100 * stats.allies / (stats.points+1));
         stats.legalAllies = stats.allies <= 25;
-        stats.pointsLimit = armyList.meta.pts;
+        stats.pointsLimit = armylist.meta.pts;
         stats.legalPts = stats.points <= stats.pointsLimit;
         return stats;
     }
@@ -222,20 +220,20 @@ armybuilderController = function() {
     }
 
     /* Configure armylist data for communication with server */
-    function generate_armylist_obj(armyList) {
+    function generate_armylist_obj(armylist) {
         var obj = {'player':'Orcy','army':'Not specified','name':'New Army List','pts':2000}; // default values
-        $.extend(obj, armyList.meta);
+        $.extend(obj, armylist.meta);
         obj.units = [];
-        $.each(armyList.items, function(i,u) {
+        $.each(armylist.units, function(i,u) {
             obj.units.push([u.army,u.key,u.form,u.options]);
         });
         var armyData = getArmyData();
-        $.each(armyList.items, function(i,unit) {
+        $.each(armylist.units, function(i,unit) {
             var unitData = armyData[unit.army]['units'][unit.key];
             unit.name = unitData.name;
             unit.stats = unitData[unit.form];
         });
-        var stats = calculateStatistics(armyList);
+        var stats = calculateStatistics(armylist);
         obj.legal = true;
         $.each(stats, function(i,v) {
             if(i.indexOf('legal') > -1) {
