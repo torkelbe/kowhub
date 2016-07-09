@@ -94,6 +94,8 @@ armybuilderController = function() {
             var obj = getUnitObject(evt);
             storageEngine.addUnit('units', obj, function(data) {
                 renderUnitSelections(data);
+                var panel = $('#armylistPanel section')[0];
+                $(panel).scrollTop(panel.scrollHeight);
             }, errorLogger);
         });
         // Rerender unit selections
