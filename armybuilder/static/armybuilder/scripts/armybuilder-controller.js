@@ -56,7 +56,6 @@ armybuilderController = function() {
             var height = $(window).height() - $('#headerPanel').outerHeight(true) - $('#footerPanel').outerHeight(true);
             height = height > 500 ? height : 500;
             $('#mainPanel').outerHeight(height);
-            $('#leftPanelBody').height($('#leftPanel').height() - $('#leftPanelHeader').outerHeight(true));
         }, 500, "resize string");
     });
 
@@ -83,14 +82,14 @@ armybuilderController = function() {
     /* Load the forceList view with unit choices from seleted armySelection */
     function loadUnitChoices(armySelection, armyName) {
         armybuilderController.activeArmy = armySelection;
-        var forceListTmpl = $.templates("#forceListTmpl");
-        var forceListHtml = forceListTmpl.render(getActiveArmyData(), tmplHelper);
-        $('#unitChoicePanel').html(forceListHtml);
+        var unitOptionsTmpl = $.templates("#unitOptionsTmpl");
+        var unitOptionsHtml = unitOptionsTmpl.render(getActiveArmyData(), tmplHelper);
+        $('#unitOptions').html(unitOptionsHtml);
         $('#armyChoicePanel').hide();
-        $('#unitList').show();
+        $('#unitOptions').show();
         $('#forceListHeader').find('.forceListReturnBtn>div>div').html(armyName);
-        // forceList button listeners
-        $(armyPage).find('.forceList tbody').on('click', '.unitBtn', function(evt) {
+        // Unit option button listeners
+        $(armyPage).find('#unitOptions nav').on('click', 'div', function(evt) {
             evt.preventDefault();
             var obj = getUnitObject(evt);
             storageEngine.addUnit('units', obj, function(data) {
@@ -145,7 +144,7 @@ armybuilderController = function() {
         var default_values = {'player':'Orcy','army':'el','name':'New Army List','pts':2000};
         armyList.meta = $.extend(default_values, armyList.meta);
         var units = armyList.items;
-        $('.forceList a.unitBtn').removeClass('disabled');
+        $('#unitOptions nav>div').removeClass('disabled');
         var armyData = getArmyData();
         $.each(units, function(i,unit) {
             var unitData = armyData[unit.army]['units'][unit.key];
@@ -154,7 +153,7 @@ armybuilderController = function() {
             unit.type = unitData['type'];
             // Disable button for chosen unique units
             if(unit.name.indexOf('[1]') > -1) {
-                $('.forceList td:contains('+unit.name+')').parents('tr').find('.unitBtn').addClass('disabled');
+                $('#unitOptions nav>label:contains('+unit.name+')').siblings().addClass('disabled');
             }
         });
         // Set armylist title, primary army, and points limit
@@ -213,8 +212,8 @@ armybuilderController = function() {
     /* Create a unit object based on the information in a unit choice button click */
     function getUnitObject(evt) {
         var unit = {};
-        unit.army = $(evt.target).parents('table').data().army;
         unit.key = $(evt.target).data().key;
+        unit.army = unit.key.substr(0,2);
         unit.form = $(evt.target).data().form;
         unit.options = "";
         return unit;
@@ -306,7 +305,7 @@ armybuilderController = function() {
                 $(armyPage).find('#forceListHeader').on('click', '.forceListReturnBtn', function(evt) {
                     evt.preventDefault();
                     $(armyPage).find('#forceListHeader').addClass('disabled');
-                    $(armyPage).find('#unitChoicePanel').children().hide();
+                    $(armyPage).find('#unitOptions').hide();
                     $(armyPage).find('#armyChoicePanel').show();
                     $(armyPage).find('.forceListReturnBtn>div>div').html('Select an army');
                 });

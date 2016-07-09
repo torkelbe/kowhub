@@ -90,8 +90,8 @@ body {
     padding-left: 2px;
 }
 
-#unitChoicePanel {
-    //background-color: white;
+#unitOptions {
+    display: none;
     overflow-y: scroll;
     height: 450px;
     header>div, nav>div {
@@ -134,8 +134,11 @@ body {
             color: white;
             border: 1px solid #5b5b5b;
             border-radius: 4px;
-
-            &.invalid {
+            cursor: pointer;
+            &:hover {
+                background-color: red;
+            }
+            &.invalid, &.disabled {
                 opacity: 0.6;
                 cursor: default;
                 pointer-events: none;
