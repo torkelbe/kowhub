@@ -55,7 +55,7 @@
 .alUnitType {
     display: flex;
     justify-content: center;
-    flex: 0 1 70px;
+    flex: 0 0 70px;
     padding: 2px;
     background-color: white;
     text-align: center;
@@ -65,13 +65,13 @@
 .alUnitPts {
     display: flex;
     justify-content: center;
-    flex: 0 2 50px;
+    flex: 0 0 50px;
     background-color: #ddd;
 }
 .alUnitName {
     display: flex;
     justify-content: left;
-    flex: 1 2 135px;
+    flex: 1 1 135px;
     padding: 4px 8px;
     background-color: white;
 }
