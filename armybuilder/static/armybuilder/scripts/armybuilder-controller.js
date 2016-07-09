@@ -53,9 +53,9 @@ armybuilderController = function() {
     /* Window resize listener */
     $(window).on('resize', function(evt) {
         waitForFinalEvent(function() {
-            var height = $(window).height() - $('#headerPanel').outerHeight(true) - $('#footerPanel').outerHeight(true);
+            var height = $(window).height() - $('body>header').outerHeight(true) - $('body>footer').outerHeight(true);
             height = height > 500 ? height : 500;
-            $('#mainPanel').outerHeight(height);
+            $('main').outerHeight(height);
         }, 500, "resize string");
     });
 
