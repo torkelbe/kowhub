@@ -149,6 +149,7 @@ armybuilderController = function() {
         $('#unitOptions nav>div').removeClass('disabled');
         var armyData = getArmyData();
         $.each(units, function(i,unit) {
+            unit.army = unit.key.substr(0,2);
             var unitData = armyData[unit.army]['units'][unit.key];
             unit.name = unitData['name'];
             unit.stats = unitData[unit.form];
@@ -215,7 +216,6 @@ armybuilderController = function() {
     function getUnitObject(evt) {
         var unit = {};
         unit.key = $(evt.target).data().key;
-        unit.army = unit.key.substr(0,2);
         unit.form = $(evt.target).data().form;
         unit.options = "";
         return unit;
