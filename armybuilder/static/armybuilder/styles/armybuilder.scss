@@ -33,18 +33,21 @@ body {
     }
 }
 
+#headerPanel, #armybuilderPage, #footerPanel {
+    min-width: 950px;
+    max-width: 1100px;
+    margin: auto;
+}
+
 #armybuilderPage {
     flex: 1 0 450px;
     padding: 5px 0px;
-    min-width: 950px;
-    max-width: 1100px;
     margin: auto;
     display: flex;
 }
 
 #leftPanel {
     flex: 0 0 475px;
-    position: relative;
     padding: 0px 15px;
     display: flex;
     flex-direction: column;
@@ -173,7 +176,6 @@ body {
 
 #rightPanel {
     flex: 1 1 auto;
-    height: 100%;
     padding: 0px 15px;
     display: flex;
     flex-direction: column;
