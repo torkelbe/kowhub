@@ -49,15 +49,6 @@ armybuilderController = function() {
             timers[uniqueId] = setTimeout(callback, ms);
         };
     })();
-    
-    /* Window resize listener */
-    $(window).on('resize', function(evt) {
-        waitForFinalEvent(function() {
-            var height = $(window).height() - $('body>header').outerHeight(true) - $('body>footer').outerHeight(true);
-            height = height > 500 ? height : 500;
-            $('main').outerHeight(height);
-        }, 500, "resize string");
-    });
 
     /* Load buttons for selecting which army to handle */
     function loadArmyChoices(data) {
@@ -77,6 +68,7 @@ armybuilderController = function() {
         var primaryArmyHtml = primaryArmyTmpl.render(armyChoiceList);
         $('#primaryArmyOptions').html(primaryArmyHtml);
         $(armyPage).find('#forceListHeader').addClass('disabled');
+        $(armyPage).find('#unitOptions').hide();
     }
 
     /* Load the forceList view with unit choices from seleted armySelection */
