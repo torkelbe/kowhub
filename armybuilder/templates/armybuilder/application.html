@@ -31,7 +31,7 @@
                         <div class="forceListReturnBtn"><div class="buttonWrapper"><div>Select an army</div></div></div>
                     </div>
                 </header>
-                <section id="armyChoicePanel"></section>
+                <section id="armyOptions"></section>
                 <section id="unitOptions"></section>
             </div>
             <div id="rightPanel">
@@ -142,8 +142,8 @@
 {?/if?}
     </script>
 
-    <script id="armyChoicePanelTmpl" type="text/x-jsrender">
-<div class="armyBtn" data-army={?:key?}><div class="buttonWrapper"><div>{?:name?}</div></div></div>
+    <script id="armyOptionsTmpl" type="text/x-jsrender">
+<div data-army={?:key?}>{?:name?}</div>
     </script>
 
     <script id="primaryArmyTmpl" type="text/x-jsrender">

@@ -52,20 +52,24 @@ armybuilderController = function() {
 
     /* Load buttons for selecting which army to handle */
     function loadArmyChoices(data) {
-        var armyChoiceList = [];
+        var armyOptions = [];
         $.each(data, function(key, army) {
-            armyChoiceList.push({"key":key,"name":army["name"]});
+            armyOptions.push({"key":key,"name":army["name"]});
         });
-        armyChoiceList.sort(function(a,b) {
+        armyOptions.sort(function(a,b) {
             if (a.key < b.key) { return -1 }
             if (a.key > b.key) { return 1 }
             return 0;
         });
-        var armyChoiceTmpl = $.templates("#armyChoicePanelTmpl");
-        var armyChoiceHtml = armyChoiceTmpl.render(armyChoiceList);
-        $('#armyChoicePanel').html(armyChoiceHtml);
+        var armyOptionsTmpl = $.templates("#armyOptionsTmpl");
+        var armyOptionsHtml = armyOptionsTmpl.render(armyOptions);
+        $('#armyOptions').html(armyOptionsHtml);
+        // Add invisible elements for layout purposes
+        for (i = 0; i < 5-(armyOptions.length%5); i++) {
+            $('#armyOptions').append('<div style="visibility:hidden;"></div>');
+        }
         var primaryArmyTmpl = $.templates("#primaryArmyTmpl");
-        var primaryArmyHtml = primaryArmyTmpl.render(armyChoiceList);
+        var primaryArmyHtml = primaryArmyTmpl.render(armyOptions);
         $('#primaryArmyOptions').html(primaryArmyHtml);
         $(armyPage).find('#forceListHeader').addClass('disabled');
         $(armyPage).find('#unitOptions').hide();
@@ -77,8 +81,9 @@ armybuilderController = function() {
         var unitOptionsTmpl = $.templates("#unitOptionsTmpl");
         var unitOptionsHtml = unitOptionsTmpl.render(getActiveArmyData(), tmplHelper);
         $('#unitOptions').html(unitOptionsHtml);
-        $('#armyChoicePanel').hide();
+        $('#armyOptions').hide();
         $('#unitOptions').show();
+        $('#unitOptions').scrollTop(0);
         $('#forceListHeader').find('.forceListReturnBtn>div>div').html(armyName);
         // Unit option button listeners
         $(armyPage).find('#unitOptions nav').on('click', 'div', function(evt) {
@@ -298,16 +303,15 @@ armybuilderController = function() {
                     evt.preventDefault();
                     $(armyPage).find('#forceListHeader').addClass('disabled');
                     $(armyPage).find('#unitOptions').hide();
-                    $(armyPage).find('#armyChoicePanel').show();
+                    $(armyPage).find('#armyOptions').show();
                     $(armyPage).find('.forceListReturnBtn>div>div').html('Select an army');
                 });
 
-                // Button listener: Select army to view choices for
-                $(armyPage).find('#armyChoicePanel').on('click', '.armyBtn', function(evt) {
+                // Button listener: Select army to view options for
+                $(armyPage).find('#armyOptions').on('click', 'div', function(evt) {
                     evt.preventDefault();
-                    var $tar = $(evt.target).closest('.armyBtn');
-                    var armyKey = $tar.data().army;
-                    var armyName = $tar.find('div>div').html();
+                    var armyKey = $(evt.target).data().army;
+                    var armyName = $(evt.target).html();
                     loadUnitChoices(armyKey, armyName);
                     $(armyPage).find('#forceListHeader').removeClass('disabled');
                 });

@@ -58,12 +58,6 @@ body {
     }
 }
 
-.unitName {
-    font-variant: small-caps;
-    font-weight: bold;
-    text-align: left;
-    padding-left: 10px;
-}
 .buttonWrapper {
     display: table;
     width: 100%;
@@ -81,8 +75,27 @@ body {
     }
 }
 
-#armyChoicePanel {
-    padding-left: 2px;
+#armyOptions {
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    &>div {
+        flex: 1 0 80px;
+        height: 85px;
+        background-color: #f44336;
+        color: white;
+        font-size: 16px;
+        border: 1px solid #5b5b5b;
+        border-radius: 6px;
+        text-decoration: none;
+        cursor: pointer;
+        text-align: center;
+        margin: 1px;
+        padding: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 #unitOptions {
@@ -156,20 +169,6 @@ body {
 }
 .forceListReturnBtn {
     width: 155px;
-}
-
-.armyBtn {
-    display: inline-block;
-    text-decoration: none;
-    background-color: #f44336;
-    color: white;
-    font-size: 16px;
-    border: 1px solid #5b5b5b;
-    border-radius: 4px;
-    width: 85px;
-    height: 85px;
-    margin: 0px;
-    cursor: pointer;
 }
 
 #rightPanel {
