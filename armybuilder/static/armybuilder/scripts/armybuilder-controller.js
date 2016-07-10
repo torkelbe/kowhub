@@ -370,7 +370,7 @@ armybuilderController = function() {
                 });
 
                 // Button listener: Get armylist PDF
-                $(armyPage).on('click', '.pdfBtn', function(evt) {
+                $('body').on('click', '.pdfBtn', function(evt) {
                     evt.preventDefault();
                     $(evt.target).addClass('disabled');
                     var $tooltip = $(evt.target).siblings('.riseTooltip');
