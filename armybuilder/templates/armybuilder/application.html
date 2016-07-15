@@ -42,18 +42,6 @@
                             <div></div>
                             <textarea id="titleChange" style="display:none;" rows="1" cols="30" maxlength="30"></textarea>
                         </div>
-                        <div class="rightHeaderField">
-                            <button id="primaryArmyBtn" class="dropdownBtn"></button>
-                            <ul id="primaryArmyOptions" class="dropdownMenu"></ul>
-                        </div>
-                        <div class="rightHeaderField">
-                            <button id="armylistPoints" class="dropdownBtn"></button>
-                            <ul id="armylistPointsOptions" class="dropdownMenu">
-                                <li><a href="#">1500</a></li>
-                                <li><a href="#">2000</a></li>
-                                <li><a href="#">2500</a></li>
-                            </ul>
-                        </div>
                     </header>
                     <section></section>
                     <footer>
@@ -64,14 +52,28 @@
                     </footer>
                 </div>
                 <div id="statsTable"></div>
+                <div id="placeholderBtnPanel">
+                    <div>
+                        <button id="primaryArmyBtn" class="dropdownBtn"></button>
+                        <ul id="primaryArmyOptions" class="dropdownMenu panUp"></ul>
+                    </div>
+                    <div>
+                        <button id="armylistPoints" class="dropdownBtn"></button>
+                        <ul id="armylistPointsOptions" class="dropdownMenu panUp">
+                            <li><a href="#">1500</a></li>
+                            <li><a href="#">2000</a></li>
+                            <li><a href="#">2500</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <span class="riseTooltip"></span>
+                        <button class="pdfBtn">PDF</button>
+                    </div>
+                </div>
             </div>
         </main>
         <footer>
             <div id="footerPanel">
-                <div id="mainPdfBtn">
-                    <span class="riseTooltip"></span>
-                    <button class="pdfBtn">PDF</button>
-                </div>
             </div>
         </footer>
     </body>

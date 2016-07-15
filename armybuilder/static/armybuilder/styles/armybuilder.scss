@@ -211,15 +211,19 @@ body {
     th, td {
         padding: 0px 10px;
     }
+    [legal=false] {
+        color: red;
+    }
 }
 
-[legal=false] {
-    color: red;
+#placeholderBtnPanel>div {
+    display: inline-block;
 }
+
 
 .dropdownBtn,
 .pdfBtn {
-    width: 150px;
+    width: 140px;
     background: #222;
     color: #eee;
     line-height: 25px;
@@ -230,7 +234,7 @@ body {
 
 .dropdownMenu {
     display: none;
-    width: 150px;
+    width: 140px;
     position: absolute;
     margin: 0;
     background: #dddddd;
@@ -247,20 +251,21 @@ body {
             background: #bbb;
         }
     }
+    &.panUp {
+        transform: translateY(-100%);
+        margin-top: -25px;
+    }
 }
 
 .riseTooltip {
     display: none;
     position: absolute;
     transform: translateY(-100%);
-    width: 150px;
+    width: 140px;
     background-color: #dddddd;
     padding: 10px;
 }
 
-.rightHeaderField {
-    display: inline-block;
-}
 #armylistTitle {
     font-weight: bold;
     height: 30px;
