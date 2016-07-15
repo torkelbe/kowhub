@@ -282,16 +282,16 @@ body {
     align-items: center;
 }
 #armylistTitle {
+    flex: 1 1 auto;
+    font-size: 18px;
     font-weight: bold;
-    height: 30px;
-    width: 120px;
-    line-height: 30px;
+    margin: 0px 15px;
+    line-height: 40px;
 }
 #titleChange {
+    font-size: 18px;
     font-weight: bold;
-    height: 30px;
-    width: 120px;
-    line-height: 30px;
+    line-height: 40px;
 }
 
 #armybuilderPage {
