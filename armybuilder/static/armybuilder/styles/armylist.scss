@@ -3,7 +3,9 @@
     position: relative;
     border: 1pt solid black;
     border-radius: 2pt;
-    margin-bottom: 2px;
+    &:not(:first-of-type) {
+        margin-top: 2px;
+    }
     &>div {
         height: 40px;
         align-items: center;
