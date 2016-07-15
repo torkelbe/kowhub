@@ -183,6 +183,7 @@ body {
         header {
             flex: 0 0 40px;
             margin-bottom: 10px;
+            display: flex;
         }
         section {
             flex: 1 1 auto;
@@ -266,6 +267,20 @@ body {
     padding: 10px;
 }
 
+#storedListsBtn {
+    flex: 0 0 70px;
+    background-color: #f44336;
+    color: white;
+    font-size: 16px;
+    border: 1px solid #5b5b5b;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 #armylistTitle {
     font-weight: bold;
     height: 30px;
