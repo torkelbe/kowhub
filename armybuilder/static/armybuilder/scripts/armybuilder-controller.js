@@ -4,14 +4,18 @@ armybuilderController = function() {
 
     var armyPage;
     var initialized = false;
-    var activeArmy;
     var dataObj;
 
     function getArmyData() {
         return armybuilderController.dataObj["armies"];
     }
-    function getActiveArmyData() {
-        return  armybuilderController.dataObj["armies"][armybuilderController.activeArmy];
+    function getOrderedArmyData(armySelection) {
+        var data = armybuilderController.dataObj["armies"][armySelection];
+        var orderedUnits = {};
+        $.each(data.units, function(key, unit) {
+            orderedUnits[unit.order] = unit;
+        });
+        return {"units": orderedUnits};
     }
     function getSpecialRules() {
         return armybuilderController.dataObj["special"];
@@ -76,10 +80,9 @@ armybuilderController = function() {
     }
 
     /* Load the forceList view with unit choices from seleted armySelection */
-    function loadUnitChoices(armySelection, armyName) {
-        armybuilderController.activeArmy = armySelection;
+    function loadUnitOptions(armySelection, armyName) {
         var unitOptionsTmpl = $.templates("#unitOptionsTmpl");
-        var unitOptionsHtml = unitOptionsTmpl.render(getActiveArmyData(), tmplHelper);
+        var unitOptionsHtml = unitOptionsTmpl.render(getOrderedArmyData(armySelection), tmplHelper);
         $('#unitOptions').html(unitOptionsHtml);
         $('#armyOptions').hide();
         $('#unitOptions').show();
@@ -312,7 +315,7 @@ armybuilderController = function() {
                     evt.preventDefault();
                     var armyKey = $(evt.target).data().army;
                     var armyName = $(evt.target).html();
-                    loadUnitChoices(armyKey, armyName);
+                    loadUnitOptions(armyKey, armyName);
                     $(armyPage).find('#forceListHeader').removeClass('disabled');
                 });
 
@@ -415,9 +418,10 @@ armybuilderController = function() {
 
         loadForceListJSON: function() {
             $.getJSON("dataobj", function(data) {
-                $.each(data["armies"], function(i,army) {
-                    army.key = i;
-                    $.each(army.units, function(i,unit) {
+                $.each(data["armies"], function(armykey, army) {
+                    army.key = armykey;
+                    $.each(army.units, function(unitkey, unit) {
+                        unit.key = unitkey;
                         $.each(["Troop","Regiment","Horde","Legion","Warengine","Monster","Hero"], function(i,form) {
                             if(unit[form]) unit[form] = getStatsObj(unit[form]);
                         });

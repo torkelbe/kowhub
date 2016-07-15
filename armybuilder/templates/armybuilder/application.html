@@ -136,7 +136,7 @@
 
     <script id="btnTmpl" type="text/x-jsrender">
 {?if prop[~form]?}
-    <div data-key={?>key?} data-form={?:~form?}>{?>prop[~form].Pts?}</div>
+    <div data-key={?>prop.key?} data-form={?:~form?}>{?>prop[~form].Pts?}</div>
 {?else?}
     <div class="invalid"></div>
 {?/if?}
