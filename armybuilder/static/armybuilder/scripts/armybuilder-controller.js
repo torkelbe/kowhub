@@ -360,7 +360,7 @@ armybuilderController = function() {
                     var title = $div.html();
                     $div.hide();
                     $txt.show();
-                    $txt.html(title);
+                    $txt.val(title);
                     $txt.select();
                 });
                 $(armyPage).on('blur', '#armylistTitle>textarea', function(evt) {
