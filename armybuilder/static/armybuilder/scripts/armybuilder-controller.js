@@ -55,14 +55,14 @@ armybuilderController = function() {
     })();
 
     /* Load buttons for selecting which army to handle */
-    function loadArmyChoices(data) {
+    function loadArmyOptions(data) {
         var armyOptions = [];
         $.each(data, function(key, army) {
-            armyOptions.push({"key":key,"name":army["name"]});
+            armyOptions.push({"order":army.order,"key":key,"name":army.name});
         });
         armyOptions.sort(function(a,b) {
-            if (a.key < b.key) { return -1 }
-            if (a.key > b.key) { return 1 }
+            if (a.order < b.order) { return -1 }
+            if (a.order > b.order) { return 1 }
             return 0;
         });
         var armyOptionsTmpl = $.templates("#armyOptionsTmpl");
@@ -431,7 +431,7 @@ armybuilderController = function() {
             })
             .done(function(data) {
                 loadUnitSelections();
-                loadArmyChoices(data["armies"]);
+                loadArmyOptions(data["armies"]);
             })
             .fail(function() {
                 errorLogger("JSON", "getJSON failed to load army data");
