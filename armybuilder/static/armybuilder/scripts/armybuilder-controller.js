@@ -54,7 +54,7 @@ armybuilderController = function() {
         };
     })();
 
-    /* Load buttons for selecting which army to handle */
+    /* Load buttons for selecting an army */
     function loadArmyOptions(data) {
         var armyOptions = [];
         $.each(data, function(key, army) {
@@ -75,11 +75,11 @@ armybuilderController = function() {
         var primaryArmyTmpl = $.templates("#primaryArmyTmpl");
         var primaryArmyHtml = primaryArmyTmpl.render(armyOptions);
         $('#primaryArmyOptions').html(primaryArmyHtml);
-        $(armyPage).find('#forceListHeader').addClass('disabled');
+        $(armyPage).find('#armyOptionsBtn').addClass('disabled');
         $(armyPage).find('#unitOptions').hide();
     }
 
-    /* Load the forceList view with unit choices from seleted armySelection */
+    /* Load left panel with unit choices from seleted army */
     function loadUnitOptions(armySelection, armyName) {
         var unitOptionsTmpl = $.templates("#unitOptionsTmpl");
         var unitOptionsHtml = unitOptionsTmpl.render(getOrderedArmyData(armySelection), tmplHelper);
@@ -87,7 +87,8 @@ armybuilderController = function() {
         $('#armyOptions').hide();
         $('#unitOptions').show();
         $('#unitOptions').scrollTop(0);
-        $('#forceListHeader').find('.forceListReturnBtn>div>div').html(armyName);
+        $('#leftPanelTitle').html(armyName);
+        $('#leftPanelTitle').removeClass('faded');
         // Unit option button listeners
         $(armyPage).find('#unitOptions nav').on('click', 'div', function(evt) {
             evt.preventDefault();
@@ -302,12 +303,13 @@ armybuilderController = function() {
                 });
 
                 // Button listener: Move to army selection view */
-                $(armyPage).find('#forceListHeader').on('click', '.forceListReturnBtn', function(evt) {
+                $(armyPage).find('#leftPanel').on('click', '#armyOptionsBtn', function(evt) {
                     evt.preventDefault();
-                    $(armyPage).find('#forceListHeader').addClass('disabled');
+                    $(evt.target).addClass('disabled');
+                    $(armyPage).find('#leftPanelTitle').html('Select an army');
+                    $(armyPage).find('#leftPanelTitle').addClass('faded');
                     $(armyPage).find('#unitOptions').hide();
                     $(armyPage).find('#armyOptions').show();
-                    $(armyPage).find('.forceListReturnBtn>div>div').html('Select an army');
                 });
 
                 // Button listener: Select army to view options for
@@ -316,7 +318,7 @@ armybuilderController = function() {
                     var armyKey = $(evt.target).data().army;
                     var armyName = $(evt.target).html();
                     loadUnitOptions(armyKey, armyName);
-                    $(armyPage).find('#forceListHeader').removeClass('disabled');
+                    $(armyPage).find('#armyOptionsBtn').removeClass('disabled');
                 });
 
                 // Button listener: Display drop-down menus
