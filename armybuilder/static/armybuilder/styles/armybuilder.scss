@@ -44,6 +44,11 @@ body {
     padding: 5px 0px;
     margin: auto;
     display: flex;
+    .disabled {
+        opacity: 0.6;
+        cursor: default;
+        pointer-events: none;
+    }
 }
 
 #leftPanel {
@@ -84,12 +89,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    &.disabled {
-        opacity: 0.6;
-        cursor: default;
-        pointer-events: none;
-    }
 }
+
 #armyOptions {
     display: flex;
     flex-flow: row wrap;
@@ -159,7 +160,7 @@ body {
             &:hover {
                 background-color: red;
             }
-            &.invalid, &.disabled {
+            &.invalid {
                 opacity: 0.6;
                 cursor: default;
                 pointer-events: none;
