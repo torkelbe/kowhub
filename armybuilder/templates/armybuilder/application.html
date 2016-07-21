@@ -35,12 +35,13 @@
                 <section>
                     <div id="armyOptions"></div>
                     <div id="unitOptions"></div>
+                    <div id="storedListsPanel"></div>
                 </section>
             </div>
             <div id="rightPanel">
                 <div id="armylistPanel">
                     <header>
-                        <div id="storedListsBtn">...</div>
+                        <div id="storedListsBtn">list</div>
                         <div id="armylistTitle">
                             <div></div>
                             <textarea id="titleChange" style="display:none;" rows="1" cols="30" maxlength="30"></textarea>
@@ -205,5 +206,13 @@
         <tr><td legal="{?:legalTro?}">{?:Troop?} Troops ({?:slotsTro?} slots left)</td><td legal="{?:legalAllies?}">{?:allies?}% Allies</td></tr>
     </tbody>
 </table>
+    </script>
+
+    <script id="storedListsTmpl" type="text/x-jsrender">
+<div class="storedArmylist">
+    <div class="saArmy">Elf Armies</div>
+    <div class="saPts">2000</div>
+    <div class="saName">New armylist</div>
+</div>
     </script>
 </html>
