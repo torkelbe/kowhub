@@ -107,6 +107,12 @@ storageEngine = function() {
             if(!initialized) {
                 errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
             }
+            var allLists = {};
+            $.each(localStorage, function(key, value) {
+                allLists[key] = (JSON.parse(value)).meta;
+            }, function() {
+                errorCallback('storage_format_error', 'Could not parse storage items correctly');
+            });
             successCallback(Object.keys(localStorage));
         }
     }
