@@ -50,11 +50,16 @@ PROD = Site(
 env.hosts = ['kowhub.com']
 
 @task
+# Request server to pull latest version from git, apply changes, and restart site
 def deploy():
     print "Deploying on " +  " ".join(env.hosts)
     PROD.deploy()
 
 @task
+# Handle KoW data source files.
+# arg: 'update' to create new json data files.
+# arg: 'dry' to do a test run, and print json result to console only.
+# arg: 'error' to check for errors in source file parsing.
 def data(arg=""):
     if arg.startswith("update"):
         source_to_json.generate_data(error_print=False, write_to_file=True, write_to_console=False)
@@ -66,6 +71,7 @@ def data(arg=""):
         print "Requires argument (update|dry|error)"
 
 @task
+# Start/stop local postgres database
 def database(cmd="status"):
     data_file = "/Users/torkel/Library/Application Support/Postgres/var-9.5"
     FNULL = open(os.devnull,'w')
@@ -85,6 +91,7 @@ def database(cmd="status"):
     return retcode
 
 @task
+# QOL function for starting local database and development server
 def runserver():
     if database(cmd="status"): database(cmd="start")
     local("kowhubenv/bin/python manage.py runserver")
