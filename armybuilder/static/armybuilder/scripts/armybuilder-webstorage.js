@@ -117,7 +117,7 @@ storageEngine = function() {
             }, function() {
                 errorCallback('storage_format_error', 'Could not parse storage items correctly');
             });
-            successCallback(Object.keys(localStorage));
+            successCallback(allLists);
         }
     }
 }();
