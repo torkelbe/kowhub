@@ -107,6 +107,13 @@ armybuilderController = function() {
         // Rerender unit selections
         loadUnitSelections();
     }
+    
+    /* Load left panel with view of stored armylists */
+    function loadStoredLists() {
+        var storedListsTmpl = $.templates("#storedListsTmpl");
+        var storedListsHtml = storedListsTmpl.render();
+        $('#storedListsPanel').html(storedListsHtml);
+    }
 
     /* Apply change in armylist title */
     function changeArmyListTitle() {
@@ -327,6 +334,17 @@ armybuilderController = function() {
                     $('#unitOptions').show();
                 });
 
+                // Button listener: Display stored armylists
+                $(armyPage).find('#leftPanel').on('click', '#storedListsBtn', function(evt) {
+                    evt.preventDefault();
+                    loadStoredLists();
+                    resetLeftPanel();
+                    $('#storedListsPanel').show();
+                    $('#storedListsBtn').addClass('disabled');
+                    $('#leftPanelTitle').html("Select your armylist");
+                    $('#leftPanelTitle').addClass('faded');
+                });
+
                 // Button listener: Display drop-down menus
                 $(armyPage).on('click', '.dropdownBtn', function(evt) {
                     evt.preventDefault();
@@ -440,6 +458,12 @@ armybuilderController = function() {
             .done(function(data) {
                 loadUnitSelections();
                 loadArmyOptions(data["armies"]);
+                loadStoredLists();
+                resetLeftPanel();
+                $('#storedListsPanel').show();
+                $('#storedListsBtn').addClass('disabled');
+                $('#leftPanelTitle').html("Select your armylist");
+                $('#leftPanelTitle').addClass('faded');
             })
             .fail(function() {
                 errorLogger("JSON", "getJSON failed to load army data");
