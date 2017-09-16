@@ -24,6 +24,9 @@ storageEngine = function() {
         init: function(successCallback, errorCallback) {
             if(window.localStorage) {
                 initialized = true;
+                $.each(Object.keys(localStorage), function(i,v) {
+                    initializedObjectStores[v] = true;
+                });
                 successCallback(null);
             } else {
                 errorCallback('storage_api_not_supported', 'The web storage api is not supported');
@@ -33,7 +36,7 @@ storageEngine = function() {
         initList: function(type, successCallback, errorCallback) {
             if(!initialized) {
                 errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
-            } else if(!localStorage.getItem(type)) {
+            } else if(!initializedObjectStores[type]) {
                 localStorage.setItem(type, JSON.stringify({'meta':{}}));
             }
             initializedObjectStores[type] = true;
@@ -44,9 +47,10 @@ storageEngine = function() {
         removeList: function(type, successCallback, errorCallback) {
             if(!initialized) {
                 errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized');
-            } else if(!localStorage.getItem(type)) {
+            } else if(!initializedObjectStores[type]) {
                 errorCallback('store_not_initialized', 'The object store '+type+' has not been initialized');
             }
+            initializedObjectStores[type] = false;
             var storageItem = getStorageObject(type);
             localStorage.removeItem(type);
             successCallback(formatReturnData(storageItem));
