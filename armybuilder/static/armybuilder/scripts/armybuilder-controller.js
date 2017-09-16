@@ -64,7 +64,7 @@ armybuilderController = function() {
         $(armyPage).find('#leftPanelTitle').removeClass('faded');
     }
 
-    /* Load buttons for selecting an army */
+    /* Load left panel with buttons for selecting an army */
     function loadArmyOptions(data) {
         var armyOptions = [];
         $.each(data, function(key, army) {
@@ -85,8 +85,6 @@ armybuilderController = function() {
         var primaryArmyTmpl = $.templates("#primaryArmyTmpl");
         var primaryArmyHtml = primaryArmyTmpl.render(armyOptions);
         $('#primaryArmyOptions').html(primaryArmyHtml);
-        $(armyPage).find('#armyOptionsBtn').addClass('disabled');
-        $(armyPage).find('#unitOptions').hide();
     }
 
     /* Load left panel with unit choices from seleted army */
@@ -94,11 +92,8 @@ armybuilderController = function() {
         var unitOptionsTmpl = $.templates("#unitOptionsTmpl");
         var unitOptionsHtml = unitOptionsTmpl.render(getOrderedArmyData(armySelection), tmplHelper);
         $('#unitOptions').html(unitOptionsHtml);
-        $('#armyOptions').hide();
-        $('#unitOptions').show();
         $('#unitOptions').scrollTop(0);
         $('#leftPanelTitle').html(armyName);
-        $('#leftPanelTitle').removeClass('faded');
         // Unit option button listeners
         $(armyPage).find('#unitOptions nav').on('click', 'div', function(evt) {
             evt.preventDefault();
@@ -315,10 +310,10 @@ armybuilderController = function() {
                 // Button listener: Move to army selection view */
                 $(armyPage).find('#leftPanel').on('click', '#armyOptionsBtn', function(evt) {
                     evt.preventDefault();
-                    $(evt.target).addClass('disabled');
+                    resetLeftPanel();
+                    $(armyPage).find('#armyOptionsBtn').addClass('disabled');
                     $(armyPage).find('#leftPanelTitle').html('Select an army');
                     $(armyPage).find('#leftPanelTitle').addClass('faded');
-                    $(armyPage).find('#unitOptions').hide();
                     $(armyPage).find('#armyOptions').show();
                 });
 
@@ -328,7 +323,8 @@ armybuilderController = function() {
                     var armyKey = $(evt.target).data().army;
                     var armyName = $(evt.target).html();
                     loadUnitOptions(armyKey, armyName);
-                    $(armyPage).find('#armyOptionsBtn').removeClass('disabled');
+                    resetLeftPanel();
+                    $('#unitOptions').show();
                 });
 
                 // Button listener: Display drop-down menus
