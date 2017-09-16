@@ -54,6 +54,16 @@ armybuilderController = function() {
         };
     })();
 
+    /* Reset left panel */
+    function resetLeftPanel() {
+        $(armyPage).find('#armyOptions').hide();
+        $(armyPage).find('#unitOptions').hide();
+        $(armyPage).find('#storedListsPanel').hide();
+        $(armyPage).find('#armyOptionsBtn').removeClass('disabled');
+        $(armyPage).find('#storedListsBtn').removeClass('disabled');
+        $(armyPage).find('#leftPanelTitle').removeClass('faded');
+    }
+
     /* Load buttons for selecting an army */
     function loadArmyOptions(data) {
         var armyOptions = [];
