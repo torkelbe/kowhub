@@ -130,7 +130,7 @@ body {
     }
 }
 
-#armyOptionsBtn {
+#armyOptionsBtn, #storedListsBtn {
     flex: 0 0 80px;
     background-color: #f44336;
     color: white;
@@ -140,6 +140,7 @@ body {
     text-decoration: none;
     cursor: pointer;
     padding: 6px;
+    margin: 0px 1px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -320,26 +321,11 @@ body {
     background-color: #dddddd;
     padding: 10px;
 }
-
-#storedListsBtn {
-    flex: 0 0 70px;
-    background-color: #f44336;
-    color: white;
-    font-size: 16px;
-    border: 1px solid #5b5b5b;
-    border-radius: 6px;
-    text-decoration: none;
-    cursor: pointer;
-    padding: 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 #armylistTitle {
     flex: 1 1 auto;
     font-size: 18px;
     font-weight: bold;
-    margin: 0px 15px;
+    margin: 0px 15px 0px 3px;
     line-height: 40px;
 }
 #titleChange {
