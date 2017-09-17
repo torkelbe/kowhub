@@ -139,6 +139,7 @@ class CsvParser:
         while line:
             entry, order, key, name, typ, size, stats, special, options = split_line(line, self.separator)
             unit, line = self.parse_unit(line, file)
+            key = armykey + key
             if not key in army["units"]:
                 army["units"][key] = unit
             elif (self.error_print):
