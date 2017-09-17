@@ -4,15 +4,16 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.views import generic
 import json
+from kowdatagen import data_locations
 
-DATAFILE = "armybuilder/data/kowdata.json"
+kowdata_locations = data_locations.DataLocations()
 
 class AppView(generic.TemplateView):
     template_name = 'armybuilder/application.html'
 
 def dataobj(request):
     if request.is_ajax():
-        with open(DATAFILE, 'r') as f:
+        with open(kowdata_locations.json, 'r') as f:
             data = f.read()
             return HttpResponse(data, content_type="application/json")
     else:

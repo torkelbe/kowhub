@@ -8,6 +8,7 @@ Note: format of CSV input and JSON output does not adhere to any formal standard
 import sys
 import json
 from os import listdir, path
+import data_locations
 
 # === Helper functions ===
 def get_stats_obj(sp, me, ra, de, att, ne, pts):
@@ -36,11 +37,10 @@ def get_rule_elements(name):
 # === Parser ===
 class CsvParser:
 
-    def __init__(self, base_dir, error_print=False):
+    def __init__(self, file_location, error_print=False):
         self.error_print = error_print
         self.separator = ';' # separator character in the CSV
-        self.rules_dir = path.join(base_dir, "sources/rules_data")
-        self.army_dir = path.join(base_dir, "sources/army_data")
+        self.csv = file_location
 
     def parse(self):
         self.special = self.parse_special_rules()
@@ -52,9 +52,9 @@ class CsvParser:
 
     def parse_special_rules(self):
         special = {}
-        for filename in listdir(self.rules_dir):
+        for filename in listdir(self.csv.rules):
             if "special" in filename and filename.endswith('.csv'):
-                with open(path.join(self.rules_dir, filename), 'r') as file:
+                with open(path.join(self.csv.rules, filename), 'r') as file:
                     file.readline() # throw first line
                     counter = 1
                     line = file.readline()
@@ -69,9 +69,9 @@ class CsvParser:
 
     def parse_magic_items(self):
         items = {}
-        for filename in listdir(self.rules_dir):
+        for filename in listdir(self.csv.rules):
             if "items" in filename and filename.endswith('.csv'):
-                with open(path.join(self.rules_dir, filename), 'r') as file:
+                with open(path.join(self.csv.rules, filename), 'r') as file:
                     file.readline() # throw first line
                     counter = 1
                     line = file.readline()
@@ -91,9 +91,9 @@ class CsvParser:
 
     def parse_ranged(self):
         ranged = {}
-        for filename in listdir(self.rules_dir):
+        for filename in listdir(self.csv.rules):
             if "ranged" in filename and filename.endswith('.csv'):
-                with open(path.join(self.rules_dir, filename), 'r') as file:
+                with open(path.join(self.csv.rules, filename), 'r') as file:
                     file.readline() # throw first line
                     counter = 1
                     line = file.readline()
@@ -110,9 +110,9 @@ class CsvParser:
     def parse_all_armies(self):
         armies = {}
         army_order_list = []
-        for filename in listdir(self.army_dir):
+        for filename in listdir(self.csv.armies):
             if filename.endswith('.csv'):
-                with open(path.join(self.army_dir, filename), 'r') as file:
+                with open(path.join(self.csv.armies, filename), 'r') as file:
                     key, obj = self.parse_army(file)
                     if not key in armies:
                         armies[key] = obj
@@ -255,14 +255,13 @@ def _confirmation_warning(message):
 
 # === External interface ===
 def generate_data(error_print=False, write_to_file=False, write_to_console=False, check_keys=True):
-    base_dir = path.dirname(path.abspath(__file__))
-    data_parser = CsvParser(base_dir, error_print)
+    files = data_locations.DataLocations()
+    data_parser = CsvParser(files.csv, error_print)
     data_obj = data_parser.parse()
-    filename = path.join(base_dir, "../data/kowdata.json")
     if check_keys:
-        _check_key_conformity(data_obj, filename)
+        _check_key_conformity(data_obj, files.json)
     if write_to_file:
-        with open(filename, 'w') as output_file:
+        with open(files.json, 'w') as output_file:
             output_file.write(json.dumps(data_obj, separators=(',',':')))
         print >>sys.stderr, "Data updated successfully"
     if write_to_console:
