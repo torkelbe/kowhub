@@ -214,21 +214,24 @@ class CsvParser:
 
 # === Key conformity check ===
 def _check_key_conformity(newobj, oldobj_filename):
-    with open(oldobj_filename, 'r') as oldobj_file:
-        oldobj = json.loads(oldobj_file.read())
-    newkeys = _get_keys_obj(newobj)
-    oldkeys = _get_keys_obj(oldobj)
-    for armykey, army in oldkeys.iteritems():
-        if not newkeys.has_key(armykey):
-            _confirmation_warning("Updated data will lose army key: "+armykey)
-        for unitkey, unitname in army.iteritems():
-            if newkeys[armykey].has_key(unitkey):
-                newname = newkeys[armykey][unitkey]
-                if not unitname == newname:
-                    _confirmation_warning("Name for key '"+unitkey+"' will change from '"+unitname+"' to '"+newname+"'")
-            else:
-                _confirmation_warning("Updated data will lose unit key '"+unitkey+"' : '"+unitname+"'")
-    print >>sys.stderr, "Key conformity check completed"
+    try:
+        with open(oldobj_filename, 'r') as oldobj_file:
+            oldobj = json.loads(oldobj_file.read())
+        newkeys = _get_keys_obj(newobj)
+        oldkeys = _get_keys_obj(oldobj)
+        for armykey, army in oldkeys.iteritems():
+            if not newkeys.has_key(armykey):
+                _confirmation_warning("Updated data will lose army key: "+armykey)
+            for unitkey, unitname in army.iteritems():
+                if newkeys[armykey].has_key(unitkey):
+                    newname = newkeys[armykey][unitkey]
+                    if not unitname == newname:
+                        _confirmation_warning("Name for key '"+unitkey+"' will change from '"+unitname+"' to '"+newname+"'")
+                else:
+                    _confirmation_warning("Updated data will lose unit key '"+unitkey+"' : '"+unitname+"'")
+        print >>sys.stderr, "Key conformity check completed"
+    except IOError as e:
+        print >>sys.stderr, "Key conformity check FAILED. Could not read previous data file."
 
 def _get_keys_obj(dataobj):
     obj = {}
