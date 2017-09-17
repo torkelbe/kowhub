@@ -109,11 +109,18 @@ class CsvParser:
 
     def parse_all_armies(self):
         armies = {}
+        army_order_list = []
         for filename in listdir(self.army_dir):
             if filename.endswith('.csv'):
                 with open(path.join(self.army_dir, filename), 'r') as file:
                     key, obj = self.parse_army(file)
-                    armies[key] = obj
+                    if not key in armies:
+                        armies[key] = obj
+                    elif(self.error_print):
+                        print >>sys.stdout, "Duplicate army key:  "+key+" ("+filename+")"
+                    if obj["order"] in army_order_list and (self.error_print):
+                        print >>sys.stdout, "Duplicate army ordering:  "+filename
+                    army_order_list.append(obj["order"])
         return armies
 
     def parse_army(self, file):
@@ -128,10 +135,17 @@ class CsvParser:
         #--- Units ---
         army["units"] = {}
         line = file.readline()
+        unit_order_list = []
         while line:
             entry, order, key, name, typ, size, stats, special, options = split_line(line, self.separator)
             unit, line = self.parse_unit(line, file)
-            army["units"][key] = unit
+            if not key in army["units"]:
+                army["units"][key] = unit
+            elif (self.error_print):
+                print >>sys.stdout, "Duplicate unit key:  "+key+" ("+name+")"
+            if unit["order"] in unit_order_list and (self.error_print):
+                print >>sys.stdout, "Duplicate unit ordering:  "+name
+            unit_order_list.append(unit["order"])
         return armykey, army
 
     def parse_unit(self, line, file):
