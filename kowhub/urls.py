@@ -17,10 +17,17 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import RedirectView
 from django.conf import settings
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 urlpatterns = [
     url(r'^armybuilder/', include('armybuilder.urls')),
     url(r'^$', RedirectView.as_view(url='armybuilder')),
+    url(r'^favicon.ico$',
+        RedirectView.as_view(
+            url=staticfiles_storage.url('img/favicon.ico')
+        ),
+        name="favicon"
+    ),
 ]
 
 if settings.ADMIN_ENABLED:
