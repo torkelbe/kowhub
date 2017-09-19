@@ -1,7 +1,7 @@
 import os
 import subprocess
 from fabric.api import *
-from armybuilder.kowdatagen import source_to_json
+from armybuilder.kowdatagen import csv_to_json
 
 class Site(object):
 
@@ -62,11 +62,11 @@ def deploy():
 # arg: 'error' to check for errors in source file parsing.
 def data(arg=""):
     if arg.startswith("update"):
-        source_to_json.generate_data(error_print=False, write_to_file=True, write_to_console=False)
+        csv_to_json.generate_data(error_print=False, write_to_file=True, write_to_console=False)
     elif arg.startswith("dry"):
-        source_to_json.generate_data(error_print=False, write_to_file=False, write_to_console=True)
+        csv_to_json.generate_data(error_print=False, write_to_file=False, write_to_console=True)
     elif arg.startswith("error"):
-        source_to_json.generate_data(error_print=True, write_to_file=False, write_to_console=False)
+        csv_to_json.generate_data(error_print=True, write_to_file=False, write_to_console=False)
     else:
         print "Requires argument (update|dry|error)"
 
