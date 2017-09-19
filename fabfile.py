@@ -1,7 +1,7 @@
 import os
 import subprocess
 from fabric.api import *
-from armybuilder.kowdatagen import csv_to_json
+from armybuilder.kowdatagen import numbers_to_csv, csv_to_json
 
 class Site(object):
 
@@ -57,18 +57,27 @@ def deploy():
 
 @task
 # Handle KoW data source files.
-# arg: 'update' to create new json data files.
-# arg: 'dry' to do a test run, and print json result to console only.
-# arg: 'error' to check for errors in source file parsing.
+# arg: 'csv' to export from numbers to csv
+# arg: 'json' to convert from csv to json
+# arg: 'make' to perform both numbers-to-csv and csv-to-json
+# arg: 'dry' to do a test run of csv-to-json, and print result to console only
+# arg: 'error' to check for errors in csv-to-json file parsing
 def data(arg=""):
-    if arg.startswith("update"):
+    if arg.startswith("csv"):
+        numbers_to_csv.export_to_csv()
+    elif arg.startswith("json"):
+        csv_to_json.generate_data(error_print=False, write_to_file=True, write_to_console=False)
+    elif arg.startswith("make"):
+        numbers_to_csv.export_to_csv()
+        csv_to_json.generate_data(error_print=False, write_to_file=True, write_to_console=False)
+    elif arg.startswith("update"):
         csv_to_json.generate_data(error_print=False, write_to_file=True, write_to_console=False)
     elif arg.startswith("dry"):
         csv_to_json.generate_data(error_print=False, write_to_file=False, write_to_console=True)
     elif arg.startswith("error"):
         csv_to_json.generate_data(error_print=True, write_to_file=False, write_to_console=False)
     else:
-        print "Requires argument (update|dry|error)"
+        print "Requires argument (csv|json|make|dry|error)"
 
 @task
 # Start/stop local postgres database
