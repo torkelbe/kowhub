@@ -232,7 +232,7 @@ def _check_key_conformity(newobj, oldobj_filename):
                     _confirmation_warning("Updated data will lose unit key '"+unitkey+"' : '"+unitname+"'")
         print >>sys.stderr, "Key conformity check completed"
     except IOError as e:
-        print >>sys.stderr, "Key conformity check FAILED. Could not read previous data file."
+        print >>sys.stderr, "Key conformity check failed. No previous data file."
 
 def _get_keys_obj(dataobj):
     obj = {}
@@ -256,8 +256,15 @@ def _confirmation_warning(message):
 # === External interface ===
 def generate_data(error_print=False, write_to_file=False, write_to_console=False, check_keys=True):
     files = data_locations.DataLocations()
+    if not (path.isdir(files.csv.armies) and path.isdir(files.csv.rules)):
+        print "Could not generate json data. Directory for csv files is missing."
+        return
     data_parser = CsvParser(files.csv, error_print)
     data_obj = data_parser.parse()
+    if not data_obj["special"]: print "Error: Rules for 'special' missing."
+    if not data_obj["items"]: print "Error: Rules for 'spells' missing."
+    if not data_obj["ranged"]: print "Error: Rules for 'ranged' missing."
+    if not data_obj["armies"]: print "Error: Rules for 'armies' missing."
     if check_keys:
         _check_key_conformity(data_obj, files.json)
     if write_to_file:
