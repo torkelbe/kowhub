@@ -24,9 +24,9 @@ def properties(line, separator):
     return elements
 
 def split_line(line, separator):
-    entry, order, key, name, typ, size, sp, me, ra, de, att, ne, pts, special, options = properties(line, separator)
+    entry, order, key, name, short, typ, size, sp, me, ra, de, att, ne, pts, special, options = properties(line, separator)
     stats = get_stats_obj(sp, me, ra, de, att, ne, pts)
-    return entry, order, key, name, typ, size, stats, special, options
+    return entry, order, key, name, short, typ, size, stats, special, options
 
 def get_rule_elements(name):
     parts = name.split('(')
@@ -124,8 +124,9 @@ class CsvParser:
         file.readline() # throw first line
         #--- Army Header ---
         line = file.readline()
-        entry, order, armykey, armyname, alignment = properties(line, self.separator)[:5]
+        entry, order, armykey, armyname, armyname_short, alignment = properties(line, self.separator)[:6]
         army["name"] = armyname
+        army["short"] = armyname_short
         army["alignment"] = alignment
         army["order"] = int(order)
         #--- Units ---
@@ -133,7 +134,7 @@ class CsvParser:
         line = file.readline()
         unit_order_list = []
         while line:
-            entry, order, key, name, typ, size, stats, special, options = split_line(line, self.separator)
+            entry, order, key, name, short, typ, size, stats, special, options = split_line(line, self.separator)
             unit, line = self.parse_unit(line, file)
             key = armykey + key
             if not key in army["units"]:
@@ -147,8 +148,9 @@ class CsvParser:
 
     def parse_unit(self, line, file):
         unit = {}
-        entry, order, key, name, typ, size, stats, special, options = split_line(line, self.separator)
+        entry, order, key, name, short, typ, size, stats, special, options = split_line(line, self.separator)
         unit["name"] = name
+        unit["short"] = short
         unit["type"] = typ
         unit["order"] = int(order)
         unit["special"] = special
@@ -165,15 +167,15 @@ class CsvParser:
         if size=="Troop":
             unit["Troop"] = stats
             new_line = file.readline()
-            entry, order, key, name, typ, size, stats, special, options = split_line(new_line, self.separator)
+            entry, order, key, name, short, typ, size, stats, special, options = split_line(new_line, self.separator)
         if size=="Regiment" and not name:
             unit["Regiment"] = stats
             new_line = file.readline()
-            entry, order, key, name, typ, size, stats, special, options = split_line(new_line, self.separator)
+            entry, order, key, name, short, typ, size, stats, special, options = split_line(new_line, self.separator)
         if size=="Horde" and not name:
             unit["Horde"] = stats
             new_line = file.readline()
-            entry, order, key, name, typ, size, stats, special, options = split_line(new_line, self.separator)
+            entry, order, key, name, short, typ, size, stats, special, options = split_line(new_line, self.separator)
         if size=="Legion" and not name:
             unit["Legion"] = stats
             new_line = file.readline()
