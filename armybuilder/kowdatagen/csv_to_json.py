@@ -56,13 +56,13 @@ class CsvParser:
             if "special" in filename and filename.endswith('.csv'):
                 with open(path.join(self.csv.rules, filename), 'r') as file:
                     file.readline() # throw first line
-                    counter = 1
                     line = file.readline()
                     while line:
-                        name, description = properties(line, self.separator);
-                        name, value = get_rule_elements(name)
-                        special[counter] = name
-                        counter += 1
+                        name, key, description = properties(line, self.separator);
+                        if not key in special:
+                            special[key] = {"name":name}
+                        elif(self.error_print):
+                            print >>sys.stdout, "Duplicate special key:  "+key+" ("+name+")"
                         line = file.readline()
                     break
         return special
@@ -73,18 +73,15 @@ class CsvParser:
             if "items" in filename and filename.endswith('.csv'):
                 with open(path.join(self.csv.rules, filename), 'r') as file:
                     file.readline() # throw first line
-                    counter = 1
                     line = file.readline()
                     while line:
-                        name, pts, action, description, limitation = properties(line, self.separator);
-                        action = "" # Action not yet used
+                        name, key, pts, modifier, description, limitation = properties(line, self.separator);
+                        modifier = "" # Modifier not yet used
                         limitation = "" # Limitation not yet used
-                        items[counter] = {}
-                        items[counter]["n"] = name
-                        items[counter]["p"] = int(pts)
-                        items[counter]["a"] = action
-                        items[counter]["l"] = limitation
-                        counter += 1
+                        if not key in items:
+                            items[key] = {"name":name, "pts":int(pts), "mod":modifier, "lim":limitation}
+                        elif(self.error_print):
+                            print >>sys.stdout, "Duplicate item key:  "+key+" ("+name+")"
                         line = file.readline()
                     break
         return items
@@ -95,14 +92,13 @@ class CsvParser:
             if "ranged" in filename and filename.endswith('.csv'):
                 with open(path.join(self.csv.rules, filename), 'r') as file:
                     file.readline() # throw first line
-                    counter = 1
                     line = file.readline()
                     while line:
-                        name, reach, description = properties(line, self.separator);
-                        ranged[counter] = {}
-                        ranged[counter]["n"] = name
-                        ranged[counter]["r"] = reach
-                        counter += 1
+                        name, key, rang, description = properties(line, self.separator);
+                        if not key in ranged:
+                            ranged[key] = {"name":name, "range":rang}
+                        elif(self.error_print):
+                            print >>sys.stdout, "Duplicate ranged key:  "+key+" ("+name+")"
                         line = file.readline()
                     break
         return ranged
@@ -184,26 +180,27 @@ class CsvParser:
         return unit, new_line
 
     def format_unit_special_rules(self):
-        specialObj = {}
-        rangedObj = {}
-        for key, name in self.special.items():
-            specialObj[name] = key
-        for key, item in self.ranged.items():
-            rangedObj[item["n"]] = key
+        specialobj = {}
+        rangedobj = {}
+        for key, ruleobj in self.special.iteritems():
+            specialobj[ruleobj.get("name")] = key
+        for key, itemobj in self.ranged.iteritems():
+            rangedobj[itemobj.get("name")] = key
+            rangedobj[itemobj.get("name")+"s"] = key
         for army in self.armies.itervalues():
-            for unit in army["units"].itervalues():
-                rules = unit["special"].split(',')
+            for unit in army.get("units").itervalues():
+                rules = unit.get("special").split(',')
                 if len(rules[0]) < 1: continue
                 specialkey_list = []
                 rangedkey_list = []
                 for rule in rules:
                     name, value = get_rule_elements(rule)
-                    if name in specialObj:
-                        key = specialObj[name]
+                    if name in specialobj:
+                        key = specialobj[name]
                         if value: specialkey_list.append(str(key)+':'+str(value))
                         else: specialkey_list.append(str(key))
-                    elif name in rangedObj:
-                        key = rangedObj[name]
+                    elif name in rangedobj:
+                        key = rangedobj[name]
                         if value: rangedkey_list.append(str(key)+':'+str(value))
                         else: rangedkey_list.append(str(key))
                     else:
@@ -262,7 +259,7 @@ def generate_data(error_print=False, write_to_file=False, write_to_console=False
     data_parser = CsvParser(files.csv, error_print)
     data_obj = data_parser.parse()
     if not data_obj["special"]: print "Error: Rules for 'special' missing."
-    if not data_obj["items"]: print "Error: Rules for 'spells' missing."
+    if not data_obj["items"]: print "Error: Rules for 'items' missing."
     if not data_obj["ranged"]: print "Error: Rules for 'ranged' missing."
     if not data_obj["armies"]: print "Error: Rules for 'armies' missing."
     if check_keys:
