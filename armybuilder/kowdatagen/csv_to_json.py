@@ -215,38 +215,64 @@ def _check_key_conformity(newobj, oldobj_filename):
     try:
         with open(oldobj_filename, 'r') as oldobj_file:
             oldobj = json.loads(oldobj_file.read())
-        newkeys = _get_keys_obj(newobj)
-        oldkeys = _get_keys_obj(oldobj)
-        for armykey, army in oldkeys.iteritems():
-            if not newkeys.has_key(armykey):
-                _confirmation_warning("Updated data will lose army key: "+armykey)
-            for unitkey, unitname in army.iteritems():
-                if newkeys[armykey].has_key(unitkey):
-                    newname = newkeys[armykey][unitkey]
-                    if not unitname == newname:
-                        _confirmation_warning("Name for key '"+unitkey+"' will change from '"+unitname+"' to '"+newname+"'")
-                else:
-                    _confirmation_warning("Updated data will lose unit key '"+unitkey+"' : '"+unitname+"'")
+        # check army keys
+        newarmies = _get_data_keys(newobj.get("armies"))
+        oldarmies = _get_data_keys(oldobj.get("armies"))
+        for armykey, armyname in oldarmies.iteritems():
+            if not newarmies.has_key(armykey):
+                _confirmation_warning("New data will lose army key '"+armykey+"' ("+armyname+")")
+                continue
+            elif armyname != newarmies.get(armykey):
+                _confirmation_warning("Army '"+armykey+"' changes name from "+armyname+" to "+newarmies.get(armykey))
+            # check unit keys
+            newunits = _get_data_keys(newobj.get("armies").get(armykey).get("units"))
+            oldunits = _get_data_keys(oldobj.get("armies").get(armykey).get("units"))
+            for unitkey, unitname in oldunits.iteritems():
+                if not newunits.has_key(unitkey):
+                    _confirmation_warning("New data will lose unit key '"+unitkey+"' ("+unitname+")")
+                elif unitname != newunits.get(unitkey):
+                    _confirmation_warning("Unit '"+unitkey+"' changes name from "+unitname+" to "+newunits.get(unitkey))
+        # check special keys
+        newrules = _get_data_keys(newobj.get("special"))
+        oldrules = _get_data_keys(oldobj.get("special"))
+        for ruleskey, rulesname in oldrules.iteritems():
+            if not newrules.has_key(ruleskey):
+                _confirmation_warning("New data will lose special key '"+ruleskey+"' ("+rulesname+")")
+            elif rulesname != newrules.get(ruleskey):
+                _confirmation_warning("Special rule '"+ruleskey+"' changes name from "+rulesname+" to "+newrules.get(ruleskey))
+        # check item keys
+        newitems = _get_data_keys(newobj.get("items"))
+        olditems = _get_data_keys(oldobj.get("items"))
+        for itemkey, itemname in olditems.iteritems():
+            if not newitems.has_key(itemkey):
+                _confirmation_warning("New data will lose item key '"+itemkey+"' ("+itemname+")")
+            elif itemname != newitems.get(itemkey):
+                _confirmation_warning("Item '"+itemkey+"' changes name from "+itemname+" to "+newitems.get(itemkey))
+        # check ranged keys
+        newranged = _get_data_keys(newobj.get("ranged"))
+        oldranged = _get_data_keys(oldobj.get("ranged"))
+        for rangedkey, rangedname in oldranged.iteritems():
+            if not newranged.has_key(rangedkey):
+                _confirmation_warning("New data will lose ranged key '"+rangedkey+"' ("+rangedname+")")
+            elif rangedname != newranged.get(rangedkey):
+                _confirmation_warning("Ranged attack '"+rangedkey+"' changes name from "+rangedname+" to "+newranged.get(rangedkey))
         print >>sys.stderr, "Key conformity check completed"
     except IOError as e:
         print >>sys.stderr, "Key conformity check failed. No previous data file."
 
-def _get_keys_obj(dataobj):
+def _get_data_keys(dataobj):
     obj = {}
-    for armykey, armydata in dataobj["armies"].iteritems():
-        armyobj = {}
-        for key, unit in armydata["units"].iteritems():
-            # Remove non-ascii (apostrophes) from names; python does not handle them well
-            armyobj[key] = ''.join([i if ord(i)<128 else '' for i in unit["name"]])
-        obj[armykey] = armyobj
+    for key, data in dataobj.iteritems():
+        # Remove non-ascii (apostrophes) from names; python does not handle them well
+        obj[key] = ''.join([i if ord(i)<128 else '' for i in data.get("name")])
     return obj
 
 def _confirmation_warning(message):
     print >>sys.stderr, "DATA KEY WARNING!"
     print >>sys.stderr, message
-    print >>sys.stderr, "Continue (yes/no)? ",
+    print >>sys.stderr, "Press Enter to continue, or type 'q' to abort.",
     response = raw_input()
-    if not response == "yes":
+    if response.startswith("q"):
         print >>sys.stderr, "Aborted. Data files have not been updated"
         exit(1)
 
