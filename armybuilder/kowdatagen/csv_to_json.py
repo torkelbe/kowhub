@@ -16,16 +16,23 @@ def get_stats_obj(sp, me, ra, de, att, ne, pts):
     de = de+'+'
     return [sp, me, ra, de, att, ne, int(pts)]
 
-def properties(line, separator):
+def get_elements(line, separator):
     elements =  line.rstrip('\r\n').split(separator)
     for e in elements:
         e = e.strip()
     return elements
 
-def split_line(line, separator):
-    entry, order, key, name, short, typ, size, sp, me, ra, de, att, ne, pts, special, options = properties(line, separator)
+def read_army(line, separator):
+    entry, order, armykey, armyname, armyname_short, alignment, size, sp, me, ra, de, att, ne, pts, special, options, version, status = get_elements(line, separator)
+    if entry != "army":
+        print >>sys.stderr, "Error. Tried to read army properties of a non-army line:"
+        print >>sys.stderr, line
+    return entry, order, armykey, armyname, armyname_short, alignment, version, status
+
+def read_unit(line, separator):
+    entry, order, key, name, short, typ, size, sp, me, ra, de, att, ne, pts, special, options, version, status = get_elements(line, separator)
     stats = get_stats_obj(sp, me, ra, de, att, ne, pts)
-    return entry, order, key, name, short, typ, size, stats, special, options
+    return entry, order, key, name, short, typ, size, stats, special, options, version, status
 
 def get_rule_elements(name):
     parts = name.split('(')
@@ -57,8 +64,10 @@ class CsvParser:
                     file.readline() # throw first line
                     line = file.readline()
                     while line:
-                        name, key, typ, description = properties(line, self.separator);
-                        typ = "" # To what ruleset does this special rule belong. Not yet used.
+                        name, key, version, status, description = get_elements(line, self.separator);
+                        version = "" # To what ruleset does this special rule belong. Not yet used.
+                        status = "" # Current status of the rules for this item. Not yet used.
+                        description = "" # Rulebook description of this item
                         if len(key) != 3:
                             self.print_warning("Non-standard length(3) of special rule key", key, name)
                         if not key in special:
@@ -77,11 +86,12 @@ class CsvParser:
                     file.readline() # throw first line
                     line = file.readline()
                     while line:
-                        name, key, year, status, pts, modifier, limitation, description = properties(line, self.separator);
-                        year = "" # Year of release. Not yet used.
-                        status = "" # Active/Inactive for current tournament play. Not yet used.
+                        name, key, pts, modifier, limitation, version, status, description = get_elements(line, self.separator);
                         modifier = "" # How the item modifies unit profile. Not yet used.
                         limitation = "" # Limitation on who can choose the item. Not yet used.
+                        version = "" # To what ruleset does this item belong. Not yet used.
+                        status = "" # Current status of the rules for this item. Not yet used.
+                        description = "" # Rulebook description of this item
                         if len(key) != 3:
                             self.print_warning("Non-standard length(3) of item key", key, name)
                         if not key in items:
@@ -100,10 +110,11 @@ class CsvParser:
                     file.readline() # throw first line
                     line = file.readline()
                     while line:
-                        name, key, year, status, pts, rang, description = properties(line, self.separator);
-                        year = "" # Year of release. Not yet used.
-                        status = "" # Active/Inactive for current tournament play. Not yet used.
+                        name, key, pts, rang, version, status, description = get_elements(line, self.separator);
                         pts = "" # Cost of general purchase, if applicable. Not yet used.
+                        version = "" # To what ruleset does this item belong. Not yet used.
+                        status = "" # Current status of the rules for this item. Not yet used.
+                        description = "" # Rulebook description of this item
                         if len(key) != 3:
                             self.print_warning("Non-standard length(3) of ranged key", key, name)
                         if not key in ranged:
@@ -137,7 +148,9 @@ class CsvParser:
         file.readline() # throw first line
         #--- Army Header ---
         line = file.readline()
-        entry, order, armykey, armyname, armyname_short, alignment = properties(line, self.separator)[:6]
+        entry, order, armykey, armyname, armyname_short, alignment, version, status = read_army(line, self.separator)
+        version = "" # To what ruleset does this item belong. Not yet used.
+        status = "" # Current status of the rules for this item. Not yet used.
         army["name"] = armyname
         army["short"] = armyname_short
         army["alignment"] = alignment
@@ -147,7 +160,7 @@ class CsvParser:
         line = file.readline()
         unit_order_list = []
         while line:
-            entry, order, key, name, short, typ, size, stats, special, options = split_line(line, self.separator)
+            entry, order, key, name, short, typ, size, stats, special, options, version, status = read_unit(line, self.separator)
             unit, line = self.parse_unit(line, file)
             key = armykey + key
             if len(key) != 4:
@@ -163,7 +176,9 @@ class CsvParser:
 
     def parse_unit(self, line, file):
         unit = {}
-        entry, order, key, name, short, typ, size, stats, special, options = split_line(line, self.separator)
+        entry, order, key, name, short, typ, size, stats, special, options, version, status = read_unit(line, self.separator)
+        version = "" # To what ruleset does this item belong. Not yet used.
+        status = "" # Current status of the rules for this item. Not yet used.
         unit["name"] = name
         unit["short"] = short
         unit["type"] = typ
@@ -178,19 +193,24 @@ class CsvParser:
                 unit["Monster"] = stats
             elif typ=="War Engine":
                 unit["Warengine"] = stats
+            else:
+                self.print_error("Encountered incorrect unit format", unit.get("name"))
             return unit, file.readline()
         if size=="Troop":
             unit["Troop"] = stats
             new_line = file.readline()
-            entry, order, key, name, short, typ, size, stats, special, options = split_line(new_line, self.separator)
+            if not new_line: return unit, new_line
+            entry, order, key, name, short, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
         if size=="Regiment" and not name:
             unit["Regiment"] = stats
             new_line = file.readline()
-            entry, order, key, name, short, typ, size, stats, special, options = split_line(new_line, self.separator)
+            if not new_line: return unit, new_line
+            entry, order, key, name, short, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
         if size=="Horde" and not name:
             unit["Horde"] = stats
             new_line = file.readline()
-            entry, order, key, name, short, typ, size, stats, special, options = split_line(new_line, self.separator)
+            if not new_line: return unit, new_line
+            entry, order, key, name, short, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
         if size=="Legion" and not name:
             unit["Legion"] = stats
             new_line = file.readline()
