@@ -58,7 +58,8 @@ class CsvParser:
                     file.readline() # throw first line
                     line = file.readline()
                     while line:
-                        name, key, description = properties(line, self.separator);
+                        name, key, typ, description = properties(line, self.separator);
+                        typ = "" # To what ruleset does this special rule belong. Not yet used.
                         if not key in special:
                             special[key] = {"name":name}
                         elif(self.error_print):
@@ -75,9 +76,11 @@ class CsvParser:
                     file.readline() # throw first line
                     line = file.readline()
                     while line:
-                        name, key, pts, modifier, description, limitation = properties(line, self.separator);
-                        modifier = "" # Modifier not yet used
-                        limitation = "" # Limitation not yet used
+                        name, key, year, status, pts, modifier, limitation, description = properties(line, self.separator);
+                        year = "" # Year of release. Not yet used.
+                        status = "" # Active/Inactive for current tournament play. Not yet used.
+                        modifier = "" # How the item modifies unit profile. Not yet used.
+                        limitation = "" # Limitation on who can choose the item. Not yet used.
                         if not key in items:
                             items[key] = {"name":name, "pts":int(pts), "mod":modifier, "lim":limitation}
                         elif(self.error_print):
@@ -94,7 +97,10 @@ class CsvParser:
                     file.readline() # throw first line
                     line = file.readline()
                     while line:
-                        name, key, rang, description = properties(line, self.separator);
+                        name, key, year, status, pts, rang, description = properties(line, self.separator);
+                        year = "" # Year of release. Not yet used.
+                        status = "" # Active/Inactive for current tournament play. Not yet used.
+                        pts = "" # Cost of general purchase, if applicable. Not yet used.
                         if not key in ranged:
                             ranged[key] = {"name":name, "range":rang}
                         elif(self.error_print):
