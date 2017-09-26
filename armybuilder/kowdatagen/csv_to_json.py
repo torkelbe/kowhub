@@ -3,7 +3,6 @@
 '''
 Parser for Kings of War army and rules data in CSV format.
 Prints to stdout a JSON representation of the same army lists and rules.
-Note: format of CSV input and JSON output does not adhere to any formal standard.
 '''
 import sys
 import json
@@ -59,6 +58,8 @@ class CsvParser:
                     while line:
                         name, key, typ, description = properties(line, self.separator);
                         typ = "" # To what ruleset does this special rule belong. Not yet used.
+                        if len(key) != 3:
+                            self.print_warning("Non-standard length(3) of special rule key", key, name)
                         if not key in special:
                             special[key] = {"name":name}
                         else:
@@ -80,6 +81,8 @@ class CsvParser:
                         status = "" # Active/Inactive for current tournament play. Not yet used.
                         modifier = "" # How the item modifies unit profile. Not yet used.
                         limitation = "" # Limitation on who can choose the item. Not yet used.
+                        if len(key) != 3:
+                            self.print_warning("Non-standard length(3) of item key", key, name)
                         if not key in items:
                             items[key] = {"name":name, "pts":int(pts), "mod":modifier, "lim":limitation}
                         else:
@@ -100,6 +103,8 @@ class CsvParser:
                         year = "" # Year of release. Not yet used.
                         status = "" # Active/Inactive for current tournament play. Not yet used.
                         pts = "" # Cost of general purchase, if applicable. Not yet used.
+                        if len(key) != 3:
+                            self.print_warning("Non-standard length(3) of ranged key", key, name)
                         if not key in ranged:
                             ranged[key] = {"name":name, "range":rang}
                         else:
@@ -115,6 +120,8 @@ class CsvParser:
             if filename.endswith('.csv'):
                 with open(path.join(self.csv.armies, filename), 'r') as file:
                     key, obj = self.parse_army(file)
+                    if len(key) != 2:
+                        self.print_warning("Non-standard length(2) of army key", key, obj.get("name"))
                     if not key in armies:
                         armies[key] = obj
                     else:
@@ -142,6 +149,8 @@ class CsvParser:
             entry, order, key, name, short, typ, size, stats, special, options = split_line(line, self.separator)
             unit, line = self.parse_unit(line, file)
             key = armykey + key
+            if len(key) != 4:
+                self.print_warning("Non-standard length(4) of unit key", key, unit.get("name"))
             if not key in army["units"]:
                 army["units"][key] = unit
             else:
