@@ -45,6 +45,7 @@ class CsvParser:
         self.items = self.parse_magic_items()
         self.ranged = self.parse_ranged()
         self.armies = self.parse_all_armies()
+        self.inspect_key_collisions()
         self.format_unit_special_rules()
         return {'special':self.special, 'items':self.items, 'ranged':self.ranged, 'armies':self.armies}
 
@@ -194,6 +195,19 @@ class CsvParser:
             unit["Legion"] = stats
             new_line = file.readline()
         return unit, new_line
+
+    def inspect_key_collisions(self):
+        special = _get_data_keys(self.special)
+        items = _get_data_keys(self.items)
+        ranged = _get_data_keys(self.ranged)
+        for key in special.iterkeys():
+            if key in items:
+                self.print_warning("Shared special and items keys", special.get(key), items.get(key))
+            if key in ranged:
+                self.print_warning("Shared special and ranged keys", special.get(key), ranged.get(key))
+        for key in items.iterkeys():
+            if key in ranged:
+                self.print_warning("Shared item and ranged keys", items.get(key), ranged.get(key))
 
     def format_unit_special_rules(self):
         specialobj = {}
