@@ -37,8 +37,7 @@ def get_rule_elements(name):
 # === Parser ===
 class CsvParser:
 
-    def __init__(self, file_location, error_print=False):
-        self.error_print = error_print
+    def __init__(self, file_location):
         self.separator = ';' # separator character in the CSV
         self.csv = file_location
 
@@ -62,8 +61,8 @@ class CsvParser:
                         typ = "" # To what ruleset does this special rule belong. Not yet used.
                         if not key in special:
                             special[key] = {"name":name}
-                        elif(self.error_print):
-                            print >>sys.stdout, "Duplicate special key:  "+key+" ("+name+")"
+                        else:
+                            self.print_warning("Duplicate special key", special.get(key).get("name"), name)
                         line = file.readline()
                     break
         return special
@@ -83,8 +82,8 @@ class CsvParser:
                         limitation = "" # Limitation on who can choose the item. Not yet used.
                         if not key in items:
                             items[key] = {"name":name, "pts":int(pts), "mod":modifier, "lim":limitation}
-                        elif(self.error_print):
-                            print >>sys.stdout, "Duplicate item key:  "+key+" ("+name+")"
+                        else:
+                            self.print_warning("Duplicate item key", items.get(key).get("name"), name)
                         line = file.readline()
                     break
         return items
@@ -103,8 +102,8 @@ class CsvParser:
                         pts = "" # Cost of general purchase, if applicable. Not yet used.
                         if not key in ranged:
                             ranged[key] = {"name":name, "range":rang}
-                        elif(self.error_print):
-                            print >>sys.stdout, "Duplicate ranged key:  "+key+" ("+name+")"
+                        else:
+                            self.print_warning("Duplicate ranged key", ranged.get(key).get("name"), name)
                         line = file.readline()
                     break
         return ranged
@@ -118,10 +117,10 @@ class CsvParser:
                     key, obj = self.parse_army(file)
                     if not key in armies:
                         armies[key] = obj
-                    elif(self.error_print):
-                        print >>sys.stdout, "Duplicate army key:  "+key+" ("+filename+")"
-                    if obj["order"] in army_order_list and (self.error_print):
-                        print >>sys.stdout, "Duplicate army ordering:  "+filename
+                    else:
+                        self.print_warning("Duplicate army key", armies.get(key).get("name"), obj.get("name"))
+                    if obj["order"] in army_order_list:
+                        self.print_error("Duplicate army ordering", obj.get("name"))
                     army_order_list.append(obj["order"])
         return armies
 
@@ -145,10 +144,10 @@ class CsvParser:
             key = armykey + key
             if not key in army["units"]:
                 army["units"][key] = unit
-            elif (self.error_print):
-                print >>sys.stdout, "Duplicate unit key:  "+key+" ("+name+")"
-            if unit["order"] in unit_order_list and (self.error_print):
-                print >>sys.stdout, "Duplicate unit ordering:  "+name
+            else:
+                self.print_warning("Duplicate unit key", army["units"].get(key).get("name"), name)
+            if unit["order"] in unit_order_list:
+                self.print_error("Duplicate unit ordering", name)
             unit_order_list.append(unit["order"])
         return armykey, army
 
@@ -212,14 +211,21 @@ class CsvParser:
                         if value: rangedkey_list.append(str(key)+':'+str(value))
                         else: rangedkey_list.append(str(key))
                     else:
-                        if(self.error_print):
-                            print >>sys.stdout, "Unrecognized special rule:  "+name
+                        self.print_error("Unrecognized special rule", name)
                         specialkey_list.append(rule)
                 unit["special"] = specialkey_list
                 unit["ranged"] = rangedkey_list
 
-# === Key conformity check ===
-def _check_key_conformity(newobj, oldobj_filename):
+    def print_error(self, message, item1="", item2=""):
+        print >>sys.stderr, message + (":  '"+item1 if item1 else "") + ("' - '"+item2+"'" if item2 else "'")
+
+    def print_warning(self, message, item1="", item2=""):
+        self.print_error("WARNING! "+message, item1, item2)
+        raw_input("(Press Enter to continue)")
+
+
+# === Key consistency check ===
+def _check_key_consistency(newobj, oldobj_filename):
     try:
         with open(oldobj_filename, 'r') as oldobj_file:
             oldobj = json.loads(oldobj_file.read())
@@ -264,9 +270,9 @@ def _check_key_conformity(newobj, oldobj_filename):
                 _confirmation_warning("New data will lose ranged key '"+rangedkey+"' ("+rangedname+")")
             elif rangedname != newranged.get(rangedkey):
                 _confirmation_warning("Ranged attack '"+rangedkey+"' changes name from "+rangedname+" to "+newranged.get(rangedkey))
-        print >>sys.stderr, "Key conformity check completed"
+        print >>sys.stderr, "Key consistency check completed"
     except IOError as e:
-        print >>sys.stderr, "Key conformity check failed. No previous data file."
+        print >>sys.stderr, "Key consistency check failed. No previous data file."
 
 def _get_data_keys(dataobj):
     obj = {}
@@ -276,8 +282,7 @@ def _get_data_keys(dataobj):
     return obj
 
 def _confirmation_warning(message):
-    print >>sys.stderr, "DATA KEY WARNING!"
-    print >>sys.stderr, message
+    print >>sys.stderr, "KEY CONSISTENCY WARNING!", message
     print >>sys.stderr, "Press Enter to continue, or type 'q' to abort.",
     response = raw_input()
     if response.startswith("q"):
@@ -285,19 +290,19 @@ def _confirmation_warning(message):
         exit(1)
 
 # === External interface ===
-def generate_data(error_print=False, write_to_file=False, write_to_console=False, check_keys=True):
+def generate_data(write_to_file=False, write_to_console=False, check_keys=True):
     files = data_locations.DataLocations()
     if not (path.isdir(files.csv.armies) and path.isdir(files.csv.rules)):
         print "Could not generate json data. Directory for csv files is missing."
         return
-    data_parser = CsvParser(files.csv, error_print)
+    data_parser = CsvParser(files.csv)
     data_obj = data_parser.parse()
     if not data_obj["special"]: print "Error: Rules for 'special' missing."
     if not data_obj["items"]: print "Error: Rules for 'items' missing."
     if not data_obj["ranged"]: print "Error: Rules for 'ranged' missing."
     if not data_obj["armies"]: print "Error: Rules for 'armies' missing."
     if check_keys:
-        _check_key_conformity(data_obj, files.json)
+        _check_key_consistency(data_obj, files.json)
     if write_to_file:
         with open(files.json, 'w') as output_file:
             output_file.write(json.dumps(data_obj, separators=(',',':')))
@@ -307,4 +312,4 @@ def generate_data(error_print=False, write_to_file=False, write_to_console=False
 
 # === Main ===
 if __name__ == "__main__":
-    generate_data(error_print=True, write_to_file=False, write_to_console=True)
+    generate_data(write_to_file=False, write_to_console=True)

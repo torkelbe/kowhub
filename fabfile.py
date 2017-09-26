@@ -66,16 +66,16 @@ def data(arg=""):
     if arg.startswith("csv"):
         numbers_to_csv.export_to_csv()
     elif arg.startswith("json"):
-        csv_to_json.generate_data(error_print=False, write_to_file=True, write_to_console=False)
+        csv_to_json.generate_data(write_to_file=True, write_to_console=False)
     elif arg.startswith("make"):
         numbers_to_csv.export_to_csv()
-        csv_to_json.generate_data(error_print=False, write_to_file=True, write_to_console=False)
+        csv_to_json.generate_data(write_to_file=True, write_to_console=False)
     elif arg.startswith("update"):
-        csv_to_json.generate_data(error_print=False, write_to_file=True, write_to_console=False)
+        csv_to_json.generate_data(write_to_file=True, write_to_console=False)
     elif arg.startswith("dry"):
-        csv_to_json.generate_data(error_print=False, write_to_file=False, write_to_console=True)
+        csv_to_json.generate_data(write_to_file=False, write_to_console=True)
     elif arg.startswith("error"):
-        csv_to_json.generate_data(error_print=True, write_to_file=False, write_to_console=False)
+        csv_to_json.generate_data(write_to_file=False, write_to_console=False)
     else:
         print "Requires argument (csv|json|make|dry|error)"
 
