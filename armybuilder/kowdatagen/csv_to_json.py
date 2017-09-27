@@ -158,7 +158,7 @@ class CsvParser:
         #--- Units ---
         army["units"] = {}
         line = file.readline()
-        unit_order_list = []
+        unit_order = 1
         while line:
             entry, order, key, name, short, typ, size, stats, special, options, version, status = read_unit(line, self.separator)
             unit, line = self.parse_unit(line, file)
@@ -166,12 +166,11 @@ class CsvParser:
             if len(key) != 4:
                 self.print_warning("Non-standard length(4) of unit key", key, unit.get("name"))
             if not key in army["units"]:
+                unit["order"] = unit_order
                 army["units"][key] = unit
+                unit_order += 1
             else:
                 self.print_warning("Duplicate unit key", army["units"].get(key).get("name"), name)
-            if unit["order"] in unit_order_list:
-                self.print_error("Duplicate unit ordering", name)
-            unit_order_list.append(unit["order"])
         return armykey, army
 
     def parse_unit(self, line, file):
@@ -182,7 +181,6 @@ class CsvParser:
         unit["name"] = name
         unit["short"] = short
         unit["type"] = typ
-        unit["order"] = int(order)
         unit["special"] = special
         name=""
         new_line = ""
