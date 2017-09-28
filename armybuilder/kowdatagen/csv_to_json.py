@@ -243,8 +243,16 @@ class CsvParser:
                 rangedkey_list = []
                 for rule in rules:
                     name, value = get_rule_elements(rule)
+                    selector = ""
+                    if ':' in name:
+                        if name.startswith("Troop"): selector = "#t"
+                        elif name.startswith("Regiment"): selector = "#r"
+                        elif name.startswith("Horde"): selector = "#h"
+                        elif name.startswith("Legion"): selector = "#l"
+                        else: self.print_error("Unrecognized selector", name)
+                        name = name.split(':')[1].strip()
                     if name in specialobj:
-                        key = specialobj[name]
+                        key = selector + specialobj[name]
                         if value: specialkey_list.append(str(key)+':'+str(value))
                         else: specialkey_list.append(str(key))
                     elif name in rangedobj:
