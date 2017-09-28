@@ -102,7 +102,7 @@ on processSpreadsheet()
 		
 		-- Before we open the file asked of us, close out every document 
 		-- that might have opened along with the application having activated:
-		close every window saving no
+		--close every window saving no
 		
 		-- Retrieve information about the source file:
 		set fileInfo to (info for (_inputFilePathAlias))
@@ -132,10 +132,10 @@ on processSpreadsheet()
 			-- Since we closed out other windows that might have been open before
 			-- opening the file we sought, we really should only have one document
 			-- window open.
-			close activeDocument
+			--close activeDocument
 		end tell
 		
-		quit
+		--quit
 		
 	end tell
 end processSpreadsheet
