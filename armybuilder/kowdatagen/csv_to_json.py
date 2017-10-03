@@ -357,7 +357,7 @@ def generate_data(write_to_file=False, write_to_console=False, check_keys=True):
             output_file.write(json.dumps(data_obj, separators=(',',':')))
         print >>sys.stderr, "Data updated successfully"
     if write_to_console:
-        sys.stdout.write(json.dumps(data_obj, separators=(',',':')))
+        sys.stdout.write(json.dumps(data_obj, sort_keys=True, indent=4, separators=(',',':')))
 
 # === Main ===
 if __name__ == "__main__":
