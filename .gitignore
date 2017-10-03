@@ -7,6 +7,5 @@ docs/*
 **/temp/*
 kowhub/static/*
 kowhubenv/*
-armybuilder/kowdatagen/csv/*
 **/kowdata.json
 kowhub/settings/local.py
