@@ -1,11 +1,10 @@
 .DS_Store
 *.swp
 *.pyc
+__pycache__/
 db.sqlite3
-notes/*
-docs/*
 **/temp/*
-kowhub/static/*
-kowhubenv/*
+cache/*
+venv/*
 **/kowdata.json
 kowhub/settings/local.py
