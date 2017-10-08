@@ -1,5 +1,4 @@
 import os
-import subprocess
 from fabric.api import *
 from armybuilder.kowdatagen import numbers_to_csv, csv_to_json
 
@@ -80,28 +79,12 @@ def data(arg=""):
         print "Requires argument (csv|json|make|dry|error)"
 
 @task
-# Start/stop local postgres database
-def database(cmd="status"):
-    data_file = "/Users/torkel/Library/Application Support/Postgres/var-9.5"
-    FNULL = open(os.devnull,'w')
-    if cmd=="start":
-        retcode = subprocess.call(["pg_ctl","start","-D",data_file], stdout=FNULL)
-        if retcode==0: print "Started postgres database"
-        else: print "Error when starting postgres database!"
-    elif cmd=="stop":
-        retcode = subprocess.call(["pg_ctl","stop","-D",data_file], stdout=FNULL)
-        if retcode==0: print "Stopped postgres database"
-        else: print "Error when stopping postgres database!"
-    elif cmd=="status":
-        retcode = subprocess.call(["pg_ctl","status","-D",data_file])
-    else:
-        retcode = 1
-        print "Option \""+cmd+"\" not recognized."
-    return retcode
+def runserver():
+    """ Run local server on 127.0.0.1:8000 """
+    local("venv/bin/python manage.py runserver")
 
 @task
-# QOL function for starting local database and development server
-def runserver():
-    if database(cmd="status"): database(cmd="start")
-    local("kowhubenv/bin/python manage.py runserver")
+def servelocal():
+    """ Serve local server on 0.0.0.0:8000 """
+    local("venv/bin/python manage.py runserver 0.0.0.0:8000")
 
