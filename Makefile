@@ -1,9 +1,9 @@
 SHELL := /bin/bash
 
 .PHONY: install
-install: setup venv dependencies
+install: cp_settings venv dependencies migrate
 
-.PHONY: setup
+.PHONY: cp_settings
 setup:
 	if [ ! -e "kowhub/settings/local.py" ] ; then cp kowhub/settings/local.py.example kowhub/settings/local.py ; fi
 
@@ -13,14 +13,21 @@ venv:
 
 .PHONY: dependencies
 dependencies:
-	PYTHONPATH=venv ; . venv/bin/activate && venv/bin/pip install -r requirements.txt
+	PYTHONPATH=venv ; venv/bin/pip install -r requirements.txt
+
+.PHONY: migrate
+migrate:
+	PYTHONPATH=venv ; venv/bin/python manage.py migrate
 
 .PHONY: freeze
 freeze:
-	. venv/bin/activate && venv/bin/pip freeze > requirements.txt
+	PYTHONPATH=venv ; source venv/bin/activate && venv/bin/pip freeze > requirements.txt
 
 .PHONY: clean
-clean: clear_venv
+clean: clear_files clear_venv
+
+.PHONY: clear_files
+clear_files:
 	find . -name '*.pyc' -delete
 	find . -name '__pycache__' -delete
 	find . -type d -empty -delete
