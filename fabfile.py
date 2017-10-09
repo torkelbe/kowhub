@@ -1,5 +1,6 @@
 import os
 from fabric.api import *
+from fabric.contrib.console import confirm
 from armybuilder.kowdatagen import numbers_to_csv, csv_to_json
 
 class Site(object):
@@ -45,19 +46,29 @@ env.use_ssh_config=True
 env.hosts = ['kowhub-webserver']
 
 @task
-# Request server to pull latest version from git, apply changes, and restart site
-def deploy():
-    print "Deploying on " +  " ".join(env.hosts)
-    PROD.deploy()
+def help():
+    """ Simple help print """
+    print "Run a task with arguments using '$ fab task:argument'"
+    print "Suppress Fabric output with '--hide=running'"
+    with hide("running"): local("fab --list")
 
 @task
-# Handle KoW data source files.
-# arg: 'csv' to export from numbers to csv
-# arg: 'json' to convert from csv to json
-# arg: 'make' to perform both numbers-to-csv and csv-to-json
-# arg: 'dry' to do a test run of csv-to-json, and print result to console only
-# arg: 'error' to check for errors in csv-to-json file parsing
+def deploy():
+    """ Deploy latest version to www.kowhub.com """
+    print "Latest version will be deployed to www.kowhub.com"
+    if confirm("Do you wish to continue?"):
+        print "Deploying on " +  " ".join(env.hosts)
+        PROD.deploy()
+
+@task
 def data(arg=""):
+    """ Manage source data. Use argument (csv|json|make|dry|error|upload)
+    - 'csv'   to export from numbers to csv
+    - 'json'  to convert from csv to json
+    - 'make'  to perform both numbers-to-csv and csv-to-json
+    - 'dry'   to do a test run of csv-to-json, and print result to console only
+    - 'error' to check for errors in csv-to-json file parsing
+    """
     if arg.startswith("csv"):
         numbers_to_csv.export_to_csv()
     elif arg.startswith("json"):
