@@ -11,10 +11,6 @@ class Site(object):
         with cd(self.dir):
             run(cmd)
 
-    def sudo(self, cmd):
-        with cd(self.dir):
-            sudo(cmd, user=self.user_id)
-
     def deploy(self):
         self.git_pull()
         self.upload_data_file()
@@ -25,28 +21,28 @@ class Site(object):
 
     def git_pull(self):
         self.run("find . -name '*.pyc' -delete")
-        self.run("git fetch origin && git reset --hard origin/master")
+        self.run("cd kowhub && git fetch origin && git reset --hard origin/master")
 
     def upload_data_file(self):
         with cd(self.dir):
-            put('./armybuilder/data/kowdata.json', 'armybuilder/data')
+            put('armybuilder/data/kowdata.json', 'kowhub/armybuilder/data/')
 
     def update_packages(self):
-        self.run("./kowhubenv/bin/pip install -r requirements.txt")
+        self.run("venv/bin/pip install -r kowhub/requirements.txt")
 
     def django_manage(self, cmd):
-        self.run('kowhubenv/bin/python manage.py ' + cmd)
+        self.run('venv/bin/python kowhub/manage.py ' + cmd)
 
     def restart(self):
-        self.sudo('service gunicorn restart')
+        self.run('sudo supervisorctl restart kowhub')
 
 
 PROD = Site(
-    dir='/home/torkel/kowhub',
-    user_id='torkel'
+    dir='/webapps/kowhub_django',
 )
 
-env.hosts = ['kowhub.com']
+env.use_ssh_config=True
+env.hosts = ['kowhub-webserver']
 
 @task
 # Request server to pull latest version from git, apply changes, and restart site
