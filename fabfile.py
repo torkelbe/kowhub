@@ -82,8 +82,12 @@ def data(arg=""):
         csv_to_json.generate_data(write_to_file=False, write_to_console=True)
     elif arg.startswith("error"):
         csv_to_json.generate_data(write_to_file=False, write_to_console=False)
+    elif arg == "upload":
+        print "New data file will be uploaded to kowhub.com"
+        if confirm("Do you wish to continue?"):
+            PROD.upload_data_file()
     else:
-        print "Requires argument (csv|json|make|dry|error)"
+        print "Requires argument (csv|json|make|dry|error|upload)"
 
 @task
 def runserver():
