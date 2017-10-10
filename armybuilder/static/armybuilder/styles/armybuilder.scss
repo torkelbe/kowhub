@@ -159,9 +159,10 @@ body {
     &>div {
         flex: 1 0 80px;
         height: 85px;
+        min-width: 0; //seems to prevent flexbox from adjusting its size based on content
         background-color: #f44336;
         color: white;
-        font-size: 16px;
+        font-size: 13px;
         border: 1px solid #5b5b5b;
         border-radius: 6px;
         text-decoration: none;
