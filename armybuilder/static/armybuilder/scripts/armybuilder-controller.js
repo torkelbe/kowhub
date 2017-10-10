@@ -355,7 +355,7 @@ armybuilderController = function() {
                 });
 
                 // Button listener: Select primary army from drop-down menu
-                $(armyPage).on('click', '#primaryArmyOptions', function(evt) {
+                $(armyPage).on('click', '#primaryArmyOptions>li', function(evt) {
                     evt.preventDefault();
                     var $tar = $(evt.target).closest('li').children('a');
                     var meta = {'army':$tar.data().army};
@@ -366,7 +366,7 @@ armybuilderController = function() {
                 });
 
                 // Button listener: Select points limit from drop-down menu
-                $(armyPage).on('click', '#armylistPointsOptions', function(evt) {
+                $(armyPage).on('click', '#armylistPointsOptions>li', function(evt) {
                     evt.preventDefault();
                     var $tar = $(evt.target).closest('li').children('a');
                     var meta = {'pts':$tar.html()};
