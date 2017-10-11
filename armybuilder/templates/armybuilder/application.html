@@ -211,11 +211,11 @@
     </script>
 
     <script id="storedListsTmpl" type="text/x-jsrender">
-<div class="storedArmylist">
-    <div class="saName">New armylist</div>
-    <div class="saArmy">Elf Armies</div>
-    <div class="saPts">2000</div>
-    <div class="saCount">10 units</div>
+<div class="storedArmylist" data-army-id={?:key?}>
+    <div class="saName">{?:name?}</div>
+    <div class="saArmy">{?:army?}</div>
+    <div class="saPts">{?:pts?}</div>
+    <div class="saCount">{?:count?}</div>
 </div>
     </script>
 </html>

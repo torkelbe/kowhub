@@ -111,7 +111,20 @@ armybuilderController = function() {
     /* Load left panel with view of stored armylists */
     function loadStoredLists() {
         var storedListsTmpl = $.templates("#storedListsTmpl");
-        var storedListsHtml = storedListsTmpl.render();
+        var storedLists = [];
+        storageEngine.getAllMeta(function(data) {
+            armies = getArmyData();
+            $.each(data, function(listkey, list) {
+                storedLists.push(
+                    Object.assign(
+                        {count: 'n/a'},
+                        list,
+                        {key: listkey, army: armies[list.army]["name"]},
+                    )
+                );
+            });
+        }, errorLogger);
+        var storedListsHtml = storedListsTmpl.render(storedLists);
         $('#storedListsPanel').html(storedListsHtml);
     }
 
