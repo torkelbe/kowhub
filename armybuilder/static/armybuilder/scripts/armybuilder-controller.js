@@ -26,7 +26,7 @@ armybuilderController = function() {
     function getRanged() {
         return armybuilderController.dataObj["ranged"];
     }
-    function errorLogger(errorCode, errorMessage) {
+    function errorLogger(errorCode, errorMessage = '') {
         console.log(errorCode+':'+errorMessage);
     }
     function getStatsObj(s) {
