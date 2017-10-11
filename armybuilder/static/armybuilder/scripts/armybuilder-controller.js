@@ -112,12 +112,12 @@ armybuilderController = function() {
     function loadStoredLists() {
         var storedListsTmpl = $.templates("#storedListsTmpl");
         var storedLists = [];
-        storageEngine.getAllMeta(function(data) {
+        storageEngine.findAllLists(function(data) {
             armies = getArmyData();
             $.each(data, function(listkey, list) {
                 storedLists.push(
                     Object.assign(
-                        {count: 'n/a'},
+                        {name: "Default", army: "ba", pts: "2000", count: "n/a"},
                         list,
                         {key: listkey, army: armies[list.army]["name"]},
                     )
