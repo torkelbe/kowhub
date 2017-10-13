@@ -2,7 +2,7 @@ import os
 from fabric.api import *
 from fabric.contrib.console import confirm
 from kowdatagen.numbers_to_csv import export_to_csv
-from kowdatagen.csv_to_json import generate_data
+from kowdatagen.csv_to_json import generate_json
 
 class Site(object):
 
@@ -73,16 +73,16 @@ def data(arg=""):
     if arg.startswith("csv"):
         export_to_csv()
     elif arg.startswith("json"):
-        generate_data(write_to_file=True, write_to_console=False)
+        generate_json(write_to_file=True, write_to_console=False)
     elif arg.startswith("make"):
         export_to_csv()
-        generate_data(write_to_file=True, write_to_console=False)
+        generate_json(write_to_file=True, write_to_console=False)
     elif arg.startswith("update"):
-        generate_data(write_to_file=True, write_to_console=False)
+        generate_json(write_to_file=True, write_to_console=False)
     elif arg.startswith("dry"):
-        generate_data(write_to_file=False, write_to_console=True)
+        generate_json(write_to_file=False, write_to_console=True)
     elif arg.startswith("error"):
-        generate_data(write_to_file=False, write_to_console=False)
+        generate_json(write_to_file=False, write_to_console=False)
     elif arg == "upload":
         print "New data file will be uploaded to kowhub.com"
         if confirm("Do you wish to continue?"):

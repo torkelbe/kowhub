@@ -339,7 +339,7 @@ def _confirmation_warning(message):
         exit(1)
 
 # === External interface ===
-def generate_data(write_to_file=False, write_to_console=False, check_keys=True):
+def generate_json(write_to_file=False, write_to_console=False, check_keys=True):
     files = data_locations.DataLocations()
     if not (path.isdir(files.csv.armies) and path.isdir(files.csv.rules)):
         print "Could not generate json data. Directory for csv files is missing."
@@ -361,4 +361,4 @@ def generate_data(write_to_file=False, write_to_console=False, check_keys=True):
 
 # === Main ===
 if __name__ == "__main__":
-    generate_data(write_to_file=False, write_to_console=True)
+    generate_json(write_to_file=False, write_to_console=True)
