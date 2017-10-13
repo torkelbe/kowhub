@@ -118,3 +118,9 @@ def servelocal():
     """ Serve local server on 0.0.0.0:8000 """
     DEV.manage('runserver 0.0.0.0:8000')
 
+@task
+def manage(arg=""):
+    """ python manage.py <cmd> """
+    if not arg: help()
+    else: DEV.manage(arg)
+
