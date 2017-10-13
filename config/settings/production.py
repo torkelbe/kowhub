@@ -11,14 +11,14 @@ ALLOWED_HOSTS = ['kowhub.com']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '', # name of project's postgres database
-        'USER': '', # name of project's postgres user
-        'PASSWORD': '', # password of project's postgres user
+        'NAME': get_secret("DATABASE_NAME"),
+        'USER': get_secret("DATABASE_USER"),
+        'PASSWORD': get_secret("DATABASE_PASSWORD"),
         'HOST': 'localhost',
-        'PORT': '', # may leave empty
+        'PORT': '',
     }
 }
 
 STATIC_ROOT = join(PROJECT_ROOT, 'static')
 
-SECRET_KEY = ''
+SECRET_KEY = get_secret("SECRET_KEY")

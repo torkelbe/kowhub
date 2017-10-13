@@ -7,3 +7,4 @@ db.sqlite3
 cache/
 venv/
 kowdatagen/output/
+config/settings/secrets.json

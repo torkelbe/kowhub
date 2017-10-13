@@ -21,4 +21,4 @@ DATABASES = {
 
 STATIC_ROOT = ""
 
-SECRET_KEY = '6n7d_c302kd^&gty^zfeh#tkz5_yma6(z(h8uh@sz3!va^*$p('
+SECRET_KEY = get_secret("SECRET_KEY")

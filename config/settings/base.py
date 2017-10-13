@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import sys
 from os.path import dirname, abspath, join
+import json
 
 PROJECT_NAME = 'kowhub'
 PROJECT_ROOT = dirname(dirname(dirname(abspath(__file__))))
@@ -19,6 +20,19 @@ DJANGO_ROOT = join(PROJECT_ROOT, PROJECT_NAME)
 
 # Add django apps root directory to pythonpath
 sys.path.append(DJANGO_ROOT)
+
+# Import secrets from secret.json
+from django.core.exceptions import ImproperlyConfigured
+with open(join(dirname(abspath(__file__)), 'secrets.json')) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    """ Get the secret variable or return explicit exception. """
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = 'Set the %s envionment variable in config/settings/secrets.json' %(settings)
+        raise ImproperlyConfigured(error_msg)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
