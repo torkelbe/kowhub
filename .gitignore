@@ -3,6 +3,7 @@
 *.pyc
 __pycache__/
 db.sqlite3
-**/temp/*
-venv/*
-kowdatagen/output/*
+**/temp/
+cache/
+venv/
+kowdatagen/output/
