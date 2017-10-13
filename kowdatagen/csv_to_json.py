@@ -342,14 +342,18 @@ def _confirmation_warning(message):
 def generate_json(write_to_file=False, write_to_console=False, check_keys=True):
     files = data_locations.DataLocations()
     if not (path.isdir(files.csv.armies) and path.isdir(files.csv.rules)):
-        print "Could not generate json data. Directory for csv files is missing."
+        print >>sys.stderr, "Could not generate json data. Directory for csv files is missing."
         return
     data_parser = CsvParser(files.csv)
     data_obj = data_parser.parse()
-    if not data_obj["special"]: print "Error: Rules for 'special' missing."
-    if not data_obj["items"]: print "Error: Rules for 'items' missing."
-    if not data_obj["ranged"]: print "Error: Rules for 'ranged' missing."
-    if not data_obj["armies"]: print "Error: Rules for 'armies' missing."
+    if not data_obj["special"]:
+        print >>sys.stderr, "Error: Rules for 'special' missing."
+    if not data_obj["items"]:
+        print >>sys.stderr, "Error: Rules for 'items' missing."
+    if not data_obj["ranged"]:
+        print >>sys.stderr, "Error: Rules for 'ranged' missing."
+    if not data_obj["armies"]:
+        print >>sys.stderr, "Error: Rules for 'armies' missing."
     if check_keys:
         _check_key_consistency(data_obj, files.json)
     if write_to_file:
