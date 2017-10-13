@@ -10,16 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
+import sys
 from os.path import dirname, abspath, join
 
 PROJECT_NAME = 'kowhub'
 PROJECT_ROOT = dirname(dirname(dirname(abspath(__file__))))
 DJANGO_ROOT = join(PROJECT_ROOT, PROJECT_NAME)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
-
-# Application definition
+# Add django apps root directory to pythonpath
+sys.path.append(DJANGO_ROOT)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -66,7 +65,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'kowhub.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -84,7 +83,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'kowhub.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Password validation
