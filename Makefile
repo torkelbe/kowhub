@@ -1,11 +1,7 @@
 SHELL := /bin/bash
 
 .PHONY: install
-install: cp_settings venv dependencies migrate
-
-.PHONY: cp_settings
-setup:
-	if [ ! -e "kowhub/settings/local.py" ] ; then cp kowhub/settings/local.py.example kowhub/settings/local.py ; fi
+install: venv dependencies migrate
 
 .PHONY: venv
 venv:
