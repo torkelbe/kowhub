@@ -38,18 +38,25 @@ def get_secret(setting, secrets=secrets):
         error_msg = 'Set the %s envionment variable in config/settings/secrets.json' %(settings)
         raise ImproperlyConfigured(error_msg)
 
-INSTALLED_APPS = [
+DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+)
 
-    'armybuilder.apps.ArmybuilderConfig',
-
+THIRD_PARTY_APPS = (
     'compressor',
-]
+)
+
+LOCAL_APPS = (
+    'armybuilder.apps.ArmybuilderConfig',
+)
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
