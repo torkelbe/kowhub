@@ -1,7 +1,11 @@
 SHELL := /bin/bash
 
 .PHONY: install
-install: venv dependencies migrate
+install: cpsecret venv dependencies migrate
+
+.PHONY: cpsecret
+cpsecret:
+	if [ ! -e "config/settings/secrets.json" ] ; then cp config/settings/secrets.json.example config/settings/secrets.json ; fi
 
 .PHONY: venv
 venv:
