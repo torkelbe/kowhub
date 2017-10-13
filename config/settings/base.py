@@ -23,8 +23,12 @@ sys.path.append(DJANGO_ROOT)
 
 # Import secrets from secret.json
 from django.core.exceptions import ImproperlyConfigured
-with open(join(dirname(abspath(__file__)), 'secrets.json')) as f:
-    secrets = json.loads(f.read())
+try:
+    with open(join(dirname(abspath(__file__)), 'secrets.json')) as f:
+        secrets = json.loads(f.read())
+except IOError:
+    error_msg = 'Please create a copy of secrets.json in config/settings/'
+    raise IOError(error_msg)
 
 def get_secret(setting, secrets=secrets):
     """ Get the secret variable or return explicit exception. """
