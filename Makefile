@@ -30,7 +30,6 @@ clean: clear_files clear_venv
 clear_files:
 	find . -name '*.pyc' -delete
 	find . -name '__pycache__' -delete
-	find . -type d -empty -delete
 
 .PHONY: clear_venv
 clear_venv:
