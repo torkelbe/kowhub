@@ -1,7 +1,8 @@
 import os
 from fabric.api import *
 from fabric.contrib.console import confirm
-from kowdatagen import numbers_to_csv, csv_to_json
+from kowdatagen.numbers_to_csv import export_to_csv
+from kowdatagen.csv_to_json import generate_data
 
 class Site(object):
 
@@ -70,18 +71,18 @@ def data(arg=""):
     - 'error' to check for errors in csv-to-json file parsing
     """
     if arg.startswith("csv"):
-        numbers_to_csv.export_to_csv()
+        export_to_csv()
     elif arg.startswith("json"):
-        csv_to_json.generate_data(write_to_file=True, write_to_console=False)
+        generate_data(write_to_file=True, write_to_console=False)
     elif arg.startswith("make"):
-        numbers_to_csv.export_to_csv()
-        csv_to_json.generate_data(write_to_file=True, write_to_console=False)
+        export_to_csv()
+        generate_data(write_to_file=True, write_to_console=False)
     elif arg.startswith("update"):
-        csv_to_json.generate_data(write_to_file=True, write_to_console=False)
+        generate_data(write_to_file=True, write_to_console=False)
     elif arg.startswith("dry"):
-        csv_to_json.generate_data(write_to_file=False, write_to_console=True)
+        generate_data(write_to_file=False, write_to_console=True)
     elif arg.startswith("error"):
-        csv_to_json.generate_data(write_to_file=False, write_to_console=False)
+        generate_data(write_to_file=False, write_to_console=False)
     elif arg == "upload":
         print "New data file will be uploaded to kowhub.com"
         if confirm("Do you wish to continue?"):
