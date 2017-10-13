@@ -3,11 +3,14 @@ from fabric.api import *
 from fabric.contrib.console import confirm
 from kowdatagen.numbers_to_csv import export_to_csv
 from kowdatagen.csv_to_json import generate_json
+from kowdatagen.data_locations import DataLocations
 
 class Site(object):
 
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
+        data = DataLocations()
+        self.json_data_file = data.json
 
     def run(self, cmd):
         with cd(self.dir):
@@ -27,7 +30,7 @@ class Site(object):
 
     def upload_data_file(self):
         with cd(self.dir):
-            put('armybuilder/data/kowdata.json', 'kowhub/armybuilder/data/')
+            put(self.json_data_file, 'kowhub/armybuilder/data/')
 
     def update_packages(self):
         self.run("venv/bin/pip install -r kowhub/requirements.txt")
