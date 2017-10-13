@@ -5,7 +5,7 @@ from kowdatagen.numbers_to_csv import export_to_csv
 from kowdatagen.csv_to_json import generate_json
 from kowdatagen.data_locations import DataLocations
 
-class Site(object):
+class RemoteSite(object):
 
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
@@ -42,12 +42,27 @@ class Site(object):
         self.run('sudo supervisorctl restart kowhub')
 
 
-PROD = Site(
-    dir='/webapps/kowhub_django',
-)
+class LocalEnvironment(object):
+
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
+        self.settings = 'config.settings.local'
+
+    def manage(self, cmd):
+        local('venv/bin/django-admin ' + cmd +
+              ' --settings=' + self.settings +
+              ' --pythonpath=' + self.dir)
+
 
 env.use_ssh_config=True
 env.hosts = ['kowhub-webserver']
+PROD = RemoteSite(
+    dir='/webapps/kowhub_django',
+)
+
+DEV = LocalEnvironment(
+    dir=os.path.dirname(os.path.abspath(__file__))
+)
 
 @task
 def help():
@@ -96,10 +111,10 @@ def data(arg=""):
 @task
 def runserver():
     """ Run local server on 127.0.0.1:8000 """
-    local("venv/bin/python manage.py runserver")
+    DEV.manage('runserver')
 
 @task
 def servelocal():
     """ Serve local server on 0.0.0.0:8000 """
-    local("venv/bin/python manage.py runserver 0.0.0.0:8000")
+    DEV.manage('runserver 0.0.0.0:8000')
 
