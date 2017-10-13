@@ -1,7 +1,7 @@
 import os
 from fabric.api import *
 from fabric.contrib.console import confirm
-from armybuilder.kowdatagen import numbers_to_csv, csv_to_json
+from kowdatagen import numbers_to_csv, csv_to_json
 
 class Site(object):
 
