@@ -10,10 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
-import os
+from os.path import dirname, abspath, join
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+PROJECT_NAME = 'kowhub'
+PROJECT_ROOT = dirname(dirname(dirname(abspath(__file__))))
+DJANGO_ROOT = join(PROJECT_ROOT, PROJECT_NAME)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -124,6 +125,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'static/'), # common static files
+        join(DJANGO_ROOT, 'static/'), # common static files
 ]
 
