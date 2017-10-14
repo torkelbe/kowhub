@@ -2,6 +2,7 @@ Django==1.9.7
 django-appconf==1.0.2
 django-compressor==2.0
 django-libsass==0.7
+django-webpack-loader==0.5.0
 ecdsa==0.13
 Fabric==1.11.1
 gunicorn==19.6.0
@@ -10,6 +11,7 @@ paramiko==1.17.1
 Pillow==3.3.0
 psycopg2==2.6.1
 pycrypto==2.6.1
+pytz==2017.2
 rcssmin==1.0.6
 reportlab==3.3.0
 rjsmin==1.0.12

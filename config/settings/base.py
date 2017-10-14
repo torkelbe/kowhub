@@ -49,6 +49,7 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     'compressor',
+    'webpack_loader',
 )
 
 LOCAL_APPS = (
@@ -79,6 +80,15 @@ COMPRESS_JS_FILTERS = [
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
+
+# webpack_loader
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        #'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': join(PROJECT_ROOT, 'webpack-stats.json'),
+    }
+}
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -151,5 +161,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
         join(DJANGO_ROOT, 'static/'), # common static files
+        join(PROJECT_ROOT, 'reactapp/'),
 ]
 
