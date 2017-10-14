@@ -24,7 +24,7 @@ freeze:
 	PYTHONPATH=venv ; source venv/bin/activate && venv/bin/pip freeze > requirements.txt
 
 .PHONY: clean
-clean: clear_files clear_venv
+clean: clear_files clear_venv clear_bundles
 
 .PHONY: clear_files
 clear_files:
@@ -34,4 +34,8 @@ clear_files:
 .PHONY: clear_venv
 clear_venv:
 	rm -rf venv
+
+.PHONY: clear_bundles
+clear_bundles:
+	rm reactapp/bundles/*.js
 
