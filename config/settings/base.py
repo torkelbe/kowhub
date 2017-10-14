@@ -53,6 +53,7 @@ THIRD_PARTY_APPS = (
 
 LOCAL_APPS = (
     'armybuilder.apps.ArmybuilderConfig',
+    'builder.apps.BuilderConfig',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

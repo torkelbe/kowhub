@@ -1,0 +1,32 @@
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="utf=8">
+        <title>Kowhub Armybuilder</title>
+        <link rel="icon" href="{% static "img/favicon.ico" %}">
+    </head>
+    <body>
+        <header>
+            <div id="headerPanel">
+                __Up here is the header panel from index.html__
+            </div>
+        </header>
+        <main>
+            <div id='reactapp'>
+                .... it does not seem like React has loaded anything yet...
+            </div>
+        </main>
+        <footer>
+            <div id="footerPanel">
+                __Down here is the footer panel from index.html__
+            </div>
+        </footer>
+    </body>
+    <script>
+        window.react_mount = document.getElementById('reactapp');
+    </script>
+    {% render_bundle 'main' %}
+</html>
