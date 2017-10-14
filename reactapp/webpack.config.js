@@ -5,10 +5,10 @@ const BundleTracker = require('webpack-bundle-tracker')
 const armybuilder = {
     context: __dirname,
 
-    entry: './reactapp/builder/index',
+    entry: './src/builder/index',
 
     output: {
-        path: path.resolve(__dirname, 'reactapp/bundles/'),
+        path: path.resolve(__dirname, 'bundles/'),
         filename: 'builder-[hash].js',
     },
 
@@ -28,7 +28,7 @@ const armybuilder = {
     },
 
     plugins: [
-        new BundleTracker({filename: './webpack-stats.json'}),
+        new BundleTracker({filename: 'webpack-stats.json'}),
     ],
 
     resolve: {

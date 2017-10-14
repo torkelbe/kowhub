@@ -86,7 +86,7 @@ WEBPACK_LOADER = {
     'DEFAULT': {
         #'CACHE': not DEBUG,
         'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': join(PROJECT_ROOT, 'webpack-stats.json'),
+        'STATS_FILE': join(PROJECT_ROOT, 'reactapp/webpack-stats.json'),
     }
 }
 
