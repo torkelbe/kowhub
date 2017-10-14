@@ -5,27 +5,28 @@ install: cpsecret venv dependencies migrate node_modules
 
 .PHONY: cpsecret
 cpsecret:
-	if [ ! -e "config/settings/secrets.json" ] ; then cp config/settings/secrets.json.example config/settings/secrets.json ; fi
+	[ ! -e "config/settings/secrets.json" ] && \
+		cp config/settings/secrets.json.example config/settings/secrets.json
 
 .PHONY: venv
 venv:
-	if [ ! -e "venv/bin/activate_this.py" ] ; then PYTHONPATH=venv ; virtualenv --clear venv ; fi
+	[ ! -e "venv/bin/activate_this.py" ] && virtualenv --clear venv
 
 .PHONY: dependencies
 dependencies:
-	PYTHONPATH=venv ; venv/bin/pip install -r requirements.txt
+	venv/bin/pip install -r requirements.txt
 
 .PHONY: node_modules
 node_modules:
-	cd reactapp; yarn install
+	cd reactapp && yarn install
 
 .PHONY: migrate
 migrate:
-	PYTHONPATH=venv ; venv/bin/python manage.py migrate
+	venv/bin/python manage.py migrate --settings=config.settings.local
 
 .PHONY: freeze
 freeze:
-	PYTHONPATH=venv ; source venv/bin/activate && venv/bin/pip freeze > requirements.txt
+	source venv/bin/activate && venv/bin/pip freeze > requirements.txt
 
 .PHONY: clean
 clean: clear_files clear_venv clear_modules clear_bundles
