@@ -8,6 +8,13 @@ COMPRESS_ENABLED = True
 
 ALLOWED_HOSTS = ['kowhub.com']
 
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'builder/bundles/',
+        'STATS_FILE': join(PROJECT_ROOT, 'reactapp/webpack-stats.production.json'),
+    }
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -19,6 +26,7 @@ DATABASES = {
     }
 }
 
+STATICFILES_DIRS += [ join(PROJECT_ROOT, 'reactapp/bundles-prod') ]
 STATIC_ROOT = join(PROJECT_ROOT, 'static')
 
 SECRET_KEY = get_secret("SECRET_KEY")

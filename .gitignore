@@ -7,6 +7,6 @@ db.sqlite3
 cache/
 venv/
 node_modules/
-webpack-stats.json
+webpack-stats.local.json
 kowdatagen/output/
 config/settings/secrets.json

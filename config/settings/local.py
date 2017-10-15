@@ -8,6 +8,13 @@ COMPRESS_ENABLED = False
 
 ALLOWED_HOSTS = []
 
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'builder/bundles/',
+        'STATS_FILE': join(PROJECT_ROOT, 'reactapp/webpack-stats.local.json'),
+    }
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -19,6 +26,7 @@ DATABASES = {
     }
 }
 
+STATICFILES_DIRS += [ join(PROJECT_ROOT, 'reactapp/bundles-dev') ]
 STATIC_ROOT = ""
 
 SECRET_KEY = get_secret("SECRET_KEY")

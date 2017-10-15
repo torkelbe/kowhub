@@ -53,10 +53,13 @@ class LocalEnvironment(object):
               ' --settings=' + self.settings +
               ' --pythonpath=' + self.dir)
 
-    def webpack_compile(self):
+    def webpack_compile(self, production=False):
         webpack_dir = os.path.join(self.dir, 'reactapp')
-        webpack_cmd = 'node_modules/.bin/webpack --config webpack.config.js'
-        local('cd '+webpack_dir+' && '+webpack_cmd)
+        if production:
+            config = '--config=webpack.production.config.js'
+        else:
+            config = '--config=webpack.local.config.js'
+        local('cd '+webpack_dir+' && node_modules/.bin/webpack '+config)
 
 env.use_ssh_config=True
 env.hosts = ['kowhub-webserver']

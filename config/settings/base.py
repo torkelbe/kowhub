@@ -38,6 +38,7 @@ def get_secret(setting, secrets=secrets):
         error_msg = 'Set the %s envionment variable in config/settings/secrets.json' %(settings)
         raise ImproperlyConfigured(error_msg)
 
+
 DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,15 +81,6 @@ COMPRESS_JS_FILTERS = [
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
-
-# webpack_loader
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        #'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': join(PROJECT_ROOT, 'reactapp/webpack-stats.json'),
-    }
-}
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -161,6 +153,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
         join(DJANGO_ROOT, 'static/'), # common static files
-        join(PROJECT_ROOT, 'reactapp/'),
 ]
 

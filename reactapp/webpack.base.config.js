@@ -1,16 +1,7 @@
 const path = require('path')
-const webpack = require('webpack')
-const BundleTracker = require('webpack-bundle-tracker')
 
-const armybuilder = {
+module.exports = {
     context: __dirname,
-
-    entry: './src/builder/index',
-
-    output: {
-        path: path.resolve(__dirname, 'bundles/'),
-        filename: 'builder-[hash].js',
-    },
 
     module: {
         rules: [
@@ -34,15 +25,7 @@ const armybuilder = {
         ]
     },
 
-    plugins: [
-        new BundleTracker({filename: 'webpack-stats.json'}),
-    ],
-
     resolve: {
         extensions: ['.js', '.jsx']
     },
 }
-
-module.exports = [
-    armybuilder
-]
