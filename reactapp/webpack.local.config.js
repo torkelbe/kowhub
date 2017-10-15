@@ -16,9 +16,10 @@ config.output = {
 
 config.plugins = [
     new BundleTracker({ filename: 'webpack-stats.local.json' }),
-    new CleanWebpackPlugin([
-        path.resolve(__dirname, 'bundles-dev/builder/bundles/*.js'),
-    ]),
+    new CleanWebpackPlugin(
+        [ path.resolve(__dirname, 'bundles-dev/builder/bundles/*.js') ],
+        { verbose: false }
+    ),
 ];
 
 module.exports = config;
