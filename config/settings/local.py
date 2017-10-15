@@ -9,7 +9,7 @@ COMPRESS_ENABLED = False
 ALLOWED_HOSTS = []
 
 WEBPACK_LOADER = {
-    'DEFAULT': {
+    'builder': {
         'BUNDLE_DIR_NAME': 'builder/bundles/',
         'STATS_FILE': join(PROJECT_ROOT, 'reactapp/webpack-stats.local.json'),
     }
