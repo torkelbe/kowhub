@@ -8,7 +8,7 @@ config.entry = './src/builder/index';
 
 config.output = {
     path: path.resolve(__dirname, 'bundles-dev/builder/bundles/'),
-    filename: 'builder-[hash].js',
+    filename: 'builder-dev.js',
 };
 
 config.plugins = [
