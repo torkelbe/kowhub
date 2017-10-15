@@ -10,6 +10,8 @@ config.entry = './src/builder/index';
 config.output = {
     path: path.resolve(__dirname, 'bundles-dev/builder/bundles/'),
     filename: 'builder-dev.js',
+    // Tell Django to load from webpack-dev-server:
+    publicPath: 'http://localhost:8080/builder/bundles/',
 };
 
 config.plugins = [

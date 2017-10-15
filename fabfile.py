@@ -56,15 +56,13 @@ class LocalEnvironment(object):
     def webpack_compile(self, production=False):
         webpack_dir = os.path.join(self.dir, 'reactapp')
         if production:
-            config = '--config=webpack.production.config.js'
+            local('cd '+webpack_dir+' && yarn run build-production')
         else:
-            config = '--config=webpack.local.config.js'
-        local('cd '+webpack_dir+' && node_modules/.bin/webpack '+config)
+            local('cd '+webpack_dir+' && yarn run build-development')
 
-    def webpack_watch(self):
+    def webpack_serve(self):
         webpack_dir = os.path.join(self.dir, 'reactapp')
-        config = '--config=webpack.local.config.js'
-        local('cd '+webpack_dir+' && node_modules/.bin/webpack '+config+' --watch')
+        local('cd '+webpack_dir+' && yarn run dev-server')
 
 
 env.use_ssh_config=True
@@ -151,7 +149,7 @@ def bundle(arg=""):
         print "Invalid argument "+arg
 
 @task
-def watch():
-    """ Run Webpack compilation in watch-mode (continuous updates) """
-    DEV.webpack_watch()
+def webpack():
+    """ Run Webpack development server (continuous updates) """
+    DEV.webpack_serve()
 
