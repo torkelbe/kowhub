@@ -61,6 +61,12 @@ class LocalEnvironment(object):
             config = '--config=webpack.local.config.js'
         local('cd '+webpack_dir+' && node_modules/.bin/webpack '+config)
 
+    def webpack_watch(self):
+        webpack_dir = os.path.join(self.dir, 'reactapp')
+        config = '--config=webpack.local.config.js'
+        local('cd '+webpack_dir+' && node_modules/.bin/webpack '+config+' --watch')
+
+
 env.use_ssh_config=True
 env.hosts = ['kowhub-webserver']
 PROD = RemoteSite(
@@ -143,3 +149,9 @@ def bundle(arg=""):
         DEV.webpack_compile()
     else:
         print "Invalid argument "+arg
+
+@task
+def watch():
+    """ Run Webpack compilation in watch-mode (continuous updates) """
+    DEV.webpack_watch()
+
