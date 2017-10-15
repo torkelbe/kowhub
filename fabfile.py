@@ -132,6 +132,14 @@ def manage(arg=""):
     else: DEV.manage(arg)
 
 @task
-def bundle():
-    """ Run webpack.config.js """
-    DEV.webpack_compile()
+def bundle(arg=""):
+    """ Compile bundle with Webpack
+    Using argument (prod|production) will compile with production settings.
+    """
+    if arg.startswith("prod"):
+        if confirm("Do you wish to create a new version-controlled production bundle?"):
+            DEV.webpack_compile(production=True)
+    elif arg.startswith("dev") or not arg:
+        DEV.webpack_compile()
+    else:
+        print "Invalid argument "+arg
