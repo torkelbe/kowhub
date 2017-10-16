@@ -120,19 +120,24 @@ def data(arg=""):
         print "Requires argument (csv|json|make|dry|error|upload)"
 
 @task
-def run():
-    """ Run both Webpack and Django development servers """
-    local("bash scripts/run-dev-servers.sh")
+def run(arg=""):
+    """ Run both Webpack and Django development servers. Option: (serve)
+    Using argument (serve) will run both dev servers on 0.0.0.0
+    """
+    if arg.startswith("serve"):
+        local("bash scripts/run-dev-servers.sh serve")
+    else:
+        local("bash scripts/run-dev-servers.sh")
 
 @task
-def runserver():
-    """ Run local Django server on localhost:8000 """
-    DEV.manage('runserver')
-
-@task
-def servelocal():
-    """ Serve local Django server on 0.0.0.0:8000 """
-    DEV.manage('runserver 0.0.0.0:8000')
+def rundjango(arg=""):
+    """ Run Django development server. Option: (serve)
+    Using option (serve) will run dev server on 0.0.0.0
+    """
+    if arg.startswith("serve"):
+        DEV.manage('runserver 0.0.0.0:8000')
+    else:
+        DEV.manage('runserver')
 
 @task
 def manage(arg=""):
