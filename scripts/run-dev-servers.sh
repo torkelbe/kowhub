@@ -52,7 +52,7 @@ module.exports = config
 
 host="localhost"
 config="webpack.local.config.js"
-exit_cmds="kill %1; echo '';" # kill first process when second process dies
+exit_cmds="kill %1;" # kill first process when second process dies
 
 echo ""
 if $serving_to_local_network; then
@@ -67,7 +67,7 @@ if $serving_to_local_network; then
     print_temp_config $host > reactapp/$config
 
     # Remove temporary config file when script exits
-    exit_cmds+=" set -x; rm reactapp/$config;"
+    exit_cmds+=" rm reactapp/$config;"
 fi
 
 trap "$exit_cmds" SIGINT
