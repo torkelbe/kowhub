@@ -60,7 +60,7 @@ class LocalEnvironment(object):
         else:
             local('cd '+webpack_dir+' && yarn run build-development')
 
-    def webpack_serve(self):
+    def webpack_dev_server(self):
         webpack_dir = os.path.join(self.dir, 'reactapp')
         local('cd '+webpack_dir+' && yarn run dev-server')
 
@@ -78,6 +78,7 @@ DEV = LocalEnvironment(
 @task
 def help():
     """ Simple help print """
+    print ""
     print "Run a task with arguments using '$ fab task:argument'"
     print "Suppress Fabric output with '--hide=running'"
     with hide("running"): local("fab --list")
@@ -92,7 +93,7 @@ def deploy():
 
 @task
 def data(arg=""):
-    """ Manage source data. Use argument (csv|json|make|dry|error|upload)
+    """ Manage source data. Option: (csv|json|make|dry|error|upload)
     - 'csv'   to export from numbers to csv
     - 'json'  to convert from csv to json
     - 'make'  to perform both numbers-to-csv and csv-to-json
@@ -147,8 +148,8 @@ def manage(arg=""):
 
 @task
 def bundle(arg=""):
-    """ Compile bundle with Webpack
-    Using argument (prod|production) will compile with production settings.
+    """ Compile bundle with Webpack. Option: (production)
+    Using argument (prod) will compile with production settings.
     """
     if arg.startswith("prod"):
         if confirm("Do you wish to create a new version-controlled production bundle?"):
@@ -161,5 +162,5 @@ def bundle(arg=""):
 @task
 def runwebpack():
     """ Run Webpack development server on localhost:8080 """
-    DEV.webpack_serve()
+    DEV.webpack_dev_server()
 
