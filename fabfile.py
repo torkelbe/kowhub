@@ -120,13 +120,18 @@ def data(arg=""):
         print "Requires argument (csv|json|make|dry|error|upload)"
 
 @task
+def run():
+    """ Run both Webpack and Django development servers """
+    local("bash scripts/run-dev-servers.sh")
+
+@task
 def runserver():
-    """ Run local server on 127.0.0.1:8000 """
+    """ Run local Django server on localhost:8000 """
     DEV.manage('runserver')
 
 @task
 def servelocal():
-    """ Serve local server on 0.0.0.0:8000 """
+    """ Serve local Django server on 0.0.0.0:8000 """
     DEV.manage('runserver 0.0.0.0:8000')
 
 @task
@@ -149,7 +154,7 @@ def bundle(arg=""):
         print "Invalid argument "+arg
 
 @task
-def webpack():
-    """ Run Webpack development server (continuous updates) """
+def runwebpack():
+    """ Run Webpack development server on localhost:8080 """
     DEV.webpack_serve()
 
