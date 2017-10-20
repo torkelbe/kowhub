@@ -9,7 +9,7 @@ function _setStorageObject(type, obj) {
     localStorage.setItem(type, JSON.stringify(obj));
 }
 
-const kowhub_webstorage_api = {
+const webstorage_api = {
 
     errorLogger: function(errorCode, errorMessage = '') {
         console.log(errorCode + ': ' + errorMessage);
@@ -217,5 +217,5 @@ const kowhub_webstorage_api = {
     },
 }
 
-export default kowhub_webstorage_api;
+export default webstorage_api;
 
