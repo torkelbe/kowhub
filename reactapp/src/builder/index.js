@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ArmybuilderApp from './js/main'
+import BuilderApp from './components/main'
+
+require('./stylesheets/main.scss');
 
 ReactDOM.render(
-    <ArmybuilderApp />,
+    <BuilderApp />,
     window.react_mount
 );
