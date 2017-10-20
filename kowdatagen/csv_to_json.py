@@ -167,6 +167,7 @@ class CsvParser:
                 self.print_warning("Non-standard length(4) of unit key", key, unit.get("name"))
             if not key in army["units"]:
                 unit["order"] = unit_order
+                unit["key"] = key
                 army["units"][key] = unit
                 unit_order += 1
             else:
