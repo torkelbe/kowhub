@@ -3,6 +3,7 @@ from fabric.api import *
 from fabric.contrib.console import confirm
 from kowdatagen.numbers_to_csv import export_to_csv
 from kowdatagen.csv_to_json import generate_json
+from kowdatagen.json_to_js import export_js
 from kowdatagen.data_locations import DataLocations
 
 class RemoteSite(object):
@@ -93,20 +94,24 @@ def deploy():
 
 @task
 def data(arg=""):
-    """ Manage source data. Option: (csv|json|make|dry|error|upload)
+    """ Manage source data. Option: (csv|json|js|make|dry|error|upload)
     - 'csv'   to export from numbers to csv
     - 'json'  to convert from csv to json
-    - 'make'  to perform both numbers-to-csv and csv-to-json
-    - 'dry'   to do a test run of csv-to-json, and print result to console only
+    - 'js'    to export from json to importable js library
+    - 'make'  to perform all data procedures, starting from source spreadsheets
+    - 'dry'   to do a test run of csv-to-json, and pretty-print result to console only
     - 'error' to check for errors in csv-to-json file parsing
     """
     if arg.startswith("csv"):
         export_to_csv()
     elif arg.startswith("json"):
         generate_json(write_to_file=True, write_to_console=False)
+    elif arg.startswith("js"):
+        export_js()
     elif arg.startswith("make"):
         export_to_csv()
         generate_json(write_to_file=True, write_to_console=False)
+        export_js()
     elif arg.startswith("update"):
         generate_json(write_to_file=True, write_to_console=False)
     elif arg.startswith("dry"):
@@ -118,7 +123,7 @@ def data(arg=""):
         if confirm("Do you wish to continue?"):
             PROD.upload_data_file()
     else:
-        print "Requires argument (csv|json|make|dry|error|upload)"
+        print "Requires argument (csv|json|js|make|dry|error|upload)"
 
 @task
 def run(arg=""):

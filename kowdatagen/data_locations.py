@@ -13,6 +13,7 @@ class DataLocations:
         source_dir = join(dirname(project_root), 'kowsources')
         csv_dir = join(base_dir, 'temp')
         json_dir = join(base_dir, 'output')
+        jslib_dir = join(project_root, 'reactapp/src/lib/temp')
 
         self.numbers = _DLType(join(source_dir, 'army_data.numbers'),
                                join(source_dir, 'rules_data.numbers'))
@@ -23,6 +24,9 @@ class DataLocations:
 
         if not isdir(json_dir): mkdir(json_dir)
         self.json = join(json_dir, 'kowdata.json')
+
+        if not isdir(jslib_dir): mkdir(jslib_dir)
+        self.js = join(jslib_dir, 'source-data.js')
 
 class _DLType:
     def __init__(self, armies_location, rules_location):
