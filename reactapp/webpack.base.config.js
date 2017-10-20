@@ -26,6 +26,7 @@ module.exports = {
     },
 
     resolve: {
+        modules: ["node_modules", "src/lib"],
         extensions: ['.js', '.jsx']
     },
 }
