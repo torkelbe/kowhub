@@ -23,16 +23,16 @@ def get_elements(line, separator):
     return elements
 
 def read_army(line, separator):
-    entry, order, armykey, armyname, armyname_short, alignment, size, sp, me, ra, de, att, ne, pts, special, options, version, status = get_elements(line, separator)
+    entry, order, armykey, armyname, short_armyname, alignment, size, sp, me, ra, de, att, ne, pts, special, options, version, status = get_elements(line, separator)
     if entry != "army":
         print >>sys.stderr, "Error. Tried to read army properties of a non-army line:"
         print >>sys.stderr, line
-    return entry, order, armykey, armyname, armyname_short, alignment, version, status
+    return entry, order, armykey, armyname, short_armyname, alignment, version, status
 
 def read_unit(line, separator):
-    entry, order, key, name, short, typ, size, sp, me, ra, de, att, ne, pts, special, options, version, status = get_elements(line, separator)
+    entry, order, key, name, short_name, typ, size, sp, me, ra, de, att, ne, pts, special, options, version, status = get_elements(line, separator)
     stats = get_stats_obj(sp, me, ra, de, att, ne, pts)
-    return entry, order, key, name, short, typ, size, stats, special, options, version, status
+    return entry, order, key, name, short_name, typ, size, stats, special, options, version, status
 
 def get_rule_elements(name):
     parts = name.split('(')
@@ -148,11 +148,11 @@ class CsvParser:
         file.readline() # throw first line
         #--- Army Header ---
         line = file.readline()
-        entry, order, armykey, armyname, armyname_short, alignment, version, status = read_army(line, self.separator)
+        entry, order, armykey, armyname, short_armyname, alignment, version, status = read_army(line, self.separator)
         version = "" # To what ruleset does this item belong. Not yet used.
         status = "" # Current status of the rules for this item. Not yet used.
         army["name"] = armyname
-        army["short"] = armyname_short
+        army["sname"] = short_armyname
         army["alignment"] = alignment
         army["order"] = int(order)
         #--- Units ---
@@ -160,7 +160,7 @@ class CsvParser:
         line = file.readline()
         unit_order = 1
         while line:
-            entry, order, key, name, short, typ, size, stats, special, options, version, status = read_unit(line, self.separator)
+            entry, order, key, name, short_name, typ, size, stats, special, options, version, status = read_unit(line, self.separator)
             unit, line = self.parse_unit(line, file)
             key = armykey + key
             if len(key) != 4:
@@ -176,11 +176,11 @@ class CsvParser:
 
     def parse_unit(self, line, file):
         unit = {}
-        entry, order, key, name, short, typ, size, stats, special, options, version, status = read_unit(line, self.separator)
+        entry, order, key, name, short_name, typ, size, stats, special, options, version, status = read_unit(line, self.separator)
         version = "" # To what ruleset does this item belong. Not yet used.
         status = "" # Current status of the rules for this item. Not yet used.
         unit["name"] = name
-        unit["short"] = short
+        unit["sname"] = short_name
         unit["type"] = typ
         unit["special"] = special
         name=""
@@ -199,17 +199,17 @@ class CsvParser:
             unit["Troop"] = stats
             new_line = file.readline()
             if not new_line: return unit, new_line
-            entry, order, key, name, short, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
+            entry, order, key, name, short_name, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
         if size=="Regiment" and not name:
             unit["Regiment"] = stats
             new_line = file.readline()
             if not new_line: return unit, new_line
-            entry, order, key, name, short, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
+            entry, order, key, name, short_name, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
         if size=="Horde" and not name:
             unit["Horde"] = stats
             new_line = file.readline()
             if not new_line: return unit, new_line
-            entry, order, key, name, short, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
+            entry, order, key, name, short_name, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
         if size=="Legion" and not name:
             unit["Legion"] = stats
             new_line = file.readline()
