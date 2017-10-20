@@ -80,7 +80,7 @@ def help():
     """ Simple help print """
     print ""
     print "Run a task with arguments using '$ fab task:argument'"
-    print "Suppress Fabric output with '--hide=running'"
+    print "Suppress Fabric output with '--hide=running,status'"
     with hide("running"): local("fab --list")
 
 @task
