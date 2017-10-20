@@ -16,10 +16,11 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/,
+                test: /\.scss$/,
                 use: [
-                    'style-loader',
-                    'css-loader',
+                    'style-loader',     // Integrate JS
+                    'css-loader',       // CSS -> JS
+                    'sass-loader',      // Sass -> CSS
                 ]
             }
         ]
