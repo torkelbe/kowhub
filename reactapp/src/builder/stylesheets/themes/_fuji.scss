@@ -1,0 +1,17 @@
+
+$fuji-colors: (
+    dark: rgb(44, 56, 64),
+    earth: rgb(139, 128, 94),
+    redbrown: rgb(115, 89, 67),
+    pink: rgb(199, 191, 189),
+    khaki: rgb(159, 147, 129)
+);
+
+$fuji: (
+    background:  map-get($fuji-colors, dark),
+    panel:       map-get($fuji-colors, earth),
+    select:      map-get($fuji-colors, redbrown),
+    utility:     map-get($fuji-colors, pink),
+    alternative: map-get($fuji-colors, khaki)
+);
+

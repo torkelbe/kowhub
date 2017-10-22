@@ -1,0 +1,17 @@
+
+$kaoru-colors: (
+    red: rgb(181, 74, 53),
+    yellow: rgb(248, 202, 77),
+    eggwhite: rgb(245, 229, 192),
+    blue: rgb(63, 86, 102),
+    darkblue: rgb(47, 52, 64)
+);
+
+$kaoru: (
+    background:  map-get($kaoru-colors, red),
+    panel:       map-get($kaoru-colors, yellow),
+    select:      map-get($kaoru-colors, eggwhite),
+    utility:     map-get($kaoru-colors, blue),
+    alternative: map-get($kaoru-colors, darkblue)
+);
+

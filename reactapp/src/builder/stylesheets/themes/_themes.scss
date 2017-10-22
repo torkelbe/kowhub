@@ -1,0 +1,15 @@
+@import 'kaoru';
+@import 'fuji';
+@import 'hills';
+@import 'autumn';
+
+/* Set color theme here */
+$theme: $kaoru;
+
+/* Refer to these colors */
+$color-background:  map-get($theme, background);
+$color-panel:       map-get($theme, panel);
+$color-select:      map-get($theme, select);
+$color-utility:     map-get($theme, utility);
+$color-alternative: map-get($theme, alternative);
+    

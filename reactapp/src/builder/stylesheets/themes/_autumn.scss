@@ -1,0 +1,17 @@
+
+$autumn-colors: (
+    darkgreen: rgb(104, 107, 48),
+    lightgreen: rgb(171, 154, 82),
+    yellow: rgb(232, 186, 103),
+    orange: rgb(227, 143, 79),
+    red: rgb(186, 81, 46)
+);
+
+$autumn: (
+    background:  map-get($autumn-colors, darkgreen),
+    panel:       map-get($autumn-colors, lightgreen),
+    select:      map-get($autumn-colors, yellow),
+    utility:     map-get($autumn-colors, orange),
+    alternative: map-get($autumn-colors, red)
+);
+

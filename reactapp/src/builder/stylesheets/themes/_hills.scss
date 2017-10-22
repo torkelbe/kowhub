@@ -1,0 +1,17 @@
+
+$hills-colors: (
+    dark: rgb(10, 24, 41),
+    blue: rgb(88, 142, 149),
+    bluegreen: rgb(127, 173, 169),
+    lightgreen: rgb(204, 217, 206),
+    eggwhite: rgb(246, 237, 211)
+);
+
+$hills: (
+    background:  map-get($hills-colors, dark),
+    panel:       map-get($hills-colors, blue),
+    select:      map-get($hills-colors, bluegreen),
+    utility:     map-get($hills-colors, lightgreen),
+    alternative: map-get($hills-colors, eggwhite)
+);
+
