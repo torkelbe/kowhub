@@ -197,7 +197,7 @@ const webstorage_api = {
         }
     },
 
-    getAllMeta: function(type, successCallback, errorCallback) {
+    getAllLists: function(type, successCallback, errorCallback) {
         if (!window.localStorage) {
             errorCallback('webstorage_not_available');
             return;
@@ -206,10 +206,10 @@ const webstorage_api = {
         if (listsItem === null) {
             errorCallback('store_not_initialized', type);
         } else {
-            const allMeta = {};
+            const allMeta = [];
             Object.entries(listsItem).forEach(
                 (id, list) => {
-                    allMeta[id] = list.meta;
+                    allMeta.push(list.meta);
                 }
             );
             successCallback(allMeta);
