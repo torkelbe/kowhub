@@ -22,12 +22,24 @@ module.exports = {
                     'css-loader',       // CSS -> JS
                     'sass-loader',      // Sass -> CSS
                 ]
+            },
+            {
+                test: /\.(png|svg|jpg)$/,
+                use: [
+                    'file-loader'
+                ]
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                use: [
+                    'file-loader'
+                ]
             }
         ]
     },
 
     resolve: {
-        modules: ["node_modules", "src/lib"],
+        modules: ["node_modules", "src/lib", "src/img"],
         extensions: ['.js', '.jsx']
     },
 }
