@@ -6,6 +6,7 @@ function _getStatsObj(s) {
 
 const source_data_api = {
 
+    /* Used by 'ArmyBtnPanel' component to generate army buttons */
     getAllArmies: function() {
         const armies_list = [];
         Object.entries(src.armies).forEach( ([key, army]) => {
@@ -26,8 +27,9 @@ const source_data_api = {
     getArmyData: (army_id) => {
     },
 
-    getAllUnits: (army_id) = {
-        const army = src.armies.getElementById(army_id);
+    /* Used by 'UnitBtnPanel' component to generate unit choice buttons */
+    getAllUnits: (army_id) => {
+        const army = src.armies[army_id];
         const unit_list = [];
         Object.entries(army.units).forEach( ([key, unit]) => {
             unit_list.push(unit);
@@ -35,25 +37,25 @@ const source_data_api = {
         unit_list.sort(function(a, b) {
             return a.order - b.order;
         });
-        return units_list;
+        return unit_list;
     },
 
     // This function should probably select one of "Troop", "Regiment", etc
     getUnit: (unit_id) => {
-        const army = src.armies.getElementById(unit_id.substr(0,2));
-        const unit = army.units.getElementById(unit_id);
+        const army = src.armies[unit_id.substr(0,2)];
+        const unit = army.units[unit_id];
     },
 
     getSpecial: (id) => {
-        return src.special.getElementById(id);
+        return src.special[id];
     },
 
     getItem: (id) => {
-        return src.items.getElementById(id);
+        return src.items[id];
     },
 
     getRanged: (id) => {
-        return src.ranged.getElementById(id);
+        return src.ranged[id];
     },
 };
 
