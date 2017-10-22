@@ -1,0 +1,17 @@
+.kb-armybtnpanel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .kb-armybtn {
+        flex: 1;
+        min-width: 25%;
+        max-width: 25%;
+
+        &>img {
+            /* Setting 'vertical-align' will prevent the box from */
+            /* adding a small, automatic margin below the image.  */
+            vertical-align: middle;
+        }
+    }
+}

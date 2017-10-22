@@ -1,0 +1,16 @@
+.kb-leftpanel {
+    height: 100%;
+    background: red;
+    display: flex;
+    flex-direction: column;
+}
+
+.kb-lp-header {
+    flex: 0 0 40px;
+}
+
+.kb-lp-main {
+    flex: 1 1 auto;
+    overflow-y: scroll;
+}
+

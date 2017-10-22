@@ -1,0 +1,22 @@
+// Reset margins and paddings for headers, ul, ol, and p
+h1, h2, h3, h4, h5, h6,
+ul, li, p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+
+// Reset form items
+input, textarea, button {
+    border: 0;
+    border-radius: 0;
+    outline: none;
+    appearance: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+

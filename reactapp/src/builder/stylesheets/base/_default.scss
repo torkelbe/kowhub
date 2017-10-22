@@ -1,0 +1,20 @@
+// Use border-box for everything
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+// Set Image and Objects to max-width 100%
+embed,
+iframe,
+img,
+object,
+video {
+    max-width: 100%;
+}
+

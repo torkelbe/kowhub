@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import BuilderApp from './components/main'
+import BuilderApp from './components/builderapp'
 
 require('./stylesheets/main.scss');
 
