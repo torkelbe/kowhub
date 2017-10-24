@@ -1,12 +1,11 @@
 #!/usr/bin/python
 '''
-Conversion tool for Kowhub's Kings of War source data.
-Reads source data in JSON format, and creates a corresponding .js
-file that may be imported by front-end modules, and may be included
-in front-end bundles by Webpack.
+Export Kowhub's Kings of War source data to front-end library as
+a .js file to be imported and included by Webpack.
 '''
 import json
-import data_locations
+
+from utilities import data_location
 
 JS_TEMPLATE = """
 const data = ?SOURCES?
@@ -23,13 +22,12 @@ class jsSourceGenerator:
         return JS_TEMPLATE.replace("?SOURCES?", json.dumps(self.data))
 
 
-def export_js():
-    locations = data_locations.DataLocations()
-    with open(locations.json) as data_file:
+def export():
+    with open(data_location.json) as data_file:
         js_generator = jsSourceGenerator(json.load(data_file))
-    with open(locations.js, 'w') as output_file:
+    with open(data_location.js, 'w') as output_file:
         output_file.write(js_generator.export())
 
 # === Main ===
 if __name__ == "__main__":
-    export_js()
+    export()

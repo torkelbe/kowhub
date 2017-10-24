@@ -9,7 +9,7 @@ The built-in applescript was written by Sohail Ahmed (http://sohail.io)
 import os
 from sys import platform
 from subprocess import Popen, PIPE
-import data_locations
+from utilities import data_location
 
 scpt = '''
 #! /usr/bin/osascript
@@ -165,15 +165,13 @@ end ensureUTF8Encoding
 '''
 
 # === External interface ===
-def export_to_csv():
-    files = data_locations.DataLocations()
-
+def export():
     if not platform == "darwin":
         print "Cannot export data. Only for use on OS X"
 
-    if os.path.exists(files.numbers.armies):
+    if os.path.exists(data_location.numbers.armies):
         print "Exporting armies data..."
-        p = Popen(['osascript', '-', files.numbers.armies, files.csv.armies], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        p = Popen(['osascript', '-', data_location.numbers.armies, data_location.csv.armies], stdin=PIPE, stdout=PIPE, stderr=PIPE)
         stdout, stderr = p.communicate(scpt)
         if stdout: print stdout
         if stderr: print stderr
@@ -184,9 +182,9 @@ def export_to_csv():
     else:
         print "Could not export armies data. Source file does not exist."
 
-    if os.path.exists(files.numbers.rules):
+    if os.path.exists(data_location.numbers.rules):
         print "Exporting rules data..."
-        p = Popen(['osascript', '-', files.numbers.rules, files.csv.rules], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        p = Popen(['osascript', '-', data_location.numbers.rules, data_location.csv.rules], stdin=PIPE, stdout=PIPE, stderr=PIPE)
         stdout, stderr = p.communicate(scpt)
         if stdout: print stdout
         if stderr: print stderr
@@ -199,4 +197,4 @@ def export_to_csv():
     
 # === Main ===
 if __name__ == "__main__":
-    export_to_csv()
+    export()

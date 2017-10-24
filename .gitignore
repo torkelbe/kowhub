@@ -8,5 +8,5 @@ cache/
 venv/
 node_modules/
 webpack-stats.local.json
-kowdatagen/output/
+kowsourcedata/output/
 config/settings/secrets.json

@@ -1,17 +1,14 @@
 import os
 from fabric.api import *
 from fabric.contrib.console import confirm
-from kowdatagen.numbers_to_csv import export_to_csv
-from kowdatagen.csv_to_json import generate_json
-from kowdatagen.json_to_js import export_js
-from kowdatagen.data_locations import DataLocations
+from kowsourcedata import numbers_to_csv, csv_to_json, json_to_js
+from kowsourcedata.utilities import data_location
 
 class RemoteSite(object):
 
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
-        data = DataLocations()
-        self.json_data_file = data.json
+        self.json_data_file = data_location.json
 
     def run(self, cmd):
         with cd(self.dir):
@@ -103,21 +100,21 @@ def data(arg=""):
     - 'error' to check for errors in csv-to-json file parsing
     """
     if arg.startswith("csv"):
-        export_to_csv()
+        numbers_to_csv.export()
     elif arg.startswith("json"):
-        generate_json(write_to_file=True, write_to_console=False)
+        csv_to_json.export(write_to_file=True, write_to_console=False)
     elif arg.startswith("js"):
-        export_js()
+        json_to_js.export()
     elif arg.startswith("make"):
-        export_to_csv()
-        generate_json(write_to_file=True, write_to_console=False)
-        export_js()
+        numbers_to_csv.export()
+        csv_to_json.export(write_to_file=True, write_to_console=False)
+        json_to_js.export()
     elif arg.startswith("update"):
-        generate_json(write_to_file=True, write_to_console=False)
+        csv_to_json.export(write_to_file=True, write_to_console=False)
     elif arg.startswith("dry"):
-        generate_json(write_to_file=False, write_to_console=True)
+        csv_to_json.export(write_to_file=False, write_to_console=True)
     elif arg.startswith("error"):
-        generate_json(write_to_file=False, write_to_console=False)
+        csv_to_json.export(write_to_file=False, write_to_console=False)
     elif arg == "upload":
         print "New data file will be uploaded to kowhub.com"
         if confirm("Do you wish to continue?"):
