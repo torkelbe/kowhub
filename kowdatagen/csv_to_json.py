@@ -260,6 +260,9 @@ class CsvParser:
                         key = rangedobj[name]
                         if value: rangedkey_list.append(str(key)+':'+str(value))
                         else: rangedkey_list.append(str(key))
+                    elif name.startswith("Base Size"):
+                        base_size = name.split(" ")[-1]
+                        unit["type"] += " (" + base_size + ")"
                     else:
                         self.print_error("Unrecognized special rule", name)
                         specialkey_list.append(rule)
