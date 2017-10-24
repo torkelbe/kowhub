@@ -54,7 +54,7 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
-    'armybuilder.apps.ArmybuilderConfig',
+    #'armybuilder.apps.ArmybuilderConfig',
     'builder.apps.BuilderConfig',
 )
 
