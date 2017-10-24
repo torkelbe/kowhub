@@ -154,7 +154,7 @@ const webstorage_api = {
                 {id: unitId}
             );
             _setStorageObject(type, listsItem);
-            successCallback(listsItem[listId].units[unitId]);
+            successCallback(listsItem[listId]);
         }
     },
 
@@ -173,7 +173,7 @@ const webstorage_api = {
         } else {
             Object.assign(listsItem[listId].units[unitId], values);
             _setStorageObject(type, listsItem);
-            successCallback(listsItem[listId].units[unitId]);
+            successCallback(listsItem[listId]);
         }
     },
 
