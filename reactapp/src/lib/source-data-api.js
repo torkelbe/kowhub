@@ -25,6 +25,11 @@ const source_data_api = {
     },
 
     getArmyData: (army_id) => {
+        return {
+            name: src.armies[army_id].name,
+            sname: src.armies[army_id].sname,
+            aligntment: src.armies[army_id].alignment,
+        };
     },
 
     /* Used by 'UnitBtnPanel' component to generate unit choice buttons */
