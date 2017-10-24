@@ -209,7 +209,12 @@ const webstorage_api = {
             const allMeta = [];
             Object.entries(listsItem).forEach(
                 (id, list) => {
-                    allMeta.push(list.meta);
+                    allMeta.push(
+                        Object.assign(
+                            list.meta,
+                            {count: Object.keys(list.units).length}
+                        )
+                    );
                 }
             );
             successCallback(allMeta);
