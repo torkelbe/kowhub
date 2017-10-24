@@ -187,31 +187,31 @@ class CsvParser:
         new_line = ""
         if not size:
             if entry=="hero":
-                unit["Hero"] = stats
+                unit["h"] = stats
             elif typ=="Monster":
-                unit["Monster"] = stats
+                unit["m"] = stats
             elif typ=="War Engine":
-                unit["Warengine"] = stats
+                unit["e"] = stats
             else:
                 self.print_error("Encountered incorrect unit format", unit.get("name"))
             return unit, file.readline()
         if size=="Troop":
-            unit["Troop"] = stats
+            unit["t"] = stats
             new_line = file.readline()
             if not new_line: return unit, new_line
             entry, order, key, name, short_name, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
         if size=="Regiment" and not name:
-            unit["Regiment"] = stats
+            unit["r"] = stats
             new_line = file.readline()
             if not new_line: return unit, new_line
             entry, order, key, name, short_name, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
         if size=="Horde" and not name:
-            unit["Horde"] = stats
+            unit["h"] = stats
             new_line = file.readline()
             if not new_line: return unit, new_line
             entry, order, key, name, short_name, typ, size, stats, special, options, version, status = read_unit(new_line, self.separator)
         if size=="Legion" and not name:
-            unit["Legion"] = stats
+            unit["l"] = stats
             new_line = file.readline()
         return unit, new_line
 
