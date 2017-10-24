@@ -1,7 +1,53 @@
 import src from 'temp/source-data';
 
-function _getStatsObj(s) {
-    return {"Sp":s[0],"Me":s[1],"Ra":s[2],"De":s[3],"Att":s[4],"Ne":s[5],"Pts":s[6]}
+const formString = {
+    "t": "Troop",
+    "r": "Regiment",
+    "h": "Horde",
+    "l": "Legion",
+    "h": "Hero",
+    "m": "Monster",
+    "e": "War Engine",
+}
+
+function _formatStats(stats) {
+    return {
+        "Sp": stats[0],
+        "Me": stats[1],
+        "Ra": stats[2],
+        "De": stats[3],
+        "Att": stats[4],
+        "Ne": stats[5]
+    }
+}
+
+function _formatSpecialRules(special) {
+    specialNames = special.map( (specialKey) => {
+        [key, value] = specialKey.split(":");
+        return src.special[specialKey].name + (value ? " ("+value+")" : "");
+    });
+    return specialNames.join(", ");
+}
+
+function _formatRangedAttacks(ranged) {
+    rangedNames = ranged.map( (rangedKey) => {
+        rangedItem = src.ranged[rangedKey];
+        return rangedItem.name + " (" + rangedItem.range + "\")";
+    });
+    return rangedNames.join(", ");
+}
+
+function _formatUnitOutput(unit, form) {
+    output = {
+        points: unit[form][6],
+        name: unit.name,
+        type: unit.type,
+        form: formString[form],
+        stats: _formatStats(unit[form]),
+        special: _formatSpecialRules(unit.special),
+        ranged: _formatRangedAttacks(unit.ranged),
+    }
+    return output;
 }
 
 const source_data_api = {
@@ -45,10 +91,12 @@ const source_data_api = {
         return unit_list;
     },
 
-    // This function should probably select one of "Troop", "Regiment", etc
     getUnit: (unit_id) => {
+        /* This function will eventually also handle options */
         const army = src.armies[unit_id.substr(0,2)];
-        const unit = army.units[unit_id];
+        const unit = army.units[unit_id.substr(0,4)];
+        const form = unit_id.substr(4,1);
+        return _formatUnitOutput(unit, form);
     },
 
     getSpecial: (id) => {
