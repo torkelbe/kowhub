@@ -136,7 +136,7 @@ const webstorage_api = {
         }
     },
 
-    addUnit: function(type, listId, values, successCallback, errorCallback) {
+    addUnit: function(type, listId, unitkey, successCallback, errorCallback) {
         if (!window.localStorage) {
             errorCallback('webstorage_not_available');
             return;
@@ -148,11 +148,7 @@ const webstorage_api = {
             errorCallback('list_not_found', type+'-'+listId);
         } else {
             const unitId = 'un'+Date.now().toString();
-            listsItem[listId].units[unitId] = Object.assign(
-                {key: "", form: "", options: []},
-                values,
-                {id: unitId}
-            );
+            listsItem[listId].units[unitId] = unitkey;
             _setStorageObject(type, listsItem);
             successCallback(listsItem[listId]);
         }
