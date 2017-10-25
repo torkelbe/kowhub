@@ -73,7 +73,7 @@ const webstorage_api = {
         if (listsItem === null) {
             errorCallback('store_not_initialized', type);
         } else {
-            const listId = 'li'+Math.floor(Date.now()/1000).toString();
+            const listId = 'x'+Math.floor(Date.now()/100).toString(32);
             listsItem[listId] = {
                 meta: Object.assign(
                     {name: "New list", pts: "2000", army: "-"},
@@ -148,7 +148,7 @@ const webstorage_api = {
         } else if (!listsItem.hasOwnProperty(listId)) {
             errorCallback('list_not_found', type+'-'+listId);
         } else {
-            const unitId = 'un'+Date.now().toString();
+            const unitId = Math.floor(Date.now()/100).toString(32);
             listsItem[listId].units[unitId] = unitkey;
             listsItem[listId].meta.count += 1;
             _setStorageObject(type, listsItem);
