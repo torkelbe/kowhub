@@ -78,7 +78,7 @@ const webstorage_api = {
                 meta: Object.assign(
                     {name: "New list", pts: "2000", army: "-"},
                     newMeta,
-                    {id: listId}),
+                    {id: listId, count: 0}),
                 units: {}
             };
             _setStorageObject(type, listsItem);
@@ -149,6 +149,7 @@ const webstorage_api = {
         } else {
             const unitId = 'un'+Date.now().toString();
             listsItem[listId].units[unitId] = unitkey;
+            listsItem[listId].meta.count += 1;
             _setStorageObject(type, listsItem);
             successCallback(listsItem[listId]);
         }
@@ -188,6 +189,7 @@ const webstorage_api = {
         } else {
             const unit = listsItem[listId].units[unitId];
             delete listsItem[listId].units[unitId];
+            listsItem[listId].meta.count -= 1;
             _setStorageObject(type, listsItem);
             successCallback(unit);
         }
@@ -202,17 +204,10 @@ const webstorage_api = {
         if (listsItem === null) {
             errorCallback('store_not_initialized', type);
         } else {
-            const allMeta = {};
-            Object.entries(listsItem).forEach(
-                (id, list) => {
-                    allMeta[id] = Object.assign(
-                            {},
-                            list.meta,
-                            {count: Object.keys(list.units).length}
-                    );
-                }
-            );
-            successCallback(allMeta);
+            for (const [id, list] of Object.entries(listsItem)) {
+                delete list.units;
+            }
+            successCallback(listsItem);
         }
     },
 }
