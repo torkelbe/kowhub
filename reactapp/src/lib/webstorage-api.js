@@ -206,14 +206,13 @@ const webstorage_api = {
         if (listsItem === null) {
             errorCallback('store_not_initialized', type);
         } else {
-            const allMeta = [];
+            const allMeta = {};
             Object.entries(listsItem).forEach(
                 (id, list) => {
-                    allMeta.push(
-                        Object.assign(
+                    allMeta[id] = Object.assign(
+                            {},
                             list.meta,
                             {count: Object.keys(list.units).length}
-                        )
                     );
                 }
             );
