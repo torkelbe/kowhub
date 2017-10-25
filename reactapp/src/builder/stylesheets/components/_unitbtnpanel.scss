@@ -1,0 +1,59 @@
+.kb-unitbtnpanel {
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+        flex: 0 0 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__section {
+        margin-top: 10px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__header {
+        flex: 0 0 30px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__unittype {
+        flex: 0 0 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: small;
+        text-align: center;
+    }
+
+    &__row {
+        flex: 0 0 30px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__unitname {
+        flex: 1 1 auto;
+        line-height: 30px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__btn {
+        flex: 0 0 60px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.disabled {
+            cursor: default;
+        }
+    }
+}

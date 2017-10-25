@@ -8,6 +8,10 @@
         min-width: 25%;
         max-width: 25%;
 
+        &:hover {
+            cursor: pointer;
+        }
+
         &>img {
             /* Setting 'vertical-align' will prevent the box from */
             /* adding a small, automatic margin below the image.  */

@@ -1,16 +1,52 @@
 .kb-leftpanel {
     height: 100%;
-    background: red;
     display: flex;
     flex-direction: column;
+
+    .kb-lp-display {
+        margin: 0 8px; // make room for scrollbar with 8px
+        height: 100%;
+    }
 }
 
-.kb-lp-header {
-    flex: 0 0 40px;
-}
+.react-tabs {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
-.kb-lp-main {
-    flex: 1 1 auto;
-    overflow-y: scroll;
-}
+    &__tab-list {
+        flex: 0 0 30px;
+        display: flex;
+        flex-direction: row;
+    }
 
+    &__tab {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background: linear-gradient(to bottom, $color-panel, shade($color-panel, 40%));
+        border-radius: 8px 8px 0 0;
+        z-index: 1;
+
+        &--selected {
+            background: $color-panel;
+            box-shadow: 0 0 2px #222;
+            z-index: 2;
+        }
+    }
+
+    &__tab-panel {
+        display: none;
+
+        &--selected {
+            flex: 1 1 auto;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            background: $color-panel;
+            z-index: 3;
+        }
+    }
+}

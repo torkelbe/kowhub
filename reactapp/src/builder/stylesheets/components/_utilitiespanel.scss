@@ -1,0 +1,27 @@
+.kb-utilities {
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+
+    &__box {
+        margin-top: 10px;
+    }
+
+    &__btnpanel {
+        margin-top: 10px;
+        flex: 0 0 40px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__btn {
+        min-height: 100%;
+        width: 40px; // Will eventually fit to contained icon
+        margin-right: 10px;
+        background: $color-utility;
+        
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+.kb-userlistunits {
+    flex: 1 1 auto;
+    background: $color-panel;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+
+    &__unit {
+        color: $color-alternative;
+    }
+}
