@@ -1,24 +1,43 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 
 import data from 'source-data-api';
+import UnitBtnSection from './unitbtnsection';
 
 export default class UnitBtnPanel extends Component {
-
+    /*
+     * Receives as props:   isActive
+     *                      armykey
+     *                      armyname
+     *                      handleAddUnit
+     */
     constructor(props) {
         super(props);
-        const newUnits = data.getAllUnits(props.armykey);
         this.state = {
-            units: newUnits,
+            groups: [],
+            monsters: [],
+            warengines: [],
+            heroes: [],
         };
     }
 
     componentWillReceiveProps(newProps) {
-        if(this.props.armykey != newProps.armykey) {
-            const newUnits = data.getAllUnits(newProps.armykey);
+        if (!newProps.isActive){
+            return;
+        } else if (this.props.armykey != newProps.armykey) {
+            const allUnits = data.getAllUnits(newProps.armykey);
             this.setState({
-                units: newUnits,
-                armykey: newProps.armykey,
+                groups: allUnits.filter( unit => {
+                    return ( ('t' in unit) || ('r' in unit) || ('h' in unit) || ('l' in unit) );
+                }),
+                monsters: allUnits.filter( unit => {
+                    return ( 'm' in unit );
+                }),
+                warengines: allUnits.filter( unit => {
+                    return ( 'e' in unit );
+                }),
+                heroes: allUnits.filter( unit => {
+                    return ( 'x' in unit );
+                }),
             });
         }
     }
@@ -27,30 +46,24 @@ export default class UnitBtnPanel extends Component {
         if (!this.props.isActive) {
             return null;
         }
-        const classes = classNames(
-            "kb-unitbtnpanel",
-            "kb-lp-display"
-        );
-        const listOfUnits = this.state.units.map(
-            (unitObj) =>
-                <UnitBtn key={unitObj.key}
-                         unit={unitObj}
-                         onClick={this.props.onClick} />
-        );
         return (
-            <div className={classes}>
-                {listOfUnits}
+            /* Pass as props: units, selectors, handleAddUnit */
+            <div className="kb-unitbtnpanel kb-lp-display">
+                <div className="kb-unitbtnpanel__title">{this.props.armyname}</div>
+                <UnitBtnSection units={this.state.groups}
+                                selectors={['t', 'r', 'h', 'l']}
+                                handleAddUnit={this.props.handleAddUnit} />
+                <UnitBtnSection units={this.state.monsters}
+                                selectors={['m']}
+                                handleAddUnit={this.props.handleAddUnit} />
+                <UnitBtnSection units={this.state.warengines}
+                                selectors={['e']}
+                                handleAddUnit={this.props.handleAddUnit} />
+                <UnitBtnSection units={this.state.heroes}
+                                selectors={['x']}
+                                handleAddUnit={this.props.handleAddUnit} />
             </div>
         );
     }
-}
-
-function UnitBtn(props) {
-    return (
-        <div className="kb-unitbtn"
-             onClick={(e) => props.onClick(e, props.unit.key)}>
-            {props.unit.name}
-        </div>
-    )
 }
 

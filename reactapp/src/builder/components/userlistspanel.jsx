@@ -1,51 +1,65 @@
 import React, { Component } from 'react';
 
 import storage from 'webstorage-api';
+import UserList from './userlist';
+
+const store = {
+    user: "userlists",
+}
 
 export default class UserListsPanel extends Component {
-
+    /*
+     * Receives as props:   activeListId  <-- not yet used
+     *                      allLists
+     *                      handleNewList
+     *                      handleUserListSelect
+     */
     constructor(props) {
         super(props);
         this.state = {
-            userlists: this._getLists(),
         }
     }
 
-    _getLists() {
-        storage.getAllLists("userlists", function(userlists) {
-            return userlists;
-        }, function(code, msg) {
-            storage.errorLogger(code, msg);
-            return ([{
-                list: {name: "(Could not access webstorage)", id: ""}
-            }]);
-        });
-    }
+/*
+Placeholder values received from webstorage API
+    {
+        name: "Very long list name I will take to tournament sometime next week",
+        pts: 2000,
+        count: 10,
+        army: "ba",
+        id: "hihihi",
+    },
+    {
+        name: "Not-so-good list (MSU)",
+        pts: 1900,
+        count: 21,
+        army: "dw",
+        id: "nooooo",
+    },
+*/
 
     render() {
-        if (!this.props.isActive) {
-            return null;
-        };
-        const listOfUserLists = this.state.userlists.map( (listObj) =>
-            <UserList
-                key={listObj.id}
-                list={listObj}
-                onClick={this.props.onClick} />
+        if (Object.keys(this.props.allLists).length < 1) {
+            console.log("'allLists' is empty: length = "+Object.keys(this.props.allLists).length);
+            return (
+                <div>"EMPTY"</div>
+            );
+        }
+        const listOfUserLists = Object.keys(this.props.allLists).map(
+            (listId) => {
+                return (
+                    <UserList key={listId}
+                              isSelected={listId === this.props.activeListId}
+                              meta={this.props.allLists[listId].meta}
+                              onClick={this.props.handleUserListSelect} />
+                );
+            }
         );
         return (
-            <div className="kb-lp-display kp-userlistspanel">
+            <div className="kb-lp-display kb-userlistspanel">
                 {listOfUserLists}
             </div>
         );
     }
-}
-
-function UserList(props) {
-    return (
-        <div className="kb-userlist"
-             onClick={(e) => onClick(e, props.list.id)} >
-            List with name {props.list.name}
-        </div>
-    );
 }
 

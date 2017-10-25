@@ -24,7 +24,7 @@ export default class ArmyBtnPanel extends Component {
         const listOfArmyButtons = this.state.armies.map(
             (armyObj) =>
                 <ArmyBtn key={armyObj.key}
-                         armykey={armyObj.key}
+                         army={armyObj}
                          onClick={this.props.onClick} />
         );
         return (
@@ -42,8 +42,9 @@ function ArmyBtn(props) {
 
     return (
         <div className="kb-armybtn"
-             armykey={props.armykey}
-             onClick={(e) => props.onClick(e, props.armykey)} >
+             onClick={ (e) =>
+                 props.onClick(e, props.army.key, props.army.name)
+             } >
             <img src={faceicon} alt="face-icon" />
         </div>
     );

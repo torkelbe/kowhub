@@ -1,45 +1,46 @@
 import React, { Component } from 'react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import UserListsPanel from './userlistspanel';
-import ArmyBtnPanel from './armybtnpanel';
-import UnitBtnPanel from './unitbtnpanel';
-
-const panelMode = {
-    lists: "UserListsPanel",
-    armies: "ArmyBtnPanel",
-    units: "UnitBtnPanel",
-}
+import BrowsePanel from './browsepanel';
 
 export default class LeftPanel extends Component {
-
+    /*
+     * Receives as props:   activeListId
+     *                      allLists
+     *                      handleNewList
+     *                      handleAddUnit
+     *                      handleUserListSelect
+     */
     constructor(props) {
         super(props);
         this.state = {
-            mode: panelMode.armies,
+            tabIndex: 0,
         }
-    }
-
-    handleArmySelect(e, armykey) {
-        e.preventDefault();
-        console.log("You selected army: " + armykey);
     }
 
     render() {
         return (
             <div className="kb-leftpanel">
-                <div className="kb-lp-header"></div>
-                <div className="kb-lp-main">
-                    <UserListsPanel
-                        isActive={this.state.mode === panelMode.lists}
-                        onClick={this.props.handleUserListSelect} />
-                    <ArmyBtnPanel
-                        isActive={this.state.mode === panelMode.armies}
-                        onClick={this.handleArmySelect} />
-                    <UnitBtnPanel
-                        isActive={this.state.mode === panelMode.units}
-                        onClick={this.props.handleUnitSelect}
-                        armykey="ba" />
-                </div>
+                <Tabs selectedIndex={this.state.tabIndex}
+                      onSelect={ (tabIndex) => this.setState({ tabIndex }) }
+                      forceRenderTabPanel={true} >
+                    <TabList>
+                        <Tab>Lists</Tab>
+                        <Tab>Browse</Tab>
+                    </TabList>
+                    <TabPanel>
+                        <UserListsPanel
+                            activeListId={this.props.activeListId}
+                            allLists={this.props.allLists}
+                            handleNewList={this.props.handleNewList}
+                            handleUserListSelect={this.props.handleUserListSelect} />
+                    </TabPanel>
+                    <TabPanel>
+                        <BrowsePanel
+                            handleAddUnit={this.props.handleAddUnit} />
+                    </TabPanel>
+                </Tabs>
             </div>
         );
     }
