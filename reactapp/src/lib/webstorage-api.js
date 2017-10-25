@@ -82,7 +82,7 @@ const webstorage_api = {
                 units: {}
             };
             _setStorageObject(type, listsItem);
-            successCallback(listsItem[listId]);
+            successCallback(listsItem, listId);
         }
     },
 
@@ -97,13 +97,14 @@ const webstorage_api = {
         } else if (!listsItem.hasOwnProperty(listId)) {
             errorCallback('list_not_found', type+'-'+listId);
         } else {
-            const list = listsItem[listId];
-            delete listsItem[listId];
+            const deletedList = listsItem[listId];
+            delete listsItem[deletedList.meta.id];
             _setStorageObject(type, listsItem);
-            successCallback(list);
+            successCallback(listsItem, deletedList);
         }
     },
     
+    /* Currently not used */
     getList: function(type, listId, successCallback, errorCallback) {
         if (!window.localStorage) {
             errorCallback('webstorage_not_available');
@@ -132,7 +133,7 @@ const webstorage_api = {
         } else {
             Object.assign(listsItem[listId].meta, newMeta);
             _setStorageObject(type, listsItem);
-            successCallback(listsItem[listId]);
+            successCallback(listsItem);
         }
     },
 
@@ -151,7 +152,7 @@ const webstorage_api = {
             listsItem[listId].units[unitId] = unitkey;
             listsItem[listId].meta.count += 1;
             _setStorageObject(type, listsItem);
-            successCallback(listsItem[listId]);
+            successCallback(listsItem);
         }
     },
 
@@ -170,7 +171,7 @@ const webstorage_api = {
         } else {
             Object.assign(listsItem[listId].units[unitId], values);
             _setStorageObject(type, listsItem);
-            successCallback(listsItem[listId]);
+            successCallback(listsItem);
         }
     },
 
@@ -187,11 +188,11 @@ const webstorage_api = {
         } else if (!listsItem[listId].units.hasOwnProperty(unitId)) {
             errorCallback('unit_not_found', type+'-'+listId+'-'+unitId);
         } else {
-            const unit = listsItem[listId].units[unitId];
-            delete listsItem[listId].units[unitId];
+            const deletedUnit = { id: unitId, unitkey: listsItem[listId].units[unitId] };
+            delete listsItem[listId].units[deletedUnit.id];
             listsItem[listId].meta.count -= 1;
             _setStorageObject(type, listsItem);
-            successCallback(unit);
+            successCallback(listsItem, deletedUnit);
         }
     },
 
@@ -204,9 +205,6 @@ const webstorage_api = {
         if (listsItem === null) {
             errorCallback('store_not_initialized', type);
         } else {
-            for (const [id, list] of Object.entries(listsItem)) {
-                delete list.units;
-            }
             successCallback(listsItem);
         }
     },
