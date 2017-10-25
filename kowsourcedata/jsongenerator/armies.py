@@ -68,7 +68,7 @@ class ArmyParser:
         new_line = ""
         if not size:
             if entry=="hero":
-                unit["h"] = stats
+                unit["x"] = stats
             elif typ=="Monster":
                 unit["m"] = stats
             elif typ=="War Engine":
