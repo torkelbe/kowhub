@@ -14,18 +14,18 @@ $hills: (
     color-4:        map-get($hills-colors, lightgreen),
     color-5:        map-get($hills-colors, eggwhite),
 
-    background:     map-get($hills-colors, dark),
-    font-header:    map-get($hills-colors, dark),
-    font-title:     map-get($hills-colors, dark),
+    background:     map-get($hills-colors, bluegreen),
+    font-header:    map-get($hills-colors, eggwhite),
+    font-title:     map-get($hills-colors, eggwhite),
 
-    panel:          map-get($hills-colors, eggwhite),
+    panel:          map-get($hills-colors, lightgreen),
     font-panel:     map-get($hills-colors, dark),
 
-    button-unit:    map-get($hills-colors, dark),
+    button-unit:    map-get($hills-colors, blue),
     font-unit:      map-get($hills-colors, dark),
 
     button-utility: map-get($hills-colors, dark),
-    font-utility:   map-get($hills-colors, dark),
+    font-utility:   map-get($hills-colors, lightgreen),
 
     logo-outside:   map-get($hills-colors, dark),
     logo-inside:    map-get($hills-colors, dark),

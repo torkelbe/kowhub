@@ -4,7 +4,9 @@ $autumn-colors: (
     lightgreen: rgb(171, 154, 82),
     yellow: rgb(232, 186, 103),
     orange: rgb(227, 143, 79),
-    red: rgb(186, 81, 46)
+    red: rgb(186, 81, 46),
+
+    black: black,
 );
 
 $autumn: (
@@ -14,18 +16,18 @@ $autumn: (
     color-4:        map-get($autumn-colors, orange),
     color-5:        map-get($autumn-colors, red),
 
-    background:     map-get($autumn-colors, red),
+    background:     map-get($autumn-colors, orange),
     font-header:    map-get($autumn-colors, red),
     font-title:     map-get($autumn-colors, red),
 
     panel:          map-get($autumn-colors, red),
-    font-panel:     map-get($autumn-colors, red),
+    font-panel:     map-get($autumn-colors, black),
 
     button-unit:    map-get($autumn-colors, red),
     font-unit:      map-get($autumn-colors, red),
 
-    button-utility: map-get($autumn-colors, red),
-    font-utility:   map-get($autumn-colors, red),
+    button-utility: map-get($autumn-colors, darkgreen),
+    font-utility:   map-get($autumn-colors, lightgreen),
 
     logo-outside:   map-get($autumn-colors, red),
     logo-inside:    map-get($autumn-colors, red),
