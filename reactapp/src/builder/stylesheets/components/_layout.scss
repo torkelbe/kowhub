@@ -17,18 +17,6 @@
         flex-direction: row;
         align-items: stretch;
         margin-top: 10px;
-
-        .kb-main-left {
-            margin-left: 20px;
-            flex: 0 0 400px;
-        }
-
-        .kb-main-right {
-            margin-left: 20px;
-            margin-right: 20px;
-            flex: 1 0 auto;
-            min-width: 400px;
-        }
     }
 
     .kb-footer {

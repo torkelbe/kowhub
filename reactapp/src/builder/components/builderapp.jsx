@@ -113,22 +113,18 @@ export default class BuilderApp extends Component {
             <div className="kb-kowhub-builder-app">
                 <Header />
                 <div className="kb-main">
-                    <div className="kb-main-left">
-                        <LeftPanel
-                            activeListId={this.state.activeListId}
-                            allLists={this.state.allLists}
-                            handleNewList={this.handleNewList}
-                            handleAddUnit={this.handleAddUnit}
-                            handleUserListSelect={this.handleUserListSelect} />
-                    </div>
-                    <div className="kb-main-right">
-                        <RightPanel
-                            activeList={this.state.allLists[this.state.activeListId]}
-                            handleNewList={this.handleNewList}
-                            handleRemoveList={this.handleRemoveList}
-                            handleRemoveUnit={this.handleRemoveUnit}
-                            handleMetaChange={this.handleMetaChange} />
-                    </div>
+                    <LeftPanel
+                        activeListId={this.state.activeListId}
+                        allLists={this.state.allLists}
+                        handleNewList={this.handleNewList}
+                        handleAddUnit={this.handleAddUnit}
+                        handleUserListSelect={this.handleUserListSelect} />
+                    <RightPanel
+                        activeList={this.state.allLists[this.state.activeListId]}
+                        handleNewList={this.handleNewList}
+                        handleRemoveList={this.handleRemoveList}
+                        handleRemoveUnit={this.handleRemoveUnit}
+                        handleMetaChange={this.handleMetaChange} />
                 </div>
                 <div className="kb-footer"></div>
             </div>

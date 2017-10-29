@@ -48,7 +48,7 @@ export default class UnitBtnPanel extends Component {
         }
         return (
             /* Pass as props: units, selectors, handleAddUnit */
-            <div className="kb-unitbtnpanel kb-lp-display">
+            <div className="kb-unitbtnpanel">
                 <div className="kb-unitbtnpanel__title">{this.props.armyname}</div>
                 <UnitBtnSection units={this.state.groups}
                                 selectors={['t', 'r', 'h', 'l']}

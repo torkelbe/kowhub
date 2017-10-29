@@ -21,27 +21,26 @@ export default class LeftPanel extends Component {
 
     render() {
         return (
-            <div className="kb-leftpanel">
-                <Tabs selectedIndex={this.state.tabIndex}
-                      onSelect={ (tabIndex) => this.setState({ tabIndex }) }
-                      forceRenderTabPanel={true} >
-                    <TabList>
-                        <Tab>Lists</Tab>
-                        <Tab>Browse</Tab>
-                    </TabList>
-                    <TabPanel>
-                        <UserListsPanel
-                            activeListId={this.props.activeListId}
-                            allLists={this.props.allLists}
-                            handleNewList={this.props.handleNewList}
-                            handleUserListSelect={this.props.handleUserListSelect} />
-                    </TabPanel>
-                    <TabPanel>
-                        <BrowsePanel
-                            handleAddUnit={this.props.handleAddUnit} />
-                    </TabPanel>
-                </Tabs>
-            </div>
+            <Tabs className="kb-leftpanel react-tabs" 
+                  selectedIndex={this.state.tabIndex}
+                  onSelect={ (tabIndex) => this.setState({ tabIndex }) }
+                  forceRenderTabPanel={true} >
+                <TabList>
+                    <Tab>Lists</Tab>
+                    <Tab>Browse</Tab>
+                </TabList>
+                <TabPanel>
+                    <UserListsPanel
+                        activeListId={this.props.activeListId}
+                        allLists={this.props.allLists}
+                        handleNewList={this.props.handleNewList}
+                        handleUserListSelect={this.props.handleUserListSelect} />
+                </TabPanel>
+                <TabPanel>
+                    <BrowsePanel
+                        handleAddUnit={this.props.handleAddUnit} />
+                </TabPanel>
+            </Tabs>
         );
     }
 }

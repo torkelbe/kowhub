@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 
 import data from 'source-data-api';
 import faceicon from 'faceicon.png';
@@ -17,10 +16,6 @@ export default class ArmyBtnPanel extends Component {
         if (!this.props.isActive) {
             return null;
         }
-        const classes = classNames(
-            "kb-armybtnpanel",
-            "kb-lp-display",
-        );
         const listOfArmyButtons = this.state.armies.map(
             (armyObj) =>
                 <ArmyBtn key={armyObj.key}
@@ -28,7 +23,7 @@ export default class ArmyBtnPanel extends Component {
                          onClick={this.props.onClick} />
         );
         return (
-            <div className={classes}>
+            <div className="kb-armybtnpanel">
                 {listOfArmyButtons}
             </div>
         );

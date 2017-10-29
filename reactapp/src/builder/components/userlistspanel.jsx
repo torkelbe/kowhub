@@ -56,7 +56,7 @@ Placeholder values received from webstorage API
             }
         );
         return (
-            <div className="kb-lp-display kb-userlistspanel">
+            <div className="kb-userlistspanel">
                 {listOfUserLists}
             </div>
         );

@@ -1,16 +1,6 @@
-.kb-leftpanel {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    .kb-lp-display {
-        margin: 0 8px; // make room for scrollbar with 8px
-        height: 100%;
-    }
-}
-
 .react-tabs {
-    height: 100%;
+    margin-left: 20px;
+    flex: 0 0 400px;
     display: flex;
     flex-direction: column;
 
@@ -22,6 +12,7 @@
 
     &__tab {
         flex: 1;
+        height: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -38,11 +29,11 @@
     }
 
     &__tab-panel {
+        padding: 10px 0;
         display: none;
 
         &--selected {
             flex: 1 1 auto;
-            overflow-y: scroll;
             display: flex;
             flex-direction: column;
             background: $color-panel;
