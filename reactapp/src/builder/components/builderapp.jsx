@@ -118,6 +118,7 @@ export default class BuilderApp extends Component {
                         allLists={this.state.allLists}
                         handleNewList={this.handleNewList}
                         handleAddUnit={this.handleAddUnit}
+                        handleRemoveUnit={this.handleRemoveUnit}
                         handleUserListSelect={this.handleUserListSelect} />
                     <RightPanel
                         activeList={this.state.allLists[this.state.activeListId]}

@@ -4,6 +4,21 @@
     flex-direction: column;
     overflow-y: scroll;
 
+    .kb-newlistbutton {
+        margin-top: 10px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+
+        .kb-icon-button {
+            cursor: pointer;
+            width: 60px;
+            &>svg>path {
+                fill: $color-font-panel;
+            }
+        }
+    }
+
     .transitem-enter {
         height: 0;
         opacity: 0;

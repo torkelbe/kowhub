@@ -9,6 +9,7 @@ export default class LeftPanel extends Component {
      * Receives as props:   activeListId
      *                      allLists
      *                      handleNewList
+     *                      handleRemoveList
      *                      handleAddUnit
      *                      handleUserListSelect
      */
@@ -34,6 +35,7 @@ export default class LeftPanel extends Component {
                         activeListId={this.props.activeListId}
                         allLists={this.props.allLists}
                         handleNewList={this.props.handleNewList}
+                        handleRemoveList={this.props.handleRemoveList}
                         handleUserListSelect={this.props.handleUserListSelect} />
                 </TabPanel>
                 <TabPanel>

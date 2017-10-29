@@ -4,6 +4,7 @@ import { TransitionGroup } from 'react-transition-group';
 import storage from 'webstorage-api';
 import TransitionItem from './transitionitem';
 import UserList from './userlist';
+import IconButton from './iconbutton';
 
 const store = {
     user: "userlists",
@@ -14,6 +15,7 @@ export default class UserListsPanel extends Component {
      * Receives as props:   activeListId  <-- not yet used
      *                      allLists
      *                      handleNewList
+     *                      handleRemoveList
      *                      handleUserListSelect
      */
     constructor(props) {
@@ -43,6 +45,9 @@ export default class UserListsPanel extends Component {
         return (
             <TransitionGroup className="kb-userlistspanel">
                 {listOfUserLists}
+                <div className="kb-newlistbutton">
+                    <IconButton type="new" onClick={this.props.handleNewList} />
+                </div>
             </TransitionGroup>
         );
     }
