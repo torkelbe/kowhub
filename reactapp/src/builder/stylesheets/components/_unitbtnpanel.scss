@@ -1,6 +1,7 @@
 .kb-unitbtnpanel {
     display: flex;
     flex-direction: column;
+    color: $color-font-panel;
 
     &__title {
         flex: 0 0 50px;
