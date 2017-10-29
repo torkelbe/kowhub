@@ -8,10 +8,27 @@ $fuji-colors: (
 );
 
 $fuji: (
-    background:  map-get($fuji-colors, dark),
-    panel:       map-get($fuji-colors, earth),
-    select:      map-get($fuji-colors, redbrown),
-    utility:     map-get($fuji-colors, pink),
-    alternative: map-get($fuji-colors, khaki)
+    color-1:        map-get($fuji-colors, dark),
+    color-2:        map-get($fuji-colors, earth),
+    color-3:        map-get($fuji-colors, redbrown),
+    color-4:        map-get($fuji-colors, pink),
+    color-5:        map-get($fuji-colors, khaki),
+
+    background:     map-get($fuji-colors, dark),
+    font-header:    map-get($fuji-colors, dark),
+    font-title:     map-get($fuji-colors, dark),
+
+    panel:          map-get($fuji-colors, dark),
+    font-panel:     map-get($fuji-colors, dark),
+
+    button-unit:    map-get($fuji-colors, dark),
+    font-unit:      map-get($fuji-colors, dark),
+
+    button-utility: map-get($fuji-colors, dark),
+    font-utility:   map-get($fuji-colors, dark),
+
+    logo-outside:   map-get($fuji-colors, dark),
+    logo-inside:    map-get($fuji-colors, dark),
+    logo-name:      map-get($fuji-colors, dark),
 );
 

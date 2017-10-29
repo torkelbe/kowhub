@@ -8,10 +8,26 @@ $kaoru-colors: (
 );
 
 $kaoru: (
-    background:  map-get($kaoru-colors, red),
-    panel:       map-get($kaoru-colors, yellow),
-    select:      map-get($kaoru-colors, eggwhite),
-    utility:     map-get($kaoru-colors, blue),
-    alternative: map-get($kaoru-colors, darkblue)
-);
+    color-1:        map-get($kaoru-colors, red),
+    color-2:        map-get($kaoru-colors, yellow),
+    color-3:        map-get($kaoru-colors, eggwhite),
+    color-4:        map-get($kaoru-colors, blue),
+    color-5:        map-get($kaoru-colors, darkblue),
 
+    background:     map-get($kaoru-colors, yellow),
+    font-header:    map-get($kaoru-colors, darkblue),
+    font-title:     map-get($kaoru-colors, darkblue),
+
+    panel:          map-get($kaoru-colors, eggwhite),
+    font-panel:     map-get($kaoru-colors, darkblue),
+
+    button-unit:    map-get($kaoru-colors, red),
+    font-unit:      map-get($kaoru-colors, darkblue),
+
+    button-utility: map-get($kaoru-colors, blue),
+    font-utility:   map-get($kaoru-colors, eggwhite),
+
+    logo-outside:   map-get($kaoru-colors, red),
+    logo-inside:    map-get($kaoru-colors, darkblue),
+    logo-name:      map-get($kaoru-colors, darkblue),
+);

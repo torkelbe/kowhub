@@ -7,9 +7,25 @@
 $theme: $kaoru;
 
 /* Refer to these colors */
-$color-background:  map-get($theme, background);
-$color-panel:       map-get($theme, panel);
-$color-select:      map-get($theme, select);
-$color-utility:     map-get($theme, utility);
-$color-alternative: map-get($theme, alternative);
-    
+$color-1: map-get($theme, color-1);
+$color-2: map-get($theme, color-2);
+$color-3: map-get($theme, color-3);
+$color-4: map-get($theme, color-4);
+$color-5: map-get($theme, color-5);
+
+$color-background:      map-get($theme, background);
+$color-font-header:     map-get($theme, font-header);
+$color-font-title:      map-get($theme, font-title);
+
+$color-panel:           map-get($theme, panel);
+$color-font-panel:      map-get($theme, font-panel);
+
+$color-button-unit:     map-get($theme, button-unit);
+$color-font-unit:       map-get($theme, font-unit);
+
+$color-button-utility:  map-get($theme, button-utility);
+$color-font-utility:    map-get($theme, font-utility);
+
+$color-logo-outside:    map-get($theme, logo-outside);
+$color-logo-inside:     map-get($theme, logo-inside);
+$color-logo-name:       map-get($theme, logo-name);
