@@ -56,7 +56,7 @@ function ResetBtn(props) {
         return null;
     }
     return (
-        <div className="kb-lp-returnbtn"
+        <div className="kb-resetbtn"
              onClick={(e) => props.onClick(e)} >
             RETURN
         </div>
