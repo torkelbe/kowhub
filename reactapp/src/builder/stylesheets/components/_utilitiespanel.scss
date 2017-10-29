@@ -9,16 +9,20 @@
 
     &__btnpanel {
         margin-top: 10px;
-        flex: 0 0 40px;
+        flex: 0 0 50px;
         display: flex;
         flex-direction: row;
     }
 
-    &__btn {
-        min-height: 100%;
-        width: 40px; // Will eventually fit to contained icon
+    .kb-icon-button {
+        width: 50px;
         margin-right: 10px;
-        background: $color-utility;
+        background: $color-button-utility;
+        border-radius: 5px;
+        
+        &>svg>path {
+            fill: $color-font-utility;
+        }
         
         &:hover {
             cursor: pointer;
