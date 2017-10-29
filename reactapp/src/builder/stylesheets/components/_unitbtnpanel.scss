@@ -46,14 +46,20 @@
     }
 
     &__btn {
-        flex: 0 0 60px;
+        flex: 0 0 58px;
         cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
 
+        background: $color-button-unit;
+        color: $color-panel;
+        border-radius: 5px;
+        margin: 1pt;
+
         &.disabled {
             cursor: default;
+            opacity: 0.5;
         }
     }
 }
