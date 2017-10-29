@@ -24,7 +24,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|svg|jpg)$/,
+                test: /\.(png|jpg)$/,
                 use: [
                     'file-loader'
                 ]
@@ -33,6 +33,23 @@ module.exports = {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: [
                     'file-loader'
+                ]
+            },
+            {
+                test: /\.svg$/,
+                use: [
+                    {
+                        loader: 'svg-react-loader',    // Convert to React component
+                        query: {
+                        }
+                    },
+                    {
+                        loader: 'svgo-loader',    // Optimize SVG
+                        options: {
+                            plugins: [
+                            ]
+                        }
+                    }
                 ]
             }
         ]
