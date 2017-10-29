@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { TransitionGroup } from 'react-transition-group';
 
 import storage from 'webstorage-api';
+import TransitionItem from './transitionitem';
 import UserList from './userlist';
 
 const store = {
@@ -20,24 +22,6 @@ export default class UserListsPanel extends Component {
         }
     }
 
-/*
-Placeholder values received from webstorage API
-    {
-        name: "Very long list name I will take to tournament sometime next week",
-        pts: 2000,
-        count: 10,
-        army: "ba",
-        id: "hihihi",
-    },
-    {
-        name: "Not-so-good list (MSU)",
-        pts: 1900,
-        count: 21,
-        army: "dw",
-        id: "nooooo",
-    },
-*/
-
     render() {
         if (Object.keys(this.props.allLists).length < 1) {
             console.log("'allLists' is empty: length = "+Object.keys(this.props.allLists).length);
@@ -48,17 +32,18 @@ Placeholder values received from webstorage API
         const listOfUserLists = Object.keys(this.props.allLists).map(
             (listId) => {
                 return (
-                    <UserList key={listId}
-                              isSelected={listId === this.props.activeListId}
-                              meta={this.props.allLists[listId].meta}
-                              onClick={this.props.handleUserListSelect} />
+                    <TransitionItem key={listId}>
+                        <UserList isSelected={listId === this.props.activeListId}
+                                  meta={this.props.allLists[listId].meta}
+                                  onClick={this.props.handleUserListSelect} />
+                    </TransitionItem>
                 );
             }
         );
         return (
-            <div className="kb-userlistspanel">
+            <TransitionGroup className="kb-userlistspanel">
                 {listOfUserLists}
-            </div>
+            </TransitionGroup>
         );
     }
 }

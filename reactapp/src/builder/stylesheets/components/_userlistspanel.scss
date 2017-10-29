@@ -4,45 +4,26 @@
     flex-direction: column;
     overflow-y: scroll;
 
-    .kb-userlist {
-        flex: 0 0 60px;
-        display: flex;
-        flex-direction: row;
-        margin-top: 10px;
-        color: $color-font-panel;
+    .transitem-enter {
+        height: 0;
+        opacity: 0;
+    }
 
-        &:hover {
-            cursor: pointer;
-        }
+    .transitem-enter.transitem-enter-active {
+        height: 60px;
+        opacity: 1;
+        transition: all 200ms ease-in;
+    }
 
-        &__name {
-            flex: 1 1 auto;
-            display: flex;
-            align-items: center;
-            margin-left: 10px;
-            margin-right: 10px;
-            font-weight: bold;
-            overflow-y: hidden;
-        }
+    .transitem-exit {
+        height: 60px;
+        opacity: 1;
+    }
 
-        &__img {
-            flex: 0 0 60px;
-            &>img {
-                vertical-align: middle;
-                max-width: 100%;
-            }
-        }
-
-        &__stat {
-            flex: 0 0 60px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-           
-            &>p {
-                font-weight: bold;
-            }
-        }
+    .transitem-exit.transitem-exit-active {
+        height: 0;
+        opacity: 0;
+        transition: all 200ms ease-in;
     }
 }
+
