@@ -34,7 +34,7 @@ export default class UserListsPanel extends Component {
         const listOfUserLists = Object.keys(this.props.allLists).map(
             (listId) => {
                 return (
-                    <TransitionItem key={listId}>
+                    <TransitionItem key={listId} timeout={200}>
                         <UserList isSelected={listId === this.props.activeListId}
                                   meta={this.props.allLists[listId].meta}
                                   onClick={this.props.handleUserListSelect} />
