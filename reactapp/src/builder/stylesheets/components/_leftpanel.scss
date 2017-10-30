@@ -17,17 +17,20 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        background: linear-gradient(to bottom, $color-panel, shade($color-panel, 40%));
-        color: $color-font-panel;
+        background: linear-gradient(to bottom, $color-panel, shade($color-panel, 20%));
+        color: rgba($color-font-panel, 0.8);
         border-radius: 8px 8px 0 0;
         z-index: 1;
-        margin-top: 2px;
+        margin: 2px 1px 0 1px;
+        transition: margin 200ms ease-in;
 
         &--selected {
+            color: $color-font-panel;
             background: $color-panel;
             box-shadow: 0 0 2px #222;
             z-index: 2;
-            margin-top: 0;
+            margin: 0;
+            transition: margin 200ms ease-in;
         }
     }
 
