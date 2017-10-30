@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TransitionGroup } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import storage from 'webstorage-api';
 import TransitionItem from './transitionitem';
@@ -45,9 +45,11 @@ export default class UserListsPanel extends Component {
         return (
             <TransitionGroup className="kb-userlistspanel">
                 {listOfUserLists}
-                <div className="kb-newlistbutton">
-                    <IconButton type="new" onClick={this.props.handleNewList} />
-                </div>
+                <CSSTransition timeout={0}>
+                    <div  className="kb-newlistbutton">
+                        <IconButton type="new" onClick={this.props.handleNewList} />
+                    </div>
+                </CSSTransition>
             </TransitionGroup>
         );
     }
