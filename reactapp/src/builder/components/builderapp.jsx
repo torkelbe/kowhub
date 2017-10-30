@@ -26,15 +26,9 @@ export default class BuilderApp extends Component {
             activeListId: "",
             allLists: initMeta,
         }
-        this.handleUserListSelect = this.handleUserListSelect.bind(this);
-        this.handleNewList = this.handleNewList.bind(this);
-        this.handleRemoveList = this.handleRemoveList.bind(this);
-        this.handleAddUnit = this.handleAddUnit.bind(this);
-        this.handleRemoveUnit = this.handleRemoveUnit.bind(this);
-        this.handleMetaChange = this.handleMetaChange.bind(this);
     }
 
-    handleUserListSelect(e, listId) {
+    handleUserListSelect = (e, listId) => {
         e.preventDefault();
         if (listId === this.state.activeListId) {
             console.log("That list is already active");
@@ -43,7 +37,8 @@ export default class BuilderApp extends Component {
         this.setState({ activeListId: listId });
         console.log("You selected new list: " + listId);
     }
-    handleNewList(e) {
+
+    handleNewList = (e) => {
         e.preventDefault();
         storage.newList(store.user, {},
             (lists, newId) => {
@@ -56,7 +51,8 @@ export default class BuilderApp extends Component {
             storage.errorLogger
         );
     }
-    handleRemoveList(e) {
+
+    handleRemoveList = (e) => {
         e.preventDefault();
         const sortedLists = Object.keys(this.state.allLists).sort();
         const nextIndex = sortedLists.indexOf(this.state.activeListId) + 1;
@@ -73,7 +69,8 @@ export default class BuilderApp extends Component {
             storage.errorLogger
         );
     }
-    handleAddUnit(e, unitkey) {
+
+    handleAddUnit = (e, unitkey) => {
         e.preventDefault();
         if (!this.state.activeListId) {
             console.log("You have no active armylist to add a unit to.");
@@ -87,7 +84,8 @@ export default class BuilderApp extends Component {
             storage.errorLogger
         );
     }
-    handleRemoveUnit(e, unitId) {
+
+    handleRemoveUnit = (e, unitId) => {
         e.preventDefault();
         storage.removeUnit(store.user, this.state.activeListId, unitId,
             (lists, removedUnit) => {
@@ -97,7 +95,8 @@ export default class BuilderApp extends Component {
             storage.errorLogger
         );
     }
-    handleMetaChange(newMeta) {
+
+    handleMetaChange = (newMeta) => {
         storage.setMeta(store.user, this.state.activeListId, newMeta,
             (lists) => {
                 this.setState({ allLists: lists });

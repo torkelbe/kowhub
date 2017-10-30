@@ -13,11 +13,9 @@ export default class BrowsePanel extends Component {
             armykey: "",
             armyname: "",
         }
-        this.handleArmySelect = this.handleArmySelect.bind(this);
-        this.handleReset = this.handleReset.bind(this);
     }
 
-    handleArmySelect(e, newKey, newName) {
+    handleArmySelect = (e, newKey, newName) => {
         e.preventDefault();
         this.setState({
             armykey: newKey,
@@ -26,7 +24,7 @@ export default class BrowsePanel extends Component {
         console.log("You selected army: " + newKey);
     }
 
-    handleReset(e) {
+    handleReset = (e) => {
         e.preventDefault();
         this.setState({ armykey: "" });
         console.log("You returned to army-button view.");
