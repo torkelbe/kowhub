@@ -97,8 +97,7 @@ export default class BuilderApp extends Component {
             storage.errorLogger
         );
     }
-    handleMetaChange(e, newMeta) {
-        e.preventDefault();
+    handleMetaChange(newMeta) {
         storage.setMeta(store.user, this.state.activeListId, newMeta,
             (lists) => {
                 this.setState({ allLists: lists });

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import data from 'source-data-api';
+import UserListTitle from './userlisttitle';
 
 export default class UserListHeader extends Component {
     /*
@@ -25,7 +26,7 @@ export default class UserListHeader extends Component {
                 <div className="kb-userlistheader">
                     <UserListTitle
                         name={this.props.list.meta.name}
-                        onChange={this.props.handleMetaChange} />
+                        handleMetaChange={this.props.handleMetaChange} />
                     <UserListArmyBtn
                         armyKey={this.props.list.meta.army}
                         onClick={this.props.handleMetaChange} />
@@ -36,14 +37,6 @@ export default class UserListHeader extends Component {
             );
         }
     }
-}
-
-function UserListTitle(props) {
-    return (
-        <p className="kb-userlistheader__title">
-            {props.name}
-        </p>
-    );
 }
 
 function UserListArmyBtn(props) {

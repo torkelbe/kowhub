@@ -7,6 +7,13 @@
     
     &__title {
         flex: 1 1 auto;
+        background: none;
+        font-size: 16px;
+        border-radius: 5px 5px 0 0;
+
+        &:focus {
+            background: linear-gradient(to bottom, $color-background, shade($color-background, 15%));
+        }
     }
 
     &__army {
