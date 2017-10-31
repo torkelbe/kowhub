@@ -43,14 +43,14 @@ export default class UserListsPanel extends Component {
             }
         );
         return (
-            <TransitionGroup className="kb-userlistspanel">
-                {listOfUserLists}
-                <CSSTransition timeout={0}>
-                    <div  className="kb-newlistbutton">
-                        <IconButton type="new" onClick={this.props.handleNewList} />
-                    </div>
-                </CSSTransition>
-            </TransitionGroup>
+            <div className="kb-userlistspanel">
+                <TransitionGroup container={SortableList} className="kb-userlistspanel__lists">
+                    {listOfUserLists}
+                </TransitionGroup>
+                <div  className="kb-newlistbutton">
+                    <IconButton type="new" onClick={this.props.handleNewList} />
+                </div>
+            </div>
         );
     }
 }
