@@ -1,4 +1,5 @@
 import src from 'temp/source-data';
+import modifierLib from 'unit-modifications';
 
 const formString = {
     "t": "Troop",
@@ -21,32 +22,52 @@ function _formatStats(stats) {
     }
 }
 
+function _applyOption(unit, unitkey, optionType, optionCode) {
+    const option = (
+        optionType === "$" ?
+        src.items[optionCode] :
+        src.options[unitkey][optionCode]
+    );
+    unit.options.push(option.name);
+    unit.points += option.pts;
+    for (const [func, type, value] of option.mod) {
+        modifierLib[func](unit, type, value); // Modifies 'unit' in-place
+    }
+}
+
 function _formatSpecialRules(special) {
-    specialNames = special.map( (specialKey) => {
+    const specialNames = special.map( (specialKey) => {
         [key, value] = specialKey.split(":");
-        return src.special[specialKey].name + (value ? " ("+value+")" : "");
+        return src.special[key].name + (value ? " ("+value+")" : "");
     });
     return specialNames.join(", ");
 }
 
 function _formatRangedAttacks(ranged) {
-    rangedNames = ranged.map( (rangedKey) => {
-        rangedItem = src.ranged[rangedKey];
-        return rangedItem.name + " (" + rangedItem.range + "\")";
+    const rangedNames = ranged.map( (rangedKey) => {
+        [key, value] = rangedKey.split(":");
+        item = src.ranged[key];
+        return "["+item.range+"\"] " + item.name + (value ? " ("+value+")" : "");
     });
     return rangedNames.join(", ");
 }
 
-function _formatUnitOutput(unit, form) {
-    output = {
+function _formatUnitOutput(unit, form, options) {
+    const output = {
         points: unit[form][6],
         name: unit.name,
         type: unit.type,
         form: formString[form],
         stats: _formatStats(unit[form]),
-        special: _formatSpecialRules(unit.special),
-        ranged: _formatRangedAttacks(unit.ranged),
+        special: unit.special,
+        ranged: unit.ranged,
+        options: [], // Text representations of options
     }
+    for (let i = 0; i < Math.floor(options.length / 4); i++) {
+        _applyOption(output, unit.key, options.substr(4*i, 1), options.substr(4*i+1,3));
+    }
+    output.special = _formatSpecialRules(output.special);
+    output.ranged = _formatRangedAttacks(output.ranged);
     return output;
 }
 
@@ -93,10 +114,10 @@ const source_data_api = {
 
     getUnit: (unit_id) => {
         /* This function will eventually also handle options */
-        const army = src.armies[unit_id.substr(0,2)];
-        const unit = army.units[unit_id.substr(0,4)];
+        const unit = src.armies[unit_id.substr(0,2)].units[unit_id.substr(0,4)];
         const form = unit_id.substr(4,1);
-        return _formatUnitOutput(unit, form);
+        const options = unit_id.substr(5);
+        return _formatUnitOutput(unit, form, options);
     },
 
     getSpecial: (id) => {
