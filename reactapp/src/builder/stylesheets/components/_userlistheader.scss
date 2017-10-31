@@ -10,6 +10,7 @@
         background: none;
         font-size: 16px;
         border-radius: 5px 5px 0 0;
+        text-overflow: ellipsis;
 
         &:focus {
             background: linear-gradient(to bottom, $color-background, shade($color-background, 15%));
