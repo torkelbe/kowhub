@@ -73,7 +73,7 @@ export default class BuilderApp extends Component {
 
     handleAddUnit = (e, unitkey) => {
         e.preventDefault();
-        if (!this.state.lists[this.state.activeIndex]) {
+        if (!this.state.allLists[this.state.activeIndex]) {
             console.log("You have no active armylist to add a unit to.");
             return;
         }
