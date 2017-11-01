@@ -12,14 +12,14 @@ export default class UserListUnits extends Component {
     }
 
     render() {
-        let userListEntries = "";
-        if (this.props.list) {
-            userListEntries = Object.keys(this.props.list.units).map(
-                (id) =>
-                    <UserListUnit key={id}
-                                  unitkey={this.props.list.units[id]} />
-            );
-        }
+        const userListEntries = this.props.list.units.map(
+            (unit, index) =>
+                <UserListUnit
+                    key={unit.id}
+                    unitkey={unit.key}
+                    index={index}
+                />
+        );
         return (
             <div className="kb-userlistunits">
                 {userListEntries}
