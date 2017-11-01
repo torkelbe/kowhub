@@ -15,16 +15,15 @@ export default class BuilderApp extends Component {
 
     constructor(props) {
         super(props);
-        const initMeta = {}
-        storage.initItem(store.user, [], () => {
+        let initLists = [];
+        storage.initItem(store.user, [], (storageItem) => {
             console.log("Webstorage item "+store.user+" created.");
-            storage.getAllLists(store.user, (allMeta) => {
-                Object.assign(initMeta, allMeta);
-            }, storage.errorLogger);
+            console.log(storageItem);
+            initLists = storageItem;
         }, storage.errorLogger);
         this.state = {
             activeListId: "",
-            allLists: initMeta,
+            allLists: initLists,
         }
     }
 
