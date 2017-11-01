@@ -23,12 +23,6 @@ export default class UserListsPanel extends Component {
     }
 
     render() {
-        if (Object.keys(this.props.allLists).length < 1) {
-            console.log("'allLists' is empty: length = "+Object.keys(this.props.allLists).length);
-            return (
-                <div>"EMPTY"</div>
-            );
-        }
         const listOfUserLists = Object.keys(this.props.allLists).map(
             (listId) => {
                 return (
