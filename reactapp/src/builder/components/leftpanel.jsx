@@ -7,8 +7,8 @@ import IconButton from './iconbutton';
 
 export default class LeftPanel extends Component {
     /*
-     * Receives as props:   activeListId
-     *                      allLists
+     * Receives as props:   activeIndex
+     *                      lists
      *                      handleNewList
      *                      handleRemoveList
      *                      handleAddUnit
@@ -33,8 +33,8 @@ export default class LeftPanel extends Component {
                 </TabList>
                 <TabPanel>
                     <UserListsPanel
-                        activeListId={this.props.activeListId}
-                        allLists={this.props.allLists}
+                        activeIndex={this.props.activeIndex}
+                        lists={this.props.lists}
                         handleRemoveList={this.props.handleRemoveList}
                         handleUserListSelect={this.props.handleUserListSelect} />
                     <div  className="kb-newlistbutton">

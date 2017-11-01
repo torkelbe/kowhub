@@ -112,7 +112,7 @@ export default class BuilderApp extends Component {
                 <div className="kb-main">
                     <LeftPanel
                         activeIndex={this.state.activeIndex}
-                        allLists={this.state.allLists}
+                        lists={this.state.allLists}
                         handleNewList={this.handleNewList}
                         handleAddUnit={this.handleAddUnit}
                         handleRemoveUnit={this.handleRemoveUnit}

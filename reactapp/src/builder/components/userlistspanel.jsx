@@ -11,8 +11,8 @@ const store = {
 
 export default class UserListsPanel extends Component {
     /*
-     * Receives as props:   activeListId  <-- not yet used
-     *                      allLists
+     * Receives as props:   activeIndex
+     *                      lists
      *                      handleRemoveList
      *                      handleUserListSelect
      */
@@ -23,23 +23,23 @@ export default class UserListsPanel extends Component {
     }
 
     render() {
-        const listOfUserLists = Object.keys(this.props.allLists).map(
-            (listId) => {
+        const listOfUserLists = this.props.lists.map(
+            (list, index) => {
                 return (
-                    <TransitionItem key={listId} timeout={200}>
-                        <UserList isSelected={listId === this.props.activeListId}
-                                  meta={this.props.allLists[listId].meta}
-                                  onClick={this.props.handleUserListSelect} />
+                    <TransitionItem key={list.meta.id} timeout={200}>
+                        <UserList isSelected={index === this.props.activeIndex}
+                                  meta={list.meta}
+                                  index={index}
+                                  handleRemoveList={this.props.handleRemoveList}
+                                  handleUserListSelect={this.props.handleUserListSelect} />
                     </TransitionItem>
                 );
             }
         );
         return (
-            <div className="kb-userlistspanel">
-                <TransitionGroup className="kb-userlistspanel__lists">
-                    {listOfUserLists}
-                </TransitionGroup>
-            </div>
+            <TransitionGroup className="kb-userlistspanel">
+                {listOfUserLists}
+            </TransitionGroup>
         );
     }
 }

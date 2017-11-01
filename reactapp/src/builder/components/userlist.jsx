@@ -7,7 +7,8 @@ export default class UserList extends Component {
     /*
      * Receives as props:   isSelected
      *                      meta
-     *                      onClick
+     *                      handleRemoveList
+     *                      handleUserListSelect
      */
     
     constructor(props) {
@@ -33,7 +34,7 @@ export default class UserList extends Component {
         });
         return (
             <div className={classes}
-                 onClick={(e) => this.props.onClick(e, this.props.meta.id)} >
+                 onClick={(e) => this.props.handleUserListSelect(e, this.props.index)} >
                 <div className="kb-userlist__name">
                     {this.props.meta.name}
                 </div>
