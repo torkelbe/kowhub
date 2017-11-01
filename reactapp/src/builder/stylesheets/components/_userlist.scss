@@ -5,6 +5,10 @@
     margin-top: 10px;
     color: $color-font-panel;
 
+    &.selected {
+        background: rgba(black, 0.1);
+    }
+
     &:hover {
         cursor: pointer;
     }

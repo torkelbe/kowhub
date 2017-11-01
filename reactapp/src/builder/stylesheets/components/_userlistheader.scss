@@ -18,10 +18,16 @@
     }
 
     &__army {
-        flex: 0 0 60px;
+        background: $color-button-utility;
+        color: $color-background;
+        flex: 0 0 80px;
+        margin-left: 10px;
     }
 
     &__pts {
-        flex: 0 0 60px;
+        background: $color-button-utility;
+        color: $color-background;
+        flex: 0 0 80px;
+        margin-left: 10px;
     }
 }
