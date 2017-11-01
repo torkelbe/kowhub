@@ -158,7 +158,7 @@ const webstorage_api = {
         }
     },
 
-    modifyUnit: function(type, listIndex, unitIndex, values, successCallback, errorCallback) {
+    modifyUnit: function(type, listIndex, unitIndex, newUnitKey, successCallback, errorCallback) {
         if (!window.localStorage) {
             errorCallback('webstorage_not_available');
             return;
@@ -171,7 +171,7 @@ const webstorage_api = {
         } else if (!listsItem[listIndex].units[unitIndex]) {
             errorCallback('unit_not_found', type+'- listIndex '+listIndex+'- unitIndex '+unitIndex);
         } else {
-            Object.assign(listsItem[listIndex].units[unitIndex], values);
+            listsItem[listIndex].units[unitIndex].key = newUnitKey;
             _setStorageObject(type, listsItem);
             successCallback(listsItem);
         }
