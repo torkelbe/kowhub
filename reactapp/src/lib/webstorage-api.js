@@ -67,7 +67,6 @@ const webstorage_api = {
         }
         _setStorageObject(type, value);
         successCallback(value);
-        }
     },
 
     /*
@@ -89,7 +88,7 @@ const webstorage_api = {
                     {name: "New list", pts: "2000", army: "-"},
                     newMeta,
                     {id: listId, count: 0}),
-                units: {}
+                units: []
             };
             const updatedLists = [newList, ...listsItem];
             _setStorageObject(type, updatedLists);
@@ -165,14 +164,17 @@ const webstorage_api = {
             errorCallback('list_not_found', type+'- listIndex '+listIndex);
         } else {
             const unitId = Math.floor(Date.now()/100).toString(32);
-            listsItem[listIndex].units[unitId] = unitkey;
+            listsItem[listIndex].units.push({
+                id: unitId,
+                key: unitkey
+            });
             listsItem[listIndex].meta.count += 1;
             _setStorageObject(type, listsItem);
             successCallback(listsItem);
         }
     },
 
-    modifyUnit: function(type, listIndex, unitId, values, successCallback, errorCallback) {
+    modifyUnit: function(type, listIndex, unitIndex, values, successCallback, errorCallback) {
         if (!window.localStorage) {
             errorCallback('webstorage_not_available');
             return;
@@ -182,16 +184,16 @@ const webstorage_api = {
             errorCallback('store_not_initialized', type);
         } else if (!listsItem[listIndex]) {
             errorCallback('list_not_found', type+'- listIndex '+listIndex);
-        } else if (!listsItem[listIndex].units.hasOwnProperty(unitId)) {
-            errorCallback('unit_not_found', type+'- listIndex '+listIndex+'-'+unitId);
+        } else if (!listsItem[listIndex].units[unitIndex]) {
+            errorCallback('unit_not_found', type+'- listIndex '+listIndex+'- unitIndex '+unitIndex);
         } else {
-            Object.assign(listsItem[listIndex].units[unitId], values);
+            Object.assign(listsItem[listIndex].units[unitIndex], values);
             _setStorageObject(type, listsItem);
             successCallback(listsItem);
         }
     },
 
-    removeUnit: function(type, listIndex, unitId, successCallback, errorCallback) {
+    removeUnit: function(type, listIndex, unitIndex, successCallback, errorCallback) {
         if (!window.localStorage) {
             errorCallback('webstorage_not_available');
             return;
@@ -201,11 +203,14 @@ const webstorage_api = {
             errorCallback('store_not_initialized', type);
         } else if (!listsItem[listIndex]) {
             errorCallback('list_not_found', type+'- listIndex '+listIndex);
-        } else if (!listsItem[listIndex].units.hasOwnProperty(unitId)) {
-            errorCallback('unit_not_found', type+'-'+listIndex+'-'+unitId);
+        } else if (!listsItem[listIndex].units[unitIndex]) {
+            errorCallback('unit_not_found', type+'- listIndex '+listIndex+'- unitIndex '+unitIndex);
         } else {
-            const deletedUnit = { id: unitId, unitkey: listsItem[listIndex].units[unitId] };
-            delete listsItem[listIndex].units[deletedUnit.id];
+            const deletedUnit = listsItem[listIndex].units[unitIndex];
+            listsItem[listIndex].units = [
+                ...listsItem[listIndex].units.slice(0,unitIndex),
+                ...listsItem[listIndex].units.slice(unitIndex + 1)
+            ];
             listsItem[listIndex].meta.count -= 1;
             _setStorageObject(type, listsItem);
             successCallback(listsItem, deletedUnit);
