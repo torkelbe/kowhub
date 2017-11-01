@@ -5,8 +5,7 @@ import IconButton from './iconbutton.jsx';
 
 export default class UtilitiesPanel extends Component {
     /*
-     * Receives as props:   handleNewList
-     *                      handleRemoveList
+     * Receives as props:
      */
     constructor(props) {
         super(props);
@@ -19,10 +18,6 @@ export default class UtilitiesPanel extends Component {
             <div className="kb-utilities">
                 <UtilitiesBox />
                 <div className="kb-utilities__btnpanel">
-                    <IconButton type="new"
-                                onClick={this.props.handleNewList} />
-                    <IconButton type="delete"
-                                onClick={this.props.handleRemoveList} />
                 </div>
             </div>
         );

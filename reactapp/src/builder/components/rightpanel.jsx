@@ -7,8 +7,6 @@ import UtilitiesPanel from './utilitiespanel';
 export default class RightPanel extends Component {
     /*
      * Receives as props:   activeList
-     *                      handleNewList
-     *                      handleRemoveList
      *                      handleRemoveUnit
      *                      handleMetaChange
      */
@@ -27,9 +25,7 @@ export default class RightPanel extends Component {
                 <UserListUnits
                     list={this.props.activeList}
                     handleRemoveUnit={this.props.handleRemoveUnit} />
-                <UtilitiesPanel
-                    handleNewList={this.props.handleNewList}
-                    handleRemoveList={this.props.handleRemoveList} />
+                <UtilitiesPanel />
             </div>
         );
     }
