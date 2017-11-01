@@ -1,5 +1,4 @@
 .kb-userlistspanel {
-    width: 100%;
     overflow-y: scroll;
     padding: 0 10px;
 
@@ -32,7 +31,7 @@
 
 .kb-newlistbutton {
     margin-top: 10px;
-    height: 60px;
+    flex: 0 0 60px;
     display: flex;
     justify-content: center;
 
