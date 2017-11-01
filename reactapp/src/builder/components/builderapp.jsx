@@ -39,6 +39,8 @@ export default class BuilderApp extends Component {
 
     handleNewList = (e) => {
         e.preventDefault();
+        const tar = e.target.closest(".kb-newlistbutton").parentNode.firstChild;
+        tar.scrollTop = 0;
         storage.newList(store.user, {},
             (lists, index) => {
                 this.setState({
