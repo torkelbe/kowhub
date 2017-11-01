@@ -16,7 +16,7 @@ export default class BuilderApp extends Component {
     constructor(props) {
         super(props);
         const initMeta = {}
-        storage.initItem(store.user, () => {
+        storage.initItem(store.user, [], () => {
             console.log("Webstorage item "+store.user+" created.");
             storage.getAllLists(store.user, (allMeta) => {
                 Object.assign(initMeta, allMeta);

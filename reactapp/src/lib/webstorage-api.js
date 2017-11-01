@@ -19,13 +19,13 @@ const webstorage_api = {
      * Functions for general localStorage interaction:
      */
 
-    initItem: function(type, successCallback, errorCallback) {
+    initItem: function(type, initValue, successCallback, errorCallback) {
         if (!window.localStorage) {
             errorCallback('webstorage_not_available');
             return;
         }
         if (localStorage.getItem(type) === null) {
-            _setStorageObject(type, {});
+            _setStorageObject(type, (initValue) ? initValue : {} );
         } else {
             successCallback(_getStorageObject(type));
         }
