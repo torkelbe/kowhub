@@ -45,7 +45,7 @@ const webstorage_api = {
         }
     },
 
-    modifyItem: function(type, values, successCallback, errorCallback){
+    modifyObjectItem: function(type, values, successCallback, errorCallback){
         if (!window.localStorage) {
             errorCallback('webstorage_not_available');
             return;
@@ -57,6 +57,16 @@ const webstorage_api = {
             const modifiedItem = Object.assign({}, storageItem, values);
             _setStorageObject(type, modifiedItem);
             successCallback(modifiedItem);
+        }
+    },
+
+    setItem: function(type, value, successCallback, errorCallback){
+        if (!window.localStorage) {
+            errorCallback('webstorage_not_available');
+            return;
+        }
+        _setStorageObject(type, value);
+        successCallback(value);
         }
     },
 
