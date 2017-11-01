@@ -118,22 +118,6 @@ const webstorage_api = {
             successCallback(updatedLists, deletedList);
         }
     },
-    
-    /* Currently not used */
-    getList: function(type, listId, successCallback, errorCallback) {
-        if (!window.localStorage) {
-            errorCallback('webstorage_not_available');
-            return;
-        }
-        const listsItem = _getStorageObject(type);
-        if (listsItem === null) {
-            errorCallback('store_not_initialized', type);
-        } else if (!listsItem.hasOwnProperty(listId)) {
-            errorCallback('list_not_found', type+'-'+listId);
-        } else {
-            successCallback(listsItem[listId]);
-        }
-    },
 
     setMeta: function(type, listIndex, newMeta, successCallback, errorCallback) {
         if (!window.localStorage) {
