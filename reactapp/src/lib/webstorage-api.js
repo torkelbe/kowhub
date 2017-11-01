@@ -92,7 +92,7 @@ const webstorage_api = {
             };
             const updatedLists = [newList, ...listsItem];
             _setStorageObject(type, updatedLists);
-            successCallback(updatedLists, listId);
+            successCallback(updatedLists, 0); // Return index of new list: 0
         }
     },
 
