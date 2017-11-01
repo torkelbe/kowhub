@@ -22,48 +22,48 @@ export default class BuilderApp extends Component {
             initLists = storageItem;
         }, storage.errorLogger);
         this.state = {
-            activeListId: "",
+            activeIndex: 0,
             allLists: initLists,
         }
     }
 
-    handleUserListSelect = (e, listId) => {
+    handleUserListSelect = (e, index) => {
         e.preventDefault();
-        if (listId === this.state.activeListId) {
+        if (index === this.state.activeIndex) {
             console.log("That list is already active");
             return;
         }
-        this.setState({ activeListId: listId });
-        console.log("You selected new list: " + listId);
+        this.setState({ activeIndex: index });
+        console.log("You selected new index: " + index);
     }
 
     handleNewList = (e) => {
         e.preventDefault();
         storage.newList(store.user, {},
-            (lists, newId) => {
+            (lists, index) => {
                 this.setState({
-                    activeListId: newId,
+                    activeIndex: index,
                     allLists: lists
                 });
-                console.log("Made a new, default list! "+newId);
+                console.log("Made a new, default list at index " + index);
             },
             storage.errorLogger
         );
     }
 
-    handleRemoveList = (e) => {
+    handleRemoveList = (e, index) => {
         e.preventDefault();
-        const sortedLists = Object.keys(this.state.allLists).sort();
-        const nextIndex = sortedLists.indexOf(this.state.activeListId) + 1;
-        const nextListId = sortedLists[ nextIndex < sortedLists.length ? nextIndex : nextIndex - 2 ];
-        console.log("Next list index: " + nextIndex + "   with ID: " + nextListId);
-        storage.removeList(store.user, this.state.activeListId,
+        if (index === undefined) index = this.state.activeIndex;
+        let nextIndex = this.state.activeIndex;
+        if (nextIndex === this.state.allLists.length - 1) nextIndex -= 1; 
+        console.log("Next list index: " + nextIndex);
+        storage.removeList(store.user, this.state.activeIndex,
             (lists, removedList) => {
                 this.setState({
-                    activeListId: nextListId,
+                    activeIndex: nextIndex,
                     allLists: lists
                 });
-                console.log("Removed list:" + removedList.meta.id);
+                console.log("Removed list with index " + index);
             },
             storage.errorLogger
         );
@@ -71,11 +71,11 @@ export default class BuilderApp extends Component {
 
     handleAddUnit = (e, unitkey) => {
         e.preventDefault();
-        if (!this.state.activeListId) {
+        if (!this.state.lists[this.state.activeIndex]) {
             console.log("You have no active armylist to add a unit to.");
             return;
         }
-        storage.addUnit(store.user, this.state.activeListId, unitkey,
+        storage.addUnit(store.user, this.state.activeIndex, unitkey,
             (lists) => {
                 this.setState({ allLists: lists });
                 console.log("Added unit "+unitkey);
@@ -84,22 +84,22 @@ export default class BuilderApp extends Component {
         );
     }
 
-    handleRemoveUnit = (e, unitId) => {
+    handleRemoveUnit = (e, unitIndex) => {
         e.preventDefault();
-        storage.removeUnit(store.user, this.state.activeListId, unitId,
+        storage.removeUnit(store.user, this.state.activeIndex, unitIndex,
             (lists, removedUnit) => {
                 this.setState({ allLists: lists });
-                console.log("Removed unit " + removedUnit.unitkey);
+                console.log("Removed unit " + removedUnit.key);
             },
             storage.errorLogger
         );
     }
 
     handleMetaChange = (newMeta) => {
-        storage.setMeta(store.user, this.state.activeListId, newMeta,
+        storage.setMeta(store.user, this.state.activeIndex, newMeta,
             (lists) => {
                 this.setState({ allLists: lists });
-                console.log("Changed meta for list: " + this.state.activeListId);
+                console.log("Changed meta for list with index " + this.state.activeIndex);
             },
             storage.errorLogger
         );
@@ -111,14 +111,14 @@ export default class BuilderApp extends Component {
                 <Header />
                 <div className="kb-main">
                     <LeftPanel
-                        activeListId={this.state.activeListId}
+                        activeIndex={this.state.activeIndex}
                         allLists={this.state.allLists}
                         handleNewList={this.handleNewList}
                         handleAddUnit={this.handleAddUnit}
                         handleRemoveUnit={this.handleRemoveUnit}
                         handleUserListSelect={this.handleUserListSelect} />
                     <RightPanel
-                        activeList={this.state.allLists[this.state.activeListId]}
+                        activeList={this.state.allLists[this.state.activeIndex]}
                         handleNewList={this.handleNewList}
                         handleRemoveList={this.handleRemoveList}
                         handleRemoveUnit={this.handleRemoveUnit}
