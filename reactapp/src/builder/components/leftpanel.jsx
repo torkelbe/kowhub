@@ -35,9 +35,9 @@ export default class LeftPanel extends Component {
                     <UserListsPanel
                         activeIndex={this.props.activeIndex}
                         lists={this.props.lists}
-                        handleRemoveList={this.props.handleRemoveList}
                         handleUserListSelect={this.props.handleUserListSelect} />
                     <div  className="kb-newlistbutton">
+                        <IconButton type="delete" onClick={this.props.handleRemoveList} />
                         <IconButton type="new" onClick={this.props.handleNewList} />
                     </div>
                 </TabPanel>

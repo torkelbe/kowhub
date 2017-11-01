@@ -13,7 +13,6 @@ export default class UserListsPanel extends Component {
     /*
      * Receives as props:   activeIndex
      *                      lists
-     *                      handleRemoveList
      *                      handleUserListSelect
      */
     constructor(props) {
@@ -30,7 +29,6 @@ export default class UserListsPanel extends Component {
                         <UserList isSelected={index === this.props.activeIndex}
                                   meta={list.meta}
                                   index={index}
-                                  handleRemoveList={this.props.handleRemoveList}
                                   handleUserListSelect={this.props.handleUserListSelect} />
                     </TransitionItem>
                 );

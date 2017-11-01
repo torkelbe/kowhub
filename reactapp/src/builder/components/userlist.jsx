@@ -7,7 +7,6 @@ export default class UserList extends Component {
     /*
      * Receives as props:   isSelected
      *                      meta
-     *                      handleRemoveList
      *                      handleUserListSelect
      */
     
