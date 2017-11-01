@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import UserListsPanel from './userlistspanel';
 import BrowsePanel from './browsepanel';
+import IconButton from './iconbutton';
 
 export default class LeftPanel extends Component {
     /*
@@ -34,9 +35,11 @@ export default class LeftPanel extends Component {
                     <UserListsPanel
                         activeListId={this.props.activeListId}
                         allLists={this.props.allLists}
-                        handleNewList={this.props.handleNewList}
                         handleRemoveList={this.props.handleRemoveList}
                         handleUserListSelect={this.props.handleUserListSelect} />
+                    <div  className="kb-newlistbutton">
+                        <IconButton type="new" onClick={this.props.handleNewList} />
+                    </div>
                 </TabPanel>
                 <TabPanel>
                     <BrowsePanel

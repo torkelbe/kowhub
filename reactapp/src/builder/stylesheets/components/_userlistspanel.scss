@@ -3,21 +3,6 @@
     overflow-y: scroll;
     padding: 0 10px;
 
-    .kb-newlistbutton {
-        margin-top: 10px;
-        height: 60px;
-        display: flex;
-        justify-content: center;
-
-        .kb-icon-button {
-            cursor: pointer;
-            width: 60px;
-            &>svg>path {
-                fill: $color-font-panel;
-            }
-        }
-    }
-
     .transitem-enter {
         height: 0;
         opacity: 0;
@@ -42,6 +27,21 @@
         opacity: 0;
         margin-top: 0;
         transition: all 200ms ease-in;
+    }
+}
+
+.kb-newlistbutton {
+    margin-top: 10px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+
+    .kb-icon-button {
+        cursor: pointer;
+        width: 60px;
+        &>svg>path {
+            fill: $color-font-panel;
+        }
     }
 }
 
