@@ -12,6 +12,7 @@ export default class UserListUnits extends Component {
     }
 
     render() {
+        if (!this.props.list) return null;
         const userListEntries = this.props.list.units.map(
             (unit, index) =>
                 <UserListUnit
