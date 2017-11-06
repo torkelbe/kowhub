@@ -1,4 +1,4 @@
-function _modifyExistingRule(unit, type, value, acceptNewRule) {
+function _modifyRule(unit, type, value, acceptNewRule) {
     const [key, modifier] = value.split(":");
     const index = unit[type].findIndex(
         item => item.startsWith(key)
@@ -33,12 +33,12 @@ export default {
 
     mod: function(unit, type, value) {
         /* Ex: type = "ranged", value = "lgb:2" */
-        _modifyExistingRule(unit, type, value, false);
+        _modifyRule(unit, type, value, false);
     },
 
     extend: function(unit, type, value) {
         /* Ex: type = "special", value = "crs:1" */
-        _modifyExistingRule(unit, type, value, true);
+        _modifyRule(unit, type, value, true);
     },
 
     set: function(unit, stat, value) {
@@ -94,10 +94,10 @@ export default {
         }
     },
 
-    change: function(unit, type, value) {
+    change: function(unit, attribute, value) {
         /* Ex: type = "type", value = "Cavalry" */
-        if (!unit[type]) throw new Error("UnitModifierError: 'change' - " + type);
-        unit[type] = value;
+        if (!unit[attribute]) throw new Error("UnitModifierError: 'change' - " + attribute);
+        unit[attribute] = value;
     },
 
     custom: function(unit, type, value) {
