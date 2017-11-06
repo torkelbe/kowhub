@@ -19,30 +19,62 @@ function _modifyRule(unit, type, value, acceptNewRule) {
 
 export default {
 
+    /*
+     * Gain new special rule or ranged attack
+     * Example:
+     *      type = "special"
+     *      value = "ind"
+     *      --> Gain special rule 'Individual'
+     */
     add: function(unit, type, value) {
-        /* Ex type = "special", value = "ind" */
         unit[type].push(value);
     },
 
+    /*
+     * Remove special rule or ranged attack
+     * Example:
+     *      type = "special"
+     *      value = "ind"
+     *      --> Lose special rule 'Individual'
+     */
     rm: function(unit, type, value) {
-        /* Ex type = "special", value = "ind" */
         unit[type] = unit[type].filter(
             item => !item.startsWith(value)
         );
     },
 
+    /*
+     * Modify existing special rule or ranged attack by a value
+     * Example:
+     *      type = "ranged"
+     *      value = "lbo:2"
+     *      --> Increase value of 'Lightning Bolt' by 2
+     */
     mod: function(unit, type, value) {
-        /* Ex: type = "ranged", value = "lgb:2" */
         _modifyRule(unit, type, value, false);
     },
 
+    /*
+     * Modify existing special rule or ranged attack by a value
+     * OR gain new special rule or ranged attack with that value
+     * Example:
+     *      type = "special"
+     *      value = "crs:1"
+     *      --> Increase value of 'Crushing Strength' by 1
+     *          OR gain 'Crushing Strength (1)'
+     */
     extend: function(unit, type, value) {
-        /* Ex: type = "special", value = "crs:1" */
         _modifyRule(unit, type, value, true);
     },
 
+    /*
+     * Set a Stat to a specific value, unless the new value is less than before
+     * Example:
+     *      stat = "Sp"
+     *      value = "10"
+     *      --> Set Speed to 10
+     */
     set: function(unit, stat, value) {
-        /* Ex: stat = "Sp", value = "10" */
         const oldValue = unit.stats[stat];
         if (stat === "Sp" || stat === "Att") {
             const newValue = (value > oldValue) ? value : oldValue;
@@ -55,8 +87,13 @@ export default {
         unit.stats[stat] = newValue;
     },
 
+    /*
+     * Improve the value of a Stat by 1
+     * Example:
+     *      stat = "Me"
+     *      --> Improve 'Me' by 1 (Example: from '5+' to '4+')
+     */
     inc: function(unit, stat, undef) {
-        /* Ex: stat = "Me" */
         let oldValue = unit.stats[stat];
         if (stat === "Sp" || stat === "Att") {
             const newValue = (parseInt(oldValue) + 1) + "";
@@ -73,8 +110,13 @@ export default {
         }
     },
 
+    /*
+     * Reduce the value of a Stat by 1
+     * Example:
+     *      stat = "Me"
+     *      --> Reduce 'Me' by 1 (Example: from '4+' to '5+')
+     */
     dec: function(unit, stat, undef) {
-        /* Ex: stat = "Me" */
         let oldValue = unit.stats[stat];
         if (stat === "Sp" || stat === "Att") {
             const newValue = (parseInt(oldValue) - 1) + "";
@@ -94,14 +136,25 @@ export default {
         }
     },
 
+    /*
+     * Change the value of any attribute of a unit
+     * Example:
+     *      attribute = "type"
+     *      value = "Cavalry"
+     *      --> Set { type: 'Cavalry' }
+     */
     change: function(unit, attribute, value) {
-        /* Ex: type = "type", value = "Cavalry" */
         if (!unit[attribute]) throw new Error("UnitModifierError: 'change' - " + attribute);
         unit[attribute] = value;
     },
 
+    /*
+     * Collection of possible, non-standard changes
+     * Example:
+     *      type = "fearless"
+     *      --> Set Waver value of a unit to '-'
+     */
     custom: function(unit, type, value) {
-        /* Used for specific, custom cases */
         if (type === "fearless") {
             const [waver, rout] = unit.stats["Ne"].split("/");
             unit.stats["Ne"] = "-/" + rout;
