@@ -97,9 +97,12 @@ export default {
         let oldValue = unit.stats[stat];
         if (stat === "Sp" || stat === "Att") {
             const newValue = (parseInt(oldValue) + 1) + "";
-        } else if (stat === "Me" || stat === "Ra" || stat === "De") {
-            if (oldValue === "-")  return;
+        } else if (stat === "Me" || stat === "Ra") {
+            if (oldValue === "-" || oldValue === "2+")  return;
             const newValue = (parseInt(oldValue.substr(0,1), 10) - 1) + "+";
+        } else if (stat === "De") {
+            if (oldValue === "-" || oldValue === "6+")  return;
+            const newValue = (parseInt(oldValue.substr(0,1), 10) + 1) + "+";
         } else if (stat === "Ne") {
             let [waver, rout] = oldValue.split("/");
             waver = waver === "-" ? waver : parseInt(waver, 10) + 1;
@@ -120,12 +123,12 @@ export default {
         let oldValue = unit.stats[stat];
         if (stat === "Sp" || stat === "Att") {
             const newValue = (parseInt(oldValue) - 1) + "";
-        } else if (stat === "Me" || stat === "Ra" || stat === "De") {
-            if (oldValue === "-") {
-                return;
-            } else {
-                const newValue = (parseInt(oldValue.substr(0,1), 10) - 1) + "+";
-            }
+        } else if (stat === "Me" || stat === "Ra") {
+            if (oldValue === "-" || oldValue === "6+")  return;
+            const newValue = (parseInt(oldValue.substr(0,1), 10) + 1) + "+";
+        } else if (stat === "De") {
+            if (oldValue === "-" || oldValue === "2+")  return;
+            const newValue = (parseInt(oldValue.substr(0,1), 10) - 1) + "+";
         } else if (stat === "Ne") {
             let [waver, rout] = oldValue.split("/");
             waver = waver === "-" ? waver : parseInt(waver, 10) - 1;
