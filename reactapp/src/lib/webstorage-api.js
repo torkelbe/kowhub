@@ -96,7 +96,7 @@ const webstorage_api = {
         }
     },
 
-    removeList: function(type, listIndex, successCallback, errorCallback) {
+    removeList: function(type, listId, successCallback, errorCallback) {
         if(!window.localStorage) {
             errorCallback('webstorage_not_available');
             return;
@@ -106,14 +106,11 @@ const webstorage_api = {
             errorCallback('store_not_initialized', type);
             return;
         }
-        const deletedList = listsItem[listIndex];
+        const deletedList = listsItem.find( list => list.meta.id === listId );
         if (!deletedList) {
             errorCallback('list_not_found', type+'- listIndex '+listIndex);
         } else {
-            const updatedLists = [
-                ...listsItem.slice(0,listIndex),
-                ...listsItem.slice(listIndex + 1)
-            ];
+            const updatedLists = listsItem.filter( list => list.meta.id != listId );
             _setStorageObject(type, updatedLists);
             successCallback(updatedLists, deletedList);
         }
