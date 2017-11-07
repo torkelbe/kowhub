@@ -116,6 +116,21 @@ const webstorage_api = {
         }
     },
 
+    reorderLists: function(type, oldIndex, newIndex, successCallback, errorCallback) {
+        if(!window.localStorage) {
+            errorCallback('webstorage_not_available');
+            return;
+        }
+        const listsItem = _getStorageObject(type);
+        if (listsItem === null) {
+            errorCallback('store_not_initialized', type);
+            return;
+        }
+        listsItem.splice(newIndex, 0, listsItem.splice(oldIndex, 1)[0]);
+        _setStorageObject(type, listsItem);
+        successCallback(listsItem);
+    },
+
     setMeta: function(type, listIndex, newMeta, successCallback, errorCallback) {
         if (!window.localStorage) {
             errorCallback('webstorage_not_available');
