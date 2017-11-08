@@ -30,6 +30,7 @@ export default class BuilderApp extends Component {
     handleListTransitionExit = (e, index) => {
         e.preventDefault();
         if (index === undefined) index = this.state.activeIndex;
+        if (!this.state.allLists[index]) return;
         const newLists = this.state.allLists;
         Object.assign(newLists[index], {in: false})
         this.setState({
