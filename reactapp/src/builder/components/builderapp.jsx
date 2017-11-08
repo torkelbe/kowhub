@@ -32,7 +32,7 @@ export default class BuilderApp extends Component {
         if (index === undefined) index = this.state.activeIndex;
         if (!this.state.allLists[index]) return;
         const newLists = this.state.allLists;
-        Object.assign(newLists[index], {in: false})
+        Object.assign(newLists[index], {exitTrigger: true})
         this.setState({
             allLists: newLists
         });

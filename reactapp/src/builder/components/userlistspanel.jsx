@@ -1,61 +1,57 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import TransitionItem from './transitionitem';
 import UserList from './userlist';
 
-const SortableItem = SortableElement( ({listIndex, ...props}) =>
-    <TransitionItem {...props} index={listIndex} >
-        <UserList />
-    </TransitionItem>
-);
-
-const SortableList = SortableContainer( (props) => {
+export default function UserListsPanel({handleReorderLists, ...passThroughProps}) {
     return (
-        <div className="kb-userlistspanel" >
-            {props.lists.map( (list, index) => (
+        <SortableList
+            onSortEnd={handleReorderLists}
+            lockAxis={"y"}
+            pressDelay={200}
+            helperClass="draggedComponent"
+            {...passThroughProps}
+        />
+    );
+}
+
+const SortableList = SortableContainer(
+    ({lists, activeIndex, handleRemoveList, ...passThroughProps}) => {
+        const listElements = lists.map(
+            (list, index) => (
                 <SortableItem
+                    // consumed by SortableContainer:
                     key={list.meta.id}
                     index={index}
-                    timeout={300}
-                    in={list.in}
-                    isSelected={index === props.activeIndex}
+                    // consumed by TransitionItem:
+                    exitTrigger={list.exitTrigger === true ? true : false}
+                    onExited={ () => handleRemoveList(list.meta.id) }
+                    // passed on:
+                    {...passThroughProps}
+                    passThroughIndex={index}
+                    isSelected={index === activeIndex}
                     meta={list.meta}
-                    listIndex={index}
-                    handleExited={() => props.handleRemoveList(list.meta.id)}
-                    handleListTransitionExit={props.handleListTransitionExit}
-                    handleUserListSelect={props.handleUserListSelect}
                 />
-            ))}
-        </div>
-    );
-});
-
-export default class UserListsPanel extends Component {
-    /*
-     * Receives as props:   activeIndex
-     *                      lists
-     *                      handleRemoveList
-     *                      handleUserListSelect
-     *                      handleListTransitionExit
-     *                      handleReorderLists
-     */
-    constructor(props) {
-        super(props);
-        this.state = {
-        }
-    }
-
-    render() {
-        if (!this.props.lists[0]) return null;
+            )
+        );
         return (
-            <SortableList {...this.props}
-                onSortEnd={this.props.handleReorderLists}
-                lockAxis={"y"}
-                pressDelay={200}
-                helperClass="draggedComponent"
-            />
+            <div className="kb-userlistspanel" >
+                {listElements}
+            </div>
         );
     }
-}
+);
+
+const SortableItem = SortableElement(
+    ({onExited, exitTrigger, passThroughIndex, ...passThroughProps}) => {
+        return (
+            <TransitionItem onExited={onExited}
+                            exitTrigger={exitTrigger}
+                            timeout={300} >
+                <UserList {...passThroughProps} index={passThroughIndex} />
+            </TransitionItem>
+        );
+    }
+);
 
