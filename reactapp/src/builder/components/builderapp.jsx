@@ -27,6 +27,29 @@ export default class BuilderApp extends Component {
         }
     }
 
+    handleReorderLists = ({oldIndex, newIndex}) => {
+        let newActiveIndex = this.state.activeIndex;
+        if (oldIndex === newActiveIndex) {
+            newActiveIndex = newIndex;
+        } else if (oldIndex > newActiveIndex && newIndex <= newActiveIndex) {
+            newActiveIndex += 1;
+        } else if (oldIndex < newActiveIndex && newIndex >= newActiveIndex) {
+            newActiveIndex -= 1;
+        }
+        storage.reorderLists(store.user, oldIndex, newIndex,
+            (lists) => {
+                console.log("Reordered lists");
+                console.log("-----------------------------");
+                for (const list of lists) console.log(list.meta.name);
+                this.setState({
+                    activeIndex: newActiveIndex,
+                    allLists: lists
+                });
+            },
+            storage.errorLogger
+        );
+    }
+
     handleUserListSelect = (e, index) => {
         e.preventDefault();
         if (index === this.state.activeIndex) {
