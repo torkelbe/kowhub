@@ -5,7 +5,6 @@
   "main": "index.js",
   "repository": "git@github.com:torkelbe/kowhub.git",
   "author": "Torkel Berli <torkelbe@gmail.com>",
-  "license": "MIT",
   "scripts": {
     "build-development": "webpack --config webpack/webpack.local.config.js --progress",
     "build-production": "webpack --config webpack/webpack.production.config.js --progress",
