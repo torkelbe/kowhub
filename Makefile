@@ -29,7 +29,7 @@ freeze:
 	cd django && source venv/bin/activate && venv/bin/pip freeze > requirements.txt
 
 .PHONY: clean
-clean: clear_files clear_venv clear_modules clear_bundles
+clean: clear_files clear_venv clear_modules
 
 .PHONY: clear_files
 clear_files:
@@ -43,8 +43,4 @@ clear_venv:
 .PHONY: clear_modules
 clear_modules:
 	rm -rf reactapp/node_modules
-
-.PHONY: clear_bundles
-clear_bundles:
-	rm reactapp/bundles/*.js
 
