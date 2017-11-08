@@ -11,7 +11,7 @@ ALLOWED_HOSTS = ['kowhub.com']
 WEBPACK_LOADER = {
     'builder': {
         'BUNDLE_DIR_NAME': 'builder/bundles/',
-        'STATS_FILE': join(PROJECT_ROOT, 'reactapp/webpack/webpack-stats.production.json'),
+        'STATS_FILE': join(FRONTEND_ROOT, 'webpack/webpack-stats.production.json'),
     }
 }
 
@@ -26,7 +26,7 @@ DATABASES = {
     }
 }
 
-STATICFILES_DIRS += [ join(PROJECT_ROOT, 'reactapp/bundles-prod') ]
+STATICFILES_DIRS += [ join(FRONTEND_ROOT, 'bundles-prod') ]
 STATIC_ROOT = join(PROJECT_ROOT, 'static')
 
 SECRET_KEY = get_secret("SECRET_KEY")

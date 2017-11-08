@@ -11,7 +11,7 @@ ALLOWED_HOSTS = []
 WEBPACK_LOADER = {
     'builder': {
         'BUNDLE_DIR_NAME': 'builder/bundles/',
-        'STATS_FILE': join(PROJECT_ROOT, 'reactapp/webpack/webpack-stats.local.json'),
+        'STATS_FILE': join(FRONTEND_ROOT, 'webpack/webpack-stats.local.json'),
     }
 }
 
@@ -26,7 +26,7 @@ DATABASES = {
     }
 }
 
-STATICFILES_DIRS += [ join(PROJECT_ROOT, 'reactapp/bundles-dev') ]
+STATICFILES_DIRS += [ join(FRONTEND_ROOT, 'bundles-dev') ]
 STATIC_ROOT = ""
 
 SECRET_KEY = get_secret("SECRET_KEY")

@@ -14,7 +14,7 @@ class PathToSourceData:
         spreadsheet_dir = join(dirname(project_root), 'kowsources')
         csv_dir = join(package_dir, 'temp')
         json_dir = join(package_dir, 'output')
-        jslib_dir = join(project_root, 'reactapp/src/lib/temp')
+        jslib_dir = join(project_root, 'frontend/src/lib/temp')
 
         self.numbers = _PathSet(join(spreadsheet_dir, 'army_data.numbers'),
                                 join(spreadsheet_dir, 'rules_data.numbers'))

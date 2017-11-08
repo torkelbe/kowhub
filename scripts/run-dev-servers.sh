@@ -17,7 +17,7 @@
 # which it should delete when the script ends.
 
 function webpack_dev_server {
-    cd reactapp && yarn run webpack-dev-server --config $1 | \
+    cd frontend && yarn run webpack-dev-server --config $1 | \
     # Print only lines starting with keyword 'webpack'
     grep "^webpack" --line-buffered | \
     # Add [WEBPACK] tag to output from webpack-dev-server:
@@ -65,10 +65,10 @@ if $serving_to_local_network; then
 
     # Create temporary config file for this particular host IP
     echo "Generating temporary Webpack config..."
-    print_temp_config $host > reactapp/$config_dir$config
+    print_temp_config $host > frontend/$config_dir$config
 
     # Remove temporary config file when script exits
-    exit_cmds+=" rm reactapp/$config_dir$config;"
+    exit_cmds+=" rm frontend/$config_dir$config;"
 fi
 
 trap "$exit_cmds" SIGINT

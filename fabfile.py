@@ -44,20 +44,19 @@ class LocalEnvironment(object):
 
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
+        self.frontend = 'frontend'
 
     def manage(self, cmd):
         local('django/venv/bin/python django/manage.py ' + cmd)
 
     def webpack_compile(self, production=False):
-        webpack_dir = os.path.join(self.dir, 'reactapp')
         if production:
-            local('cd '+webpack_dir+' && yarn run build-production')
+            local('cd '+self.frontend+' && yarn run build-production')
         else:
-            local('cd '+webpack_dir+' && yarn run build-development')
+            local('cd '+self.frontend+' && yarn run build-development')
 
     def webpack_dev_server(self):
-        webpack_dir = os.path.join(self.dir, 'reactapp')
-        local('cd '+webpack_dir+' && yarn run dev-server')
+        local('cd '+self.frontend+' && yarn run dev-server')
 
 
 env.use_ssh_config=True

@@ -16,6 +16,7 @@ import json
 
 PROJECT_ROOT = dirname(dirname(dirname(dirname(abspath(__file__)))))
 DJANGO_ROOT = join(PROJECT_ROOT, "django")
+FRONTEND_ROOT = join(PROJECT_ROOT, "frontend")
 
 # Add django apps root directory to pythonpath
 sys.path.append(join(DJANGO_ROOT, "apps"))

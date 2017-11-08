@@ -18,7 +18,7 @@ dependencies:
 
 .PHONY: node_modules
 node_modules:
-	cd reactapp && yarn install
+	cd frontend && yarn install
 
 .PHONY: migrate
 migrate:
@@ -42,5 +42,5 @@ clear_venv:
 
 .PHONY: clear_modules
 clear_modules:
-	rm -rf reactapp/node_modules
+	rm -rf frontend/node_modules
 
