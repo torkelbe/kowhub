@@ -76,19 +76,20 @@ export default class BuilderApp extends Component {
         );
     }
 
-    handleRemoveList = (e, index) => {
-        e.preventDefault();
-        if (index === undefined) index = this.state.activeIndex;
-        let nextIndex = this.state.activeIndex;
-        if (nextIndex === this.state.allLists.length - 1) nextIndex -= 1; 
-        console.log("Next list index: " + nextIndex);
-        storage.removeList(store.user, this.state.activeIndex,
+    handleRemoveList = (listId) => {
+        if (!listId) listId = this.state.allLists[this.state.activeList].meta.id;
+        const nextIndex = this.state.activeIndex === this.state.allLists.length - 1 ?
+                          this.state.activeIndex - 1 :
+                          this.state.activeIndex;
+        storage.removeList(store.user, listId,
             (lists, removedList) => {
+                console.log("Removed list: "+removedList.meta.name);
+                console.log("-----------------------------");
+                for (const list of lists) console.log(list.meta.name);
                 this.setState({
                     activeIndex: nextIndex,
                     allLists: lists
                 });
-                console.log("Removed list with index " + index);
             },
             storage.errorLogger
         );
