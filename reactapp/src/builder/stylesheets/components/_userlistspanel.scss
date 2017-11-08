@@ -2,30 +2,30 @@
     overflow-y: scroll;
     padding: 0 10px;
 
-    .transitem-enter {
-        height: 0;
-        opacity: 0;
+    .transition-appear {
+        height: 1px;
+        opacity: 0.1;
         margin-top: 0;
     }
 
-    .transitem-enter.transitem-enter-active {
+    .transition-appear.transition-appear-active {
         height: 60px;
         opacity: 1;
         margin-top: 10px;
-        transition: all 200ms ease-in;
+        transition: all 300ms ease-in-out;
     }
 
-    .transitem-exit {
+    .transition-exit {
         height: 60px;
         opacity: 1;
         margin-top: 10px;
     }
 
-    .transitem-exit.transitem-exit-active {
-        height: 0;
-        opacity: 0;
+    .transition-exit.transition-exit-active {
+        height: 1px;
+        opacity: 0.1;
         margin-top: 0;
-        transition: all 200ms ease-in;
+        transition: all 300ms ease-in-out;
     }
 }
 

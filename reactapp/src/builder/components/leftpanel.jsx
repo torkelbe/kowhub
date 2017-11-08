@@ -13,6 +13,8 @@ export default class LeftPanel extends Component {
      *                      handleRemoveList
      *                      handleAddUnit
      *                      handleUserListSelect
+     *                      handleListTransitionExit
+     *                      handleReorderLists
      */
     constructor(props) {
         super(props);
@@ -35,9 +37,12 @@ export default class LeftPanel extends Component {
                     <UserListsPanel
                         activeIndex={this.props.activeIndex}
                         lists={this.props.lists}
+                        handleRemoveList={this.props.handleRemoveList}
+                        handleListTransitionExit={this.props.handleListTransitionExit}
+                        handleReorderLists={this.props.handleReorderLists}
                         handleUserListSelect={this.props.handleUserListSelect} />
                     <div  className="kb-newlistbutton">
-                        <IconButton type="delete" onClick={this.props.handleRemoveList} />
+                        <IconButton type="delete" onClick={this.props.handleListTransitionExit} />
                         <IconButton type="new" onClick={this.props.handleNewList} />
                     </div>
                 </TabPanel>

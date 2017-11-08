@@ -8,6 +8,7 @@ export default class UserList extends Component {
      * Receives as props:   isSelected
      *                      meta
      *                      handleUserListSelect
+     *                      handleListTransitionExit
      */
     
     constructor(props) {
@@ -32,12 +33,13 @@ export default class UserList extends Component {
             "selected": this.props.isSelected
         });
         return (
-            <div className={classes}
-                 onClick={(e) => this.props.handleUserListSelect(e, this.props.index)} >
-                <div className="kb-userlist__name">
+            <div className={classes} >
+                <div className="kb-userlist__name"
+                     onClick={(e) => this.props.handleUserListSelect(e, this.props.index)} >
                     {this.props.meta.name}
                 </div>
-                <div className="kb-userlist__img">
+                <div className="kb-userlist__img"
+                     onClick={(e) => this.props.handleListTransitionExit(e, this.props.index)} >
                     <img src={faceicon} alt="face-icon" />
                 </div>
                 <div className="kb-userlist__stat">

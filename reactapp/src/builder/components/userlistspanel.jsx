@@ -1,19 +1,44 @@
 import React, { Component } from 'react';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
-import storage from 'webstorage-api';
 import TransitionItem from './transitionitem';
 import UserList from './userlist';
 
-const store = {
-    user: "userlists",
-}
+const SortableItem = SortableElement( ({listIndex, ...props}) =>
+    <TransitionItem {...props} index={listIndex} >
+        <UserList />
+    </TransitionItem>
+);
+
+const SortableList = SortableContainer( (props) => {
+    return (
+        <div className="kb-userlistspanel" >
+            {props.lists.map( (list, index) => (
+                <SortableItem
+                    key={list.meta.id}
+                    index={index}
+                    timeout={300}
+                    in={list.in}
+                    isSelected={index === props.activeIndex}
+                    meta={list.meta}
+                    listIndex={index}
+                    handleExited={() => props.handleRemoveList(list.meta.id)}
+                    handleListTransitionExit={props.handleListTransitionExit}
+                    handleUserListSelect={props.handleUserListSelect}
+                />
+            ))}
+        </div>
+    );
+});
 
 export default class UserListsPanel extends Component {
     /*
      * Receives as props:   activeIndex
      *                      lists
+     *                      handleRemoveList
      *                      handleUserListSelect
+     *                      handleListTransitionExit
+     *                      handleReorderLists
      */
     constructor(props) {
         super(props);
@@ -22,22 +47,14 @@ export default class UserListsPanel extends Component {
     }
 
     render() {
-        const listOfUserLists = this.props.lists.map(
-            (list, index) => {
-                return (
-                    <TransitionItem key={list.meta.id} timeout={200}>
-                        <UserList isSelected={index === this.props.activeIndex}
-                                  meta={list.meta}
-                                  index={index}
-                                  handleUserListSelect={this.props.handleUserListSelect} />
-                    </TransitionItem>
-                );
-            }
-        );
+        if (!this.props.lists[0]) return null;
         return (
-            <TransitionGroup className="kb-userlistspanel">
-                {listOfUserLists}
-            </TransitionGroup>
+            <SortableList {...this.props}
+                onSortEnd={this.props.handleReorderLists}
+                lockAxis={"y"}
+                pressDelay={200}
+                helperClass="draggedComponent"
+            />
         );
     }
 }

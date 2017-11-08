@@ -27,6 +27,16 @@ export default class BuilderApp extends Component {
         }
     }
 
+    handleListTransitionExit = (e, index) => {
+        e.preventDefault();
+        if (index === undefined) index = this.state.activeIndex;
+        const newLists = this.state.allLists;
+        Object.assign(newLists[index], {in: false})
+        this.setState({
+            allLists: newLists
+        });
+    }
+
     handleReorderLists = ({oldIndex, newIndex}) => {
         let newActiveIndex = this.state.activeIndex;
         if (oldIndex === newActiveIndex) {
@@ -66,11 +76,13 @@ export default class BuilderApp extends Component {
         tar.scrollTop = 0;
         storage.newList(store.user, {},
             (lists, index) => {
+                console.log("Added new list");
+                console.log("-----------------------------");
+                for (const list of lists) console.log(list.meta.name);
                 this.setState({
                     activeIndex: index,
                     allLists: lists
                 });
-                console.log("Made a new, default list at index " + index);
             },
             storage.errorLogger
         );
@@ -104,8 +116,10 @@ export default class BuilderApp extends Component {
         }
         storage.addUnit(store.user, this.state.activeIndex, unitkey,
             (lists) => {
-                this.setState({ allLists: lists });
                 console.log("Added unit "+unitkey);
+                console.log("-----------------------------");
+                for (const list of lists) console.log(list.meta.name);
+                this.setState({ allLists: lists });
             },
             storage.errorLogger
         );
@@ -115,8 +129,10 @@ export default class BuilderApp extends Component {
         e.preventDefault();
         storage.removeUnit(store.user, this.state.activeIndex, unitIndex,
             (lists, removedUnit) => {
-                this.setState({ allLists: lists });
                 console.log("Removed unit " + removedUnit.key);
+                console.log("-----------------------------");
+                for (const list of lists) console.log(list.meta.name);
+                this.setState({ allLists: lists });
             },
             storage.errorLogger
         );
@@ -143,6 +159,8 @@ export default class BuilderApp extends Component {
                         handleNewList={this.handleNewList}
                         handleRemoveList={this.handleRemoveList}
                         handleAddUnit={this.handleAddUnit}
+                        handleListTransitionExit={this.handleListTransitionExit}
+                        handleReorderLists={this.handleReorderLists}
                         handleUserListSelect={this.handleUserListSelect} />
                     <RightPanel
                         activeList={this.state.allLists[this.state.activeIndex]}
