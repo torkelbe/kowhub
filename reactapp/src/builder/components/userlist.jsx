@@ -1,22 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
 import faceicon from 'faceicon.png';
 
-export default class UserList extends Component {
-    /*
-     * Receives as props:   isSelected
-     *                      meta
-     *                      handleUserListSelect
-     *                      handleListTransitionExit
-     */
-    
-    constructor(props) {
-        super(props);
-        this.state = {
-        }
-    }
-
+export default function UserList({meta, index, isSelected, handleUserListSelect, handleListTransitionExit}) {
     /*
      *  props.meta = {
      *      name:  <user-defined name>,
@@ -26,32 +13,29 @@ export default class UserList extends Component {
      *      count: <number of units>
      *  }
      */
-    
-    render() {
-        const classes = classNames({
-            "kb-userlist": true,
-            "selected": this.props.isSelected
-        });
-        return (
-            <div className={classes} >
-                <div className="kb-userlist__name"
-                     onClick={(e) => this.props.handleUserListSelect(e, this.props.index)} >
-                    {this.props.meta.name}
-                </div>
-                <div className="kb-userlist__img"
-                     onClick={(e) => this.props.handleListTransitionExit(e, this.props.index)} >
-                    <img src={faceicon} alt="face-icon" />
-                </div>
-                <div className="kb-userlist__stat">
-                    <p>{this.props.meta.pts}</p>
-                    <div>Points</div>
-                </div>
-                <div className="kb-userlist__stat">
-                    <p>{this.props.meta.count}</p>
-                    <div>Units</div>
-                </div>
+    const classes = classNames({
+        "kb-userlist": true,
+        "selected": isSelected
+    });
+    return (
+        <div className={classes} >
+            <div className="kb-userlist__name"
+                 onClick={(e) => handleUserListSelect(e, index)} >
+                {meta.name}
             </div>
-        );
-    }
+            <div className="kb-userlist__img"
+                 onClick={(e) => handleListTransitionExit(e, index)} >
+                <img src={faceicon} alt="face-icon" />
+            </div>
+            <div className="kb-userlist__stat">
+                <p>{meta.pts}</p>
+                <div>Points</div>
+            </div>
+            <div className="kb-userlist__stat">
+                <p>{meta.count}</p>
+                <div>Units</div>
+            </div>
+        </div>
+    );
 }
 
