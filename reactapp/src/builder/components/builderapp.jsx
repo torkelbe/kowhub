@@ -78,7 +78,8 @@ export default class BuilderApp extends Component {
 
     handleRemoveList = (listId) => {
         if (!listId) listId = this.state.allLists[this.state.activeList].meta.id;
-        const nextIndex = this.state.activeIndex === this.state.allLists.length - 1 ?
+        const deleteIndex = this.state.allLists.findIndex( list => list.meta.id === listId );
+        const nextIndex = deleteIndex < this.state.activeIndex ?
                           this.state.activeIndex - 1 :
                           this.state.activeIndex;
         storage.removeList(store.user, listId,
@@ -87,7 +88,7 @@ export default class BuilderApp extends Component {
                 console.log("-----------------------------");
                 for (const list of lists) console.log(list.meta.name);
                 this.setState({
-                    activeIndex: nextIndex,
+                    activeIndex: Math.min(nextIndex, lists.length - 1),
                     allLists: lists
                 });
             },
