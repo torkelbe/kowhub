@@ -12,7 +12,7 @@ export default class UserListUnits extends Component {
     }
 
     render() {
-        if (!this.props.list) return null;
+        if (!this.props.list) return <div className="kb-userlistunits" /> ;
         const userListEntries = this.props.list.units.map(
             (unit, index) =>
                 <UserListUnit
