@@ -11,7 +11,7 @@ ALLOWED_HOSTS = ['kowhub.com']
 WEBPACK_LOADER = {
     'builder': {
         'BUNDLE_DIR_NAME': 'builder/bundles/',
-        'STATS_FILE': join(PROJECT_ROOT, 'reactapp/webpack-stats.production.json'),
+        'STATS_FILE': join(PROJECT_ROOT, 'reactapp/webpack/webpack-stats.production.json'),
     }
 }
 

@@ -52,6 +52,7 @@ module.exports = config
 
 host="localhost"
 config="webpack.local.config.js"
+config_dir="webpack/"
 exit_cmds="kill %1;" # kill first process when second process dies
 
 echo ""
@@ -64,10 +65,10 @@ if $serving_to_local_network; then
 
     # Create temporary config file for this particular host IP
     echo "Generating temporary Webpack config..."
-    print_temp_config $host > reactapp/$config
+    print_temp_config $host > reactapp/$config_dir$config
 
     # Remove temporary config file when script exits
-    exit_cmds+=" rm reactapp/$config;"
+    exit_cmds+=" rm reactapp/$config_dir$config;"
 fi
 
 trap "$exit_cmds" SIGINT
@@ -81,5 +82,5 @@ echo "Config: $config"
 echo ""
 
 # serve Webpack              and serve Django
-webpack_dev_server $config & django_dev_server $host
+webpack_dev_server $config_dir$config & django_dev_server $host
 

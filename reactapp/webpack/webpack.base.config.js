@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-    context: __dirname,
+    context: path.dirname(__dirname),
 
     module: {
         rules: [

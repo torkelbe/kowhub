@@ -11,7 +11,7 @@ ALLOWED_HOSTS = []
 WEBPACK_LOADER = {
     'builder': {
         'BUNDLE_DIR_NAME': 'builder/bundles/',
-        'STATS_FILE': join(PROJECT_ROOT, 'reactapp/webpack-stats.local.json'),
+        'STATS_FILE': join(PROJECT_ROOT, 'reactapp/webpack/webpack-stats.local.json'),
     }
 }
 

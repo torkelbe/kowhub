@@ -5,17 +5,19 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const config = require('./webpack.base.config.js');
 
+const base_dir = path.dirname(__dirname);
+
 config.entry = './src/builder/index';
 
 config.output = {
-    path: path.resolve(__dirname, 'bundles-prod/builder/bundles/'),
+    path: path.resolve(base_dir, 'bundles-prod/builder/bundles/'),
     filename: 'builder-[hash].js',
 };
 
 config.plugins = [
-    new BundleTracker({ filename: 'webpack-stats.production.json' }),
+    new BundleTracker({ filename: 'webpack/webpack-stats.production.json' }),
     new CleanWebpackPlugin([
-        path.resolve(__dirname, 'bundles-prod/builder/bundles/*.js'),
+        path.resolve(base_dir, 'bundles-prod/builder/bundles/*.js'),
     ]),
 ];
 

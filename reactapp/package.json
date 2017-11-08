@@ -7,9 +7,9 @@
   "author": "Torkel Berli <torkelbe@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build-development": "webpack --config webpack.local.config.js --progress",
-    "build-production": "webpack --config webpack.production.config.js --progress",
-    "dev-server": "webpack-dev-server --config webpack.local.config.js"
+    "build-development": "webpack --config webpack/webpack.local.config.js --progress",
+    "build-production": "webpack --config webpack/webpack.production.config.js --progress",
+    "dev-server": "webpack-dev-server --config webpack/webpack.local.config.js"
   },
   "dependencies": {
     "babel": "^6.23.0",
