@@ -10,4 +10,4 @@ node_modules/
 webpack-stats.local.json
 webpack-stats.production.json
 kowsourcedata/output/
-config/settings/secrets.json
+django/config/settings/secrets.json

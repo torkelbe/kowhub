@@ -44,12 +44,9 @@ class LocalEnvironment(object):
 
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
-        self.settings = 'config.settings.local'
 
     def manage(self, cmd):
-        local('venv/bin/django-admin ' + cmd +
-              ' --settings=' + self.settings +
-              ' --pythonpath=' + self.dir)
+        local('django/venv/bin/python django/manage.py ' + cmd)
 
     def webpack_compile(self, production=False):
         webpack_dir = os.path.join(self.dir, 'reactapp')

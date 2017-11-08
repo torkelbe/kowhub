@@ -18,7 +18,7 @@ WEBPACK_LOADER = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': join(PROJECT_ROOT, 'db.sqlite3'),
+        'NAME': join(DJANGO_ROOT, 'db.sqlite3'),
         'USER': '',         # not used with sqlite
         'PASSWORD': '',     # not used with sqlite
         'HOST': '',         # not used with sqlite

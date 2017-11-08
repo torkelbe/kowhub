@@ -14,12 +14,11 @@ import sys
 from os.path import dirname, abspath, join
 import json
 
-PROJECT_NAME = 'kowhub'
-PROJECT_ROOT = dirname(dirname(dirname(abspath(__file__))))
-DJANGO_ROOT = join(PROJECT_ROOT, PROJECT_NAME)
+PROJECT_ROOT = dirname(dirname(dirname(dirname(abspath(__file__)))))
+DJANGO_ROOT = join(PROJECT_ROOT, "django")
 
 # Add django apps root directory to pythonpath
-sys.path.append(DJANGO_ROOT)
+sys.path.append(join(DJANGO_ROOT, "apps"))
 
 # Import secrets from secret.json
 from django.core.exceptions import ImproperlyConfigured

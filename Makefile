@@ -5,16 +5,16 @@ install: cpsecret venv dependencies migrate node_modules
 
 .PHONY: cpsecret
 cpsecret:
-	[ ! -e "config/settings/secrets.json" ] && \
-		cp config/settings/secrets.json.example config/settings/secrets.json
+	[ ! -e "django/config/settings/secrets.json" ] && \
+		cp django/config/settings/secrets.json.example django/config/settings/secrets.json
 
 .PHONY: venv
 venv:
-	[ ! -e "venv/bin/activate_this.py" ] && virtualenv --clear venv
+	cd django && [ ! -e "venv/bin/activate_this.py" ] && virtualenv --clear venv
 
 .PHONY: dependencies
 dependencies:
-	venv/bin/pip install -r requirements.txt
+	cd django && venv/bin/pip install -r requirements.txt
 
 .PHONY: node_modules
 node_modules:
@@ -22,11 +22,11 @@ node_modules:
 
 .PHONY: migrate
 migrate:
-	venv/bin/python manage.py migrate --settings=config.settings.local
+	cd django && venv/bin/python manage.py migrate --settings=config.settings.local
 
 .PHONY: freeze
 freeze:
-	source venv/bin/activate && venv/bin/pip freeze > requirements.txt
+	cd django && source venv/bin/activate && venv/bin/pip freeze > requirements.txt
 
 .PHONY: clean
 clean: clear_files clear_venv clear_modules clear_bundles
@@ -38,7 +38,7 @@ clear_files:
 
 .PHONY: clear_venv
 clear_venv:
-	rm -rf venv
+	rm -rf django/venv
 
 .PHONY: clear_modules
 clear_modules:

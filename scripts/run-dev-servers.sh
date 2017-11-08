@@ -25,7 +25,7 @@ function webpack_dev_server {
 }
 
 function django_dev_server {
-    venv/bin/python manage.py runserver $host:8000 2>&1 | \
+    cd django && venv/bin/python manage.py runserver $host:8000 2>&1 | \
     # Print only lines starting with certain keywords:
     #   'Starting', 'System', 'Django', or 'Quit'
     grep "Starting\|System\|Django\|Quit\|\[*\]" --line-buffered | \
