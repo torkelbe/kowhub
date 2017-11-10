@@ -6,7 +6,7 @@ const formString = {
     "r": "Regiment",
     "h": "Horde",
     "l": "Legion",
-    "h": "Hero",
+    "x": "Hero",
     "m": "Monster",
     "e": "War Engine",
 }
@@ -37,7 +37,7 @@ function _applyOption(unit, unitkey, optionType, optionCode) {
 
 function _formatSpecialRules(special) {
     const specialNames = special.map( (specialKey) => {
-        [key, value] = specialKey.split(":");
+        const [key, value] = specialKey.split(":");
         return src.special[key].name + (value ? " ("+value+")" : "");
     });
     return specialNames.join(", ");
@@ -45,8 +45,8 @@ function _formatSpecialRules(special) {
 
 function _formatRangedAttacks(ranged) {
     const rangedNames = ranged.map( (rangedKey) => {
-        [key, value] = rangedKey.split(":");
-        item = src.ranged[key];
+        const [key, value] = rangedKey.split(":");
+        const item = src.ranged[key];
         return "["+item.range+"\"] " + item.name + (value ? " ("+value+")" : "");
     });
     return rangedNames.join(", ");
