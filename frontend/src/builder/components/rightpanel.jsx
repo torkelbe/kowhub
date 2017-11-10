@@ -15,6 +15,12 @@ export default class RightPanel extends Component {
         this.state = {
         }
     }
+
+    openListPdf = (e) => {
+        e.preventDefault();
+        /* Note: this only returns a placeholder PDF for now */
+        window.open("pdf", "_blank");
+    }
     
     render() {
         return (
@@ -25,7 +31,8 @@ export default class RightPanel extends Component {
                 <UserListUnits
                     list={this.props.activeList}
                     handleRemoveUnit={this.props.handleRemoveUnit} />
-                <UtilitiesPanel />
+                <UtilitiesPanel
+                    openListPdf={this.openListPdf} />
             </div>
         );
     }
