@@ -6,6 +6,7 @@
     background: $color-panel;
     color: $color-font-panel;
     overflow-y: hidden;
+    user-select: none;
 
     &.selected {
         background: shade($color-panel, 10);
