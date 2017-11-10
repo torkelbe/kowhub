@@ -1,10 +1,10 @@
 from django.conf.urls import url
 
-from views import default
+from views import armylist_pdf
 
 app_name = 'kowpdf'
 
 urlpatterns = [
-    url(r'^$', default, name='default'),
+    url(r'^$', armylist_pdf, name='armylist_pdf'),
 ]
 

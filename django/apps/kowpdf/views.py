@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from reportlab.pdfgen import canvas
 from io import BytesIO
 
-def default(request):
+def armylist_pdf(request):
     # Create the HttpResponse object with the appropriate PDF headers
     response = HttpResponse(content_type='application/pdf')
     # This line seems to make browser automatically download the pdf
