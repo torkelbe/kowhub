@@ -6,7 +6,6 @@ export default class UserListTitle extends Component {
 
     handleChange = (e) => {
         e.preventDefault();
-        this.setState({ value: e.target.value });
         this.props.handleMetaChange({ name: e.target.value });
     }
 
