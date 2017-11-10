@@ -19,11 +19,18 @@
     &__name {
         flex: 1 1 auto;
         display: flex;
-        align-items: center;
-        margin-left: 10px;
-        margin-right: 10px;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 10px;
         font-weight: bold;
         overflow-y: hidden;
+
+        &>input {
+            background: $color-panel;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 2px;
+        }
     }
 
     &__img {

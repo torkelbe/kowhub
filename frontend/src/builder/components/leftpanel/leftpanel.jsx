@@ -14,6 +14,7 @@ export default class LeftPanel extends Component {
      *                      handleAddUnit
      *                      handleUserListSelect
      *                      handleListTransitionExit
+     *                      handleMetaChange
      *                      handleReorderLists
      */
     constructor(props) {
@@ -40,6 +41,7 @@ export default class LeftPanel extends Component {
                         handleRemoveList={this.props.handleRemoveList}
                         handleListTransitionExit={this.props.handleListTransitionExit}
                         handleReorderLists={this.props.handleReorderLists}
+                        handleMetaChange={this.props.handleMetaChange}
                         handleUserListSelect={this.props.handleUserListSelect} />
                     <div  className="kb-newlistbutton">
                         <IconButton type="delete" onClick={this.props.handleListTransitionExit} />

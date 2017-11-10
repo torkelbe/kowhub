@@ -162,6 +162,7 @@ export default class BuilderApp extends Component {
                         handleAddUnit={this.handleAddUnit}
                         handleListTransitionExit={this.handleListTransitionExit}
                         handleReorderLists={this.handleReorderLists}
+                        handleMetaChange={this.handleMetaChange}
                         handleUserListSelect={this.handleUserListSelect} />
                     <RightPanel
                         activeList={this.state.allLists[this.state.activeIndex]}

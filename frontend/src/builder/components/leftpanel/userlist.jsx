@@ -1,9 +1,15 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import TitleController from './titlecontroller';
 import faceicon from 'faceicon.png';
 
-export default function UserList({meta, index, isSelected, handleUserListSelect, handleListTransitionExit}) {
+export default function UserList({meta,
+                                  index,
+                                  isSelected,
+                                  handleUserListSelect,
+                                  handleMetaChange,
+                                  handleListTransitionExit}) {
     /*
      *  props.meta = {
      *      name:  <user-defined name>,
@@ -18,10 +24,11 @@ export default function UserList({meta, index, isSelected, handleUserListSelect,
         "selected": isSelected
     });
     return (
-        <div className={classes} >
-            <div className="kb-userlist__name"
-                 onClick={(e) => handleUserListSelect(e, index)} >
-                {meta.name}
+        <div className={classes}
+             onClick={(e) => handleUserListSelect(e, index)} >
+            <div className="kb-userlist__name" >
+                <TitleController name={meta.name}
+                                 handleMetaChange={handleMetaChange} />
             </div>
             <div className="kb-userlist__img"
                  onClick={(e) => handleListTransitionExit(e, index)} >
