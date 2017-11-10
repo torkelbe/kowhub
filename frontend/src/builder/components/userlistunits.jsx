@@ -1,38 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class UserListUnits extends Component {
-    /*
-     * Receives as props:   list
-     *                      handleRemoveUnit
-     */
-    constructor(props) {
-        super(props);
-        this.state = {
-        }
-    }
+import UserListEntry from './userlistentry';
 
-    render() {
-        if (!this.props.list) return <div className="kb-userlistunits" /> ;
-        const userListEntries = this.props.list.units.map(
-            (unit, index) =>
-                <UserListUnit
-                    key={unit.id}
-                    unitkey={unit.key}
-                    index={index}
-                />
-        );
-        return (
-            <div className="kb-userlistunits">
-                {userListEntries}
-            </div>
-        );
-    }
-}
-
-function UserListUnit(props) {
+export default function UserListUnits({list, handleRemoveUnit}) {
+    if (!list) return <div className="kb-userlistunits" /> ;
+    const userListEntries = list.units.map(
+        (unit, index) =>
+            <UserListEntry
+                key={unit.id}
+                unitkey={unit.key}
+                index={index}
+            />
+    );
     return (
-        <div className="kb-userlistunits__unit">
-            {props.unitkey}
+        <div className="kb-userlistunits">
+            {userListEntries}
         </div>
     );
 }
