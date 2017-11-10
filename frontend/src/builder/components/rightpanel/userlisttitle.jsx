@@ -24,13 +24,23 @@ export default class UserListTitle extends Component {
         }
     }
 
+    handleKeyDown = (e) => {
+        /* Blur input on 'Enter' (13) or 'Escape' (27) */
+        if (e.keyCode == 13 || e.keyCode == 27) {
+            e.preventDefault();
+            this.textInput.blur();
+        }
+    }
+
     render() {
         return (
             <input
+                ref={input => this.textInput = input}
                 value={this.props.name}
                 onChange={(e) => this.handleChange(e)}
                 onBlur={(e) => this.handleBlur(e)}
                 onFocus={(e) => this.handleFocus(e)}
+                onKeyDown={(e) => this.handleKeyDown(e)}
                 className="kb-userlistheader__title"
             />
         );
