@@ -4,8 +4,8 @@ import storage from 'webstorage-api';
 import data from 'source-data-api';
 
 import Header from './header';
-import LeftPanel from './leftpanel';
-import RightPanel from './rightpanel';
+import LeftPanel from './leftpanel/leftpanel';
+import RightPanel from './rightpanel/rightpanel';
 
 const store = {
     user: "userlists",

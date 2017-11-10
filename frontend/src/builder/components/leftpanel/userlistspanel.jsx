@@ -1,7 +1,7 @@
 import React from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
-import TransitionItem from './transitionitem';
+import TransitionItem from '../utils/transitionitem';
 import UserList from './userlist';
 
 export default function UserListsPanel({handleReorderLists, ...passThroughProps}) {

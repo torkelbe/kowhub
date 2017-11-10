@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import UserListsPanel from './userlistspanel';
 import BrowsePanel from './browsepanel';
-import IconButton from './iconbutton';
+import IconButton from '../utils/iconbutton';
 
 export default class LeftPanel extends Component {
     /*

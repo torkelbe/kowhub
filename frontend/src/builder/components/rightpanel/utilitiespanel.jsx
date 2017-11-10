@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import UtilitiesBox from './utilitiesbox';
-import IconButton from './iconbutton';
+import IconButton from '../utils/iconbutton';
 
 export default class UtilitiesPanel extends Component {
     /*
