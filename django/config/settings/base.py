@@ -56,6 +56,7 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     #'armybuilder.apps.ArmybuilderConfig',
     'builder.apps.BuilderConfig',
+    'kowpdf.apps.KowpdfConfig',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
