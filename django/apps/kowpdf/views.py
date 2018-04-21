@@ -2,7 +2,17 @@ from django.http import HttpResponse
 from io import BytesIO
 from pdfgenerator.armylist import Armylist
 
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
 def armylist_pdf(request):
+    try:
+        data = json.loads(request.body)
+        print request.body
+    except:
+        print "json.loads failed"
+
     # Create the HttpResponse object with the appropriate PDF headers
     response = HttpResponse(content_type='application/pdf')
 
@@ -14,6 +24,7 @@ def armylist_pdf(request):
     # Create IO buffer to hold our drawings
     buffer = BytesIO()
 
+    # Draw PDF using reportlab
     armylist = Armylist(buffer, 'A4')
     pdf = armylist.generate()
 

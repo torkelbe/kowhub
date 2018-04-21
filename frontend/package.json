@@ -11,6 +11,7 @@
     "dev-server": "webpack-dev-server --config webpack/webpack.local.config.js"
   },
   "dependencies": {
+    "axios": "^0.17.0",
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
