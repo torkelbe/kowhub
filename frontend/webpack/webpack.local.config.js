@@ -26,8 +26,8 @@ module.exports = merge(base_config, {
     plugins: [
         new BundleTracker({ filename: 'webpack/webpack-stats.local.json' }),
         new CleanWebpackPlugin(
-            [ path.resolve(base_dir, 'bundles-dev/builder/bundles/*.js') ],
-            { verbose: false }
+            ['bundles-dev/builder/bundles/*.js'],
+            { root: base_dir, verbose: false }
         ),
     ],
 });

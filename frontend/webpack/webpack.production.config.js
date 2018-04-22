@@ -21,9 +21,10 @@ module.exports = merge(base_config, {
 
     plugins: [
         new BundleTracker({ filename: 'webpack/webpack-stats.production.json' }),
-        new CleanWebpackPlugin([
-            path.resolve(base_dir, 'bundles-prod/builder/bundles/*.js'),
-        ]),
+        new CleanWebpackPlugin(
+            ['bundles-prod/builder/bundles/*.js'],
+            { root: base_dir, verbose: false }
+        ),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
