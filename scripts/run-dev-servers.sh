@@ -18,8 +18,8 @@
 
 function webpack_dev_server {
     cd frontend && yarn run webpack-dev-server --config $1 | \
-    # Print only lines starting with keyword 'webpack'
-    grep "^webpack" --line-buffered | \
+    # Print only lines starting with keyword 'webpack' or 'Built'
+    grep "^webpack\|^Built" --line-buffered | \
     # Add [WEBPACK] tag to output from webpack-dev-server:
     sed -e "s/^/[WEBPACK] /"
 }
