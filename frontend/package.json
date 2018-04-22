@@ -33,6 +33,7 @@
     "svg-react-loader": "^0.4.5",
     "svgo": "^1.0.5",
     "svgo-loader": "^2.1.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.6.0",
     "webpack-bundle-tracker": "^0.4.0-beta",
     "webpack-cli": "^2.0.15",

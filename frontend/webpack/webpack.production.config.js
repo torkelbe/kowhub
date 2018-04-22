@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const BundleTracker = require('webpack-bundle-tracker');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const base_config = require('./webpack.base.config.js');
 
@@ -28,6 +29,10 @@ module.exports = merge(base_config, {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
+        new UglifyJSPlugin(),
     ],
+
+    optimization: {
+    },
 });
 
