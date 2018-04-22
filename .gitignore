@@ -8,6 +8,5 @@ cache/
 venv/
 node_modules/
 webpack-stats.local.json
-webpack-stats.production.json
 kowsourcedata/output/
 django/config/settings/secrets.json

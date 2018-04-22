@@ -10,6 +10,7 @@ ALLOWED_HOSTS = []
 
 WEBPACK_LOADER = {
     'builder': {
+        'CACHE': not DEBUG,
         'BUNDLE_DIR_NAME': 'builder/bundles/',
         'STATS_FILE': join(FRONTEND_ROOT, 'webpack/webpack-stats.local.json'),
     }
