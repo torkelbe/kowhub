@@ -14,6 +14,8 @@ module.exports = merge(base_config, {
 
     mode: 'development',
 
+    devtool: 'inline-source-map',
+
     entry: './src/builder/index',
 
     output: {
