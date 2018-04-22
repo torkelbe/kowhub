@@ -7,6 +7,10 @@ const config = require('./webpack.base.config.js');
 
 const base_dir = path.dirname(__dirname);
 
+process.traceDeprecation = true;
+
+config.mode: 'development';
+
 config.entry = './src/builder/index';
 
 config.output = {

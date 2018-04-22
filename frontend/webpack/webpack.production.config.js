@@ -7,6 +7,8 @@ const config = require('./webpack.base.config.js');
 
 const base_dir = path.dirname(__dirname);
 
+config.mode: 'production';
+
 config.entry = './src/builder/index';
 
 config.output = {

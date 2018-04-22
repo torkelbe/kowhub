@@ -11,33 +11,35 @@
     "dev-server": "webpack-dev-server --config webpack/webpack.local.config.js"
   },
   "dependencies": {
-    "axios": "^0.17.0",
-    "babel": "^6.23.0",
+    "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "classnames": "^2.2.5",
-    "css-loader": "^0.28.7",
-    "file-loader": "^1.1.5",
-    "node-sass": "^4.5.3",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
+    "node-sass": "^4.8.3",
     "path": "^0.12.7",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "react-sortable-hoc": "^0.6.8",
-    "react-tabs": "^2.1.0",
-    "react-transition-group": "^2.2.1",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.19.0",
+    "react-tabs": "^2.2.2",
+    "react-transition-group": "^2.3.1",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
     "svg-react-loader": "^0.4.5",
-    "svgo-loader": "^1.2.1",
-    "webpack": "^3.7.1",
-    "webpack-bundle-tracker": "^0.2.0"
+    "svgo": "^1.0.5",
+    "svgo-loader": "^2.1.0",
+    "webpack": "^4.6.0",
+    "webpack-bundle-tracker": "^0.4.0-beta",
+    "webpack-cli": "^2.0.15"
   },
   "devDependencies": {
-    "clean-webpack-plugin": "^0.1.17",
+    "clean-webpack-plugin": "^0.1.19",
     "react-hot-loader": "^3.0.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack-dev-server": "^3.1.3"
   }
 }
