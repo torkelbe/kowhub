@@ -8,7 +8,7 @@ Get started with development as follows.
 
 #### Dependencies
 
-```js
+```
 python-dev
 python-virtualenv
 yarn
@@ -16,7 +16,7 @@ yarn
 
 #### Clone project and install
 
-```js
+```
 git clone https://github.com/torkelbe/kowhub.git
 cd kowhub
 make
@@ -25,7 +25,7 @@ make
 #### Manage project
 Fabric is configured with functions for the most common management tasks.
 
-```js
+```
 fab help
 ```
 
