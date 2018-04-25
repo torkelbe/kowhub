@@ -14,7 +14,11 @@ venv:
 
 .PHONY: dependencies
 dependencies:
-	cd django && venv/bin/pip install -r requirements.txt
+	cd django && venv/bin/pip install -r requirements/local.txt
+
+.PHONY: prod-dependencies
+prod-dependencies:
+	cd django && venv/bin/pip install -r requirements/production.txt
 
 .PHONY: node_modules
 node_modules:
@@ -26,7 +30,7 @@ migrate:
 
 .PHONY: freeze
 freeze:
-	cd django && source venv/bin/activate && venv/bin/pip freeze > requirements.txt
+	cd django && venv/bin/pip freeze > requirements/constraints.txt
 
 .PHONY: clean
 clean: clear_files clear_venv clear_modules

@@ -1,0 +1,5 @@
+-c constraints.txt
+
+Django
+django-webpack-loader
+reportlab
