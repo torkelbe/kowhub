@@ -53,7 +53,6 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
-    #'armybuilder.apps.ArmybuilderConfig',
     'builder.apps.BuilderConfig',
     'kowpdf.apps.KowpdfConfig',
 )
