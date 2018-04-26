@@ -3,6 +3,9 @@ SHELL := /bin/bash
 .PHONY: install
 install: cpsecret venv dependencies migrate node_modules
 
+.PHONY: production
+production: cpsecret venv prod-dependencies prod-configure prod-collectstatic
+
 .PHONY: cpsecret
 cpsecret:
 	[ ! -e "django/config/settings/secrets.json" ] && \
@@ -27,6 +30,20 @@ node_modules:
 .PHONY: migrate
 migrate:
 	cd django && venv/bin/python manage.py migrate --settings=config.settings.local
+
+.PHONY: prod-configure
+prod-configure:
+	bash scripts/deployment/setup.sh
+
+.PHONY: prod-collectstatic
+prod-collectstatic:
+	cd django && venv/bin/python manage.py collectstatic \
+		--settings=config.settings.production --noinput
+
+.PHONY: prod-migrate
+prod-migrate:
+	cd django && venv/bin/python manage.py migrate \
+		--settings=config.settings.production
 
 .PHONY: freeze
 freeze:
