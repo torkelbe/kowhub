@@ -1,4 +1,4 @@
-## Configure Kowhub for Production
+# Configure Kowhub for Production
 
 This is a guide for deploying Kowhub to a production server.
 
@@ -32,12 +32,16 @@ Set up the database by following the example commands.
 
 ```text
 sudo su - postgres
+psql
 
 # CREATE USER kowhub WITH PASSWORD 'my-password';
 # ALTER USER kowhub SET client_encoding TO 'utf8';
 # ALTER USER kowhub SET default_transaction_isolation TO 'read committed';
 # ALTER USER kowhub SET timezone TO 'CET';
 # CREATE DATABASE kowhubdb OWNER kowhub;
+# \q
+
+exit
 ```
 
 ### Log in as user and clone project into its home directory
