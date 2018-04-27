@@ -9,7 +9,7 @@
 echo "Running 'scripts/deployment/setup.sh'"
 
 # Find the location of this file
-THIS_FILE=$(grep --include=deployment_setup.sh -rnwl "$(pwd)" -e 'let-django-prod-setup-find-me')
+THIS_FILE=$(grep --include=setup.sh -rnwl "$(pwd)" -e 'let-django-prod-setup-find-me')
 if [[ -z $THIS_FILE ]]; then
     echo "Please enter project directory"
     exit
@@ -62,7 +62,7 @@ echo "Generating supervisor.config..."
 sed -e "
 s~\?PROJNAME?~${PROJNAME}~g;
 s~\?PROJDIR?~${PROJDIR}~g;
-s~\?DJANGODIR?~'${DJANGODIR}'~g;
+s~\?DJANGODIR?~${DJANGODIR}~g;
 s~\?PROJUSER?~${PROJUSER}~g;
 " < $TEMPLATES/supervisor.config > $CONFIGS/supervisor.config
 
