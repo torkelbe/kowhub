@@ -26,7 +26,12 @@ module.exports = {
             {
                 test: /\.(png|jpg)$/,
                 use: [
-                    'file-loader'
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            publicPath: 'static/builder/bundles/',
+                        }
+                    }
                 ]
             },
             {
