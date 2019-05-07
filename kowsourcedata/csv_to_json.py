@@ -54,6 +54,9 @@ def export(write_to_file=False, write_to_console=False):
     if write_to_console:
         sys.stdout.write(json.dumps(data, sort_keys=True, indent=4, separators=(',',':')))
 
+    if not write_to_file and not write_to_console:
+        error_logger.message("Parsing complete, no output written")
+
 # === Main ===
 if __name__ == "__main__":
     export(write_to_file=False, write_to_console=True)
